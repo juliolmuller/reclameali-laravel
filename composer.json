@@ -1,9 +1,9 @@
 {
-  "name": "laravel/laravel",
+  "name": "juliolmuller/reclame-ali",
   "type": "project",
-  "description": "The Laravel Framework.",
+  "description": "The premier Customer Service System.",
   "keywords": [
-    "framework",
+    "php",
     "laravel"
   ],
   "license": "MIT",
@@ -16,7 +16,9 @@
   },
   "require-dev": {
     "facade/ignition": "^1.4",
-    "fzaninotto/faker": "^1.4",
+    "fzaninotto/faker": "^1.4",,
+    "jansenfelipe/faker-br": "^1.0",
+    "mbezhanov/laravel-faker-provider-collection": "^1.1",
     "mockery/mockery": "^1.0",
     "nunomaduro/collision": "^3.0",
     "phpunit/phpunit": "^8.0"
