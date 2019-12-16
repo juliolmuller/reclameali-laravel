@@ -16,7 +16,7 @@
   },
   "require-dev": {
     "facade/ignition": "^1.4",
-    "fzaninotto/faker": "^1.4",,
+    "fzaninotto/faker": "^1.4",
     "jansenfelipe/faker-br": "^1.0",
     "mbezhanov/laravel-faker-provider-collection": "^1.1",
     "mockery/mockery": "^1.0",
