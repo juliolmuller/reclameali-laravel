@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTicketStatusesTable extends Migration
+class CreateTicketStatusTable extends Migration
 {
     public function up()
     {
@@ -18,6 +18,6 @@ class CreateTicketStatusesTable extends Migration
 
     public function down()
     {
-        Schema::dropIfExists('ticket_statuses');
+        Schema::dropIfExists('ticket_status');
     }
 }
