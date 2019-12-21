@@ -11,7 +11,7 @@ class CreateAccessRolesTable extends Migration
         Schema::create('access_roles', function (Blueprint $table) {
             $table->increments('id');
             $table->string('role', 10);
-            $table->string('description');
+            $table->string('description')->nullable();
             $table->timestamps();
         });
     }
