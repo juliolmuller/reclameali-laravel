@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class TicketType extends Model
 {
     use SoftDeletes;
+
+    /**
+     * Mass assignable attributes
+     *
+     * @var array
+     */
+    protected $fillable = ['name'];
 }

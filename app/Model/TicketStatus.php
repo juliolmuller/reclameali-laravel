@@ -15,4 +15,11 @@ class TicketStatus extends Model
      * @var string
      */
     protected $table = 'ticket_status';
+
+    /**
+     * Mass assignable attributes
+     *
+     * @var array
+     */
+    protected $fillable = ['name'];
 }
