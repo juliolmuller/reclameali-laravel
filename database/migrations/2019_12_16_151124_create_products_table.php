@@ -12,9 +12,9 @@ class CreateProductsTable extends Migration
             $table->bigIncrements('id');
             $table->string('name', 50);
             $table->string('description')->nullable();
-            $table->float('weight')->unsigned();
-            $table->bigInteger('category_id')->unsigned()->nullable();
-            $table->char('utc', 12)->unique()->nullable();
+            $table->float('weight')->unsigned()->nullable();
+            $table->bigInteger('category_id')->unsigned();
+            $table->char('utc', 12)->unique();
             $table->char('ean', 13)->unique()->nullable();
             $table->softDeletes();
             $table->timestamps();
