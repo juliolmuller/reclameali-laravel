@@ -2,6 +2,7 @@
 
 namespace App\Model;
 
+use App\Model\Ticket;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -22,4 +23,14 @@ class TicketStatus extends Model
      * @var array
      */
     protected $fillable = ['name'];
+
+    /**
+     * Get the tickets associated with $this status
+     *
+     * @return \Illuminate\Database\Eloquent\Collection<\App\Model\Ticket>
+     */
+    public function tickets()
+    {
+        return $this->hasMany(Ticket::class, 'status_id');
+    }
 }

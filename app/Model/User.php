@@ -2,6 +2,9 @@
 
 namespace App\Model;
 
+use App\Model\Role;
+use App\Model\State;
+use App\Model\Ticket;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -35,4 +38,34 @@ class User extends Authenticatable
         'date_of_birth' => 'datetime',
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Get the role associated with $this user
+     *
+     * @return \App\Model\Role
+     */
+    public function role()
+    {
+        return $this->belongsTo(Role::class, 'role_id');
+    }
+
+    /**
+     * Get the state associated with $this user
+     *
+     * @return \App\Model\State
+     */
+    public function state()
+    {
+        return $this->belongsTo(State::class);
+    }
+
+    /**
+     * Get the tickets associated with $this user
+     *
+     * @return \Illuminate\Database\Eloquent\Collection<\App\Model\Ticket>
+     */
+    public function tickets()
+    {
+        return $this->hasMany(Ticket::class, 'created_by');
+    }
 }
