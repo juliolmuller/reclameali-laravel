@@ -2,7 +2,7 @@
 
 namespace App\Model;
 
-use App\Model\User;
+use App\Model\City;
 use Illuminate\Database\Eloquent\Model;
 
 class State extends Model
@@ -12,15 +12,15 @@ class State extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'abreviation'];
+    protected $fillable = ['id', 'name', 'abreviation'];
 
     /**
-     * Get the users associated with $this state
+     * Get the cities associated with $this state
      *
-     * @return \Illuminate\Database\Eloquent\Collection<\App\Model\User>
+     * @return \Illuminate\Database\Eloquent\Collection<\App\Model\City>
      */
-    public function users()
+    public function cities()
     {
-        return $this->hasMany(User::class);
+        return $this->hasMany(City::class);
     }
 }
