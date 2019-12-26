@@ -1,27 +1,30 @@
 <?php
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
-use App\User;
+use App\Model\City;
+use App\Model\Role;
+use App\Model\User;
 use Faker\Generator as Faker;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
-/*
-|--------------------------------------------------------------------------
-| Model Factories
-|--------------------------------------------------------------------------
-|
-| This directory should contain each of the model factory definitions for
-| your application. Factories provide a convenient way to generate new
-| model instances for testing / seeding your application's database.
-|
-*/
-
 $factory->define(User::class, function (Faker $faker) {
+    $firstName = $faker->firstName;
+    $lastName = $faker->lastName;
     return [
-        'name' => $faker->name,
-        'email' => $faker->unique()->safeEmail,
-        'email_verified_at' => now(),
-        'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-        'remember_token' => Str::random(10),
+        'first_name'        => $firstName,
+        'last_name'         => $lastName,
+        'cpf'               => $faker->cpf,
+        'date_of_birth'     => $faker->date('Y-m-d', '-18 years'),
+        'phone'             => $faker->randomElement([null, $faker->numerify('##9########'), $faker->numerify('##3#######')]),
+        'email'             => Str::lower("{$firstName}.{$lastName}") . '@email.com',
+        'email_verified_at' => $faker->dateTime(),
+        'street'            => $faker->optional(0.7)->randomElement([$faker->randomElement(['R.', 'Rua', 'Av.', 'Avenida', 'Alameda']) . ' ' . $faker->streetName]),
+        'number'            => $faker->optional(0.7)->buildingNumber,
+        'zip_code'          => $faker->optional(0.7)->numerify(str_repeat('#', 8)),
+        'complement'        => $faker->optional(0.7)->secondaryAddress,
+        'city_id'           => $faker->numberBetween(0, 4) ? City::all()->random()->id : null,
+        'role_id'           => Role::all()->random()->id,
+        'password'          => Hash::make($faker->password),
+        'remember_token'    => Str::random(10),
     ];
 });
