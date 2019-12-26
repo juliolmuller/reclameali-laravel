@@ -12,11 +12,11 @@ class CreateTicketMessagesTable extends Migration
             $table->bigIncrements('id');
             $table->string('message_body');
             $table->bigInteger('ticket_id')->unsigned();
-            $table->bigInteger('created_by')->unsigned();
-            $table->timestamp('created_at');
+            $table->bigInteger('sent_by')->unsigned();
+            $table->timestamp('sent_at');
             $table->softDeletes();
             $table->foreign('ticket_id')->references('id')->on('tickets');
-            $table->foreign('created_by')->references('id')->on('users');
+            $table->foreign('sent_by')->references('id')->on('users');
         });
     }
 

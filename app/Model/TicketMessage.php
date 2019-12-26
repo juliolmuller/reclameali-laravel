@@ -12,11 +12,18 @@ class TicketMessage extends Model
     use SoftDeletes;
 
     /**
+     * Indicate if the model should be timestamped automatically
+     *
+     * @var bool
+     */
+    public $timestamps = false;
+
+    /**
      * Mass assignable attributes
      *
      * @var array
      */
-    protected $fillable = ['message_body', 'ticket_id', 'created_by', 'created_at'];
+    protected $fillable = ['message_body', 'ticket_id', 'sent_by', 'sent_at'];
 
     /**
      * Get the ticket associated with $this message
