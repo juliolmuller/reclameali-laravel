@@ -15,7 +15,7 @@ class TicketType extends Model
      *
      * @var array
      */
-    protected $fillable = ['name'];
+    protected $fillable = ['description'];
 
     /**
      * Get the tickets associated with $this type

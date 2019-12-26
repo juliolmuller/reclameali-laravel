@@ -22,7 +22,7 @@ class TicketStatus extends Model
      *
      * @var array
      */
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'description'];
 
     /**
      * Get the tickets associated with $this status
