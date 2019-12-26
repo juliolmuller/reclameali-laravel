@@ -5,12 +5,18 @@ use Illuminate\Database\Seeder;
 class DatabaseSeeder extends Seeder
 {
     /**
-     * Seed the application's database.
-     *
-     * @return void
+     * Calls method 'run()' for each one of the subclasses
      */
     public function run()
     {
-        // $this->call(UsersTableSeeder::class);
+        $this->call([
+            StatesTableSeeder::class,
+            CitiesTableSeeder::class,
+            UsersTableSeeder::class,
+            CategoriesAndProductsTableSeeder::class,
+            TicketTypesTableSeeder::class,
+            TicketStatusTableSeeder::class,
+            TicketsTableSeeder::class,
+        ]);
     }
 }
