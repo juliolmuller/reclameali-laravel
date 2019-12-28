@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
-class UsersTableSeeder extends Seeder
+class RolesAndUsersTableSeeder extends Seeder
 {
     public function run()
     {
@@ -17,7 +17,7 @@ class UsersTableSeeder extends Seeder
             'description' => 'Cliente',
         ]);
         $role->save();
-        factory(User::class, 120)->create(['role_id' => $role->id]);
+        $role->users()->saveMany(factory(User::class, 120)->make(['role_id' => $role->id]));
 
         // Generate records for attendants
         $role = new Role([
@@ -25,7 +25,7 @@ class UsersTableSeeder extends Seeder
             'description' => 'Atendente',
         ]);
         $role->save();
-        factory(User::class, 20)->create(['role_id' => $role->id]);
+        $role->users()->saveMany(factory(User::class, 20)->make(['role_id' => $role->id]));
 
         // Generate records for managers
         $role = new Role([
@@ -33,7 +33,7 @@ class UsersTableSeeder extends Seeder
             'description' => 'Gerente',
         ]);
         $role->save();
-        factory(User::class, 4)->create(['role_id' => $role->id]);
+        $role->users()->saveMany(factory(User::class, 4)->make(['role_id' => $role->id]));
 
         // Generate records for visitors access
         $roles = Role::all();

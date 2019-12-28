@@ -12,7 +12,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             StatesTableSeeder::class,
             CitiesTableSeeder::class,
-            UsersTableSeeder::class,
+            RolesAndUsersTableSeeder::class,
             CategoriesAndProductsTableSeeder::class,
             TicketTypesTableSeeder::class,
             TicketStatusTableSeeder::class,
