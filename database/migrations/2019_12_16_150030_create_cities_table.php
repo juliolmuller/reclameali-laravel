@@ -10,8 +10,8 @@ class CreateCitiesTable extends Migration
     {
         Schema::create('cities', function (Blueprint $table) {
             $table->bigInteger('id');
-            $table->string('name', 80);
-            $table->integer('state_id');
+            $table->string('name', 80)->index();
+            $table->integer('state_id')->index();
             $table->timestamps();
             $table->primary('id');
             $table->foreign('state_id')->references('id')->on('states');

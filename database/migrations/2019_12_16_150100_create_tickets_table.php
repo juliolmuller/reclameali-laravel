@@ -10,10 +10,10 @@ class CreateTicketsTable extends Migration
     {
         Schema::create('tickets', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('created_by');
+            $table->unsignedBigInteger('created_by')->index();
             $table->unsignedBigInteger('product_id');
-            $table->unsignedBigInteger('type_id');
-            $table->unsignedBigInteger('status_id');
+            $table->unsignedBigInteger('type_id')->index();
+            $table->unsignedBigInteger('status_id')->index();
             $table->timestamp('closed_at')->nullable();
             $table->timestamps();
             $table->softDeletes();

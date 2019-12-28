@@ -10,8 +10,8 @@ class CreateStatesTable extends Migration
     {
         Schema::create('states', function (Blueprint $table) {
             $table->integer('id');
-            $table->string('name', 19);
-            $table->char('abreviation', 2);
+            $table->string('name', 19)->index();
+            $table->char('abreviation', 2)->index();
             $table->timestamps();
             $table->primary('id');
         });
