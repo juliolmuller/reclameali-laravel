@@ -22,9 +22,9 @@ class CreateUsersTable extends Migration
             $table->char('zip_code', 8)->nullable();
             $table->string('complement', 20)->nullable();
             $table->string('city', 64)->nullable();
-            $table->integer('state_id')->unsigned()->nullable();
+            $table->unsignedInteger('state_id')->nullable();
+            $table->unsignedInteger('role_id');
             $table->string('password');
-            $table->integer('role_id')->unsigned();
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();
