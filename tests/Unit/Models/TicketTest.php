@@ -119,33 +119,15 @@ class TicketTest extends TestCase
         $this->assertDatabaseHas(self::TABLE_NAME, compact('id', 'created_by', 'product_id', 'type_id', 'status_id'));
     }
 
-    public function test_model_softdeletion()
-    {
-        $ticket = factory(self::CLASS_NAME)->create();
-        $beforeAll = Ticket::count();
-        $before = Ticket::onlyTrashed()->count();
-        $id = $ticket->id;
-        $status = $ticket->delete();
-        $afterAll = Ticket::count();
-        $after = Ticket::onlyTrashed()->count();
-        $this->assertTrue($status);
-        $this->assertEquals(1, $beforeAll - $afterAll);
-        $this->assertEquals(1, $after - $before);
-        $this->assertSoftDeleted(self::TABLE_NAME, compact('id'));
-    }
-
     public function test_model_deletion()
     {
         $ticket = factory(self::CLASS_NAME)->create();
-        $beforeAll = Ticket::count();
-        $before = Ticket::onlyTrashed()->count();
+        $before = Ticket::count();
         $id = $ticket->id;
-        $status = $ticket->forceDelete();
-        $afterAll = Ticket::count();
-        $after = Ticket::onlyTrashed()->count();
+        $status = $ticket->delete();
+        $after = Ticket::count();
         $this->assertTrue($status);
-        $this->assertEquals(1, $beforeAll - $afterAll);
-        $this->assertEquals(0, $after - $before);
+        $this->assertEquals(1, $before - $after);
         $this->assertDeleted(self::TABLE_NAME, compact('id'));
     }
 }

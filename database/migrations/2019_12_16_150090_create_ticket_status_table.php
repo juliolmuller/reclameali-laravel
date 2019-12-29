@@ -12,8 +12,7 @@ class CreateTicketStatusTable extends Migration
             $table->bigIncrements('id');
             $table->string('name', 30);
             $table->string('description');
-            $table->softDeletes();
-            $table->timestamps();
+            $table->changesTracking();
         });
     }
 

@@ -14,7 +14,6 @@ class CreateTicketMessagesTable extends Migration
             $table->bigInteger('ticket_id')->unsigned()->index();
             $table->bigInteger('sent_by')->unsigned()->index();
             $table->timestamp('sent_at')->useCurrent();
-            $table->softDeletes();
             $table->foreign('ticket_id')->references('id')->on('tickets');
             $table->foreign('sent_by')->references('id')->on('users');
         });

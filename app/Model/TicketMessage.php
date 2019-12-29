@@ -5,12 +5,9 @@ namespace App\Model;
 use App\Model\Ticket;
 use App\Model\User;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class TicketMessage extends Model
 {
-    use SoftDeletes;
-
     /**
      * Indicate if the model should be timestamped automatically
      *

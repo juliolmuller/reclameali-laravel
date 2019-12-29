@@ -6,12 +6,9 @@ use App\Model\TicketMessage;
 use App\Model\TicketStatus;
 use App\Model\TicketType;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Ticket extends Model
 {
-    use SoftDeletes;
-
     /**
      * Mass assignable attributes
      *

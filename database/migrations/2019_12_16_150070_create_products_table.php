@@ -16,8 +16,7 @@ class CreateProductsTable extends Migration
             $table->unsignedBigInteger('category_id');
             $table->char('utc', 12)->unique()->index();
             $table->char('ean', 13)->unique()->nullable()->index();
-            $table->softDeletes();
-            $table->timestamps();
+            $table->changesTracking();
             $table->foreign('category_id')->references('id')->on('categories');
         });
     }

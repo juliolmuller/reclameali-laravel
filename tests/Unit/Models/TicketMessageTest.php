@@ -118,33 +118,15 @@ class TicketMessageTest extends TestCase
         $this->assertDatabaseHas(self::TABLE_NAME, compact('id', 'message_body', 'ticket_id', 'sent_by', 'sent_at'));
     }
 
-    public function test_model_softdeletion()
-    {
-        $message = factory(self::CLASS_NAME)->create();
-        $beforeAll = Message::count();
-        $before = Message::onlyTrashed()->count();
-        $id = $message->id;
-        $status = $message->delete();
-        $afterAll = Message::count();
-        $after = Message::onlyTrashed()->count();
-        $this->assertTrue($status);
-        $this->assertEquals(1, $beforeAll - $afterAll);
-        $this->assertEquals(1, $after - $before);
-        $this->assertSoftDeleted(self::TABLE_NAME, compact('id'));
-    }
-
     public function test_model_deletion()
     {
         $message = factory(self::CLASS_NAME)->create();
-        $beforeAll = Message::count();
-        $before = Message::onlyTrashed()->count();
+        $before = Message::count();
         $id = $message->id;
-        $status = $message->forceDelete();
-        $afterAll = Message::count();
-        $after = Message::onlyTrashed()->count();
+        $status = $message->delete();
+        $after = Message::count();
         $this->assertTrue($status);
-        $this->assertEquals(1, $beforeAll - $afterAll);
-        $this->assertEquals(0, $after - $before);
+        $this->assertEquals(1, $before - $after);
         $this->assertDeleted(self::TABLE_NAME, compact('id'));
     }
 }
