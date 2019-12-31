@@ -2,7 +2,9 @@
 
 namespace Tests\Unit\Models;
 
+use App\Model\Category;
 use App\Model\Product;
+use App\Model\Ticket;
 use PDOException;
 use Tests\TestCase;
 
@@ -63,6 +65,29 @@ class ProductTest extends TestCase
         $product = factory(self::CLASS_NAME)->create();
         $product->utc = null;
         $product->save();
+    }
+
+    public function test_category_relationship()
+    {
+        $samples = ceil(Product::count() / 10);
+        for ($i = 0; $i < $samples; $i++) {
+            $product = Product::all()->random();
+            $fromProduct = $product->category;
+            $fromCategory = Category::find($product->category_id);
+            $this->assertEquals($fromProduct->id, $fromCategory->id);
+        }
+    }
+
+    public function test_tickets_relationship()
+    {
+        $samples = ceil(Product::count() / 10);
+        for ($i = 0; $i < $samples; $i++) {
+            $product = Product::all()->random();
+            $fromProduct = $product->tickets;
+            $fromTicket = Ticket::where('product_id', $product->id)->orderByDesc('created_at')->get();
+            for ($j = 0; $j < $fromProduct->count(); $j++)
+                $this->assertEquals($fromProduct[$j]->id, $fromTicket[$j]->id);
+        }
     }
 
     public function test_model_saving()

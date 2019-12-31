@@ -85,6 +85,28 @@ class TicketMessageTest extends TestCase
         $message->save();
     }
 
+    public function test_createdBy_relationship()
+    {
+        $samples = ceil(Message::count() / 10);
+        for ($i = 0; $i < $samples; $i++) {
+            $message = Message::all()->random();
+            $fromMessage = $message->sentBy;
+            $fromUser = User::find($message->sentBy->id);
+            $this->assertEquals($fromMessage->id, $fromUser->id);
+        }
+    }
+
+    public function test_ticket_relationship()
+    {
+        $samples = ceil(Message::count() / 10);
+        for ($i = 0; $i < $samples; $i++) {
+            $message = Message::all()->random();
+            $fromMessage = $message->ticket;
+            $fromTicket = Ticket::find($message->ticket_id);
+            $this->assertEquals($fromMessage->id, $fromTicket->id);
+        }
+    }
+
     public function test_model_saving()
     {
         $before = Message::count();

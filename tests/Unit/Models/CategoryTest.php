@@ -3,6 +3,8 @@
 namespace Tests\Unit\Models;
 
 use App\Model\Category;
+use App\Model\Product;
+use Illuminate\Support\Facades\DB;
 use PDOException;
 use Tests\TestCase;
 
@@ -27,6 +29,18 @@ class CategoryTest extends TestCase
         $category = factory(self::CLASS_NAME)->create();
         $category->name = null;
         $category->save();
+    }
+
+    public function test_products_relationship()
+    {
+        $samples = ceil(Category::count() / 10);
+        for ($i = 0; $i < $samples; $i++) {
+            $category = Category::all()->random();
+            $fromCategory = $category->products;
+            $fromProduct = Product::where('category_id', $category->id)->orderBy('name')->get();
+            for ($j = 0; $j < $fromCategory->count(); $j++)
+                $this->assertEquals($fromCategory[$j]->id, $fromProduct[$j]->id);
+        }
     }
 
     public function test_model_saving()

@@ -2,6 +2,7 @@
 
 namespace Tests\Unit\Models;
 
+use App\Model\Ticket;
 use App\Model\TicketType as Type;
 use PDOException;
 use Tests\TestCase;
@@ -27,6 +28,18 @@ class TicketTypeTest extends TestCase
         $type = factory(self::CLASS_NAME)->create();
         $type->description = null;
         $type->save();
+    }
+
+    public function test_tickets_relationship()
+    {
+        $samples = Type::count();
+        for ($i = 0; $i < $samples; $i++) {
+            $type = Type::all()->random();
+            $fromType = $type->tickets;
+            $fromTicket = Ticket::where('type_id', $type->id)->orderByDesc('created_at')->get();
+            for ($j = 0; $j < $fromType->count(); $j++)
+                $this->assertEquals($fromType[$j]->id, $fromTicket[$j]->id);
+        }
     }
 
     public function test_model_saving()

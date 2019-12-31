@@ -2,6 +2,10 @@
 
 namespace Tests\Unit\Models;
 
+use App\Model\City;
+use App\Model\Role;
+use App\Model\State;
+use App\Model\Ticket;
 use App\Model\User;
 use PDOException;
 use Tests\TestCase;
@@ -117,6 +121,44 @@ class UserTest extends TestCase
         $user = factory(self::CLASS_NAME)->create();
         $user->role_id = null;
         $user->save();
+    }
+
+    public function test_city_relationship()
+    {
+        $samples = ceil(User::count() / 10);
+        for ($i = 0; $i < $samples; $i++) {
+            $user = User::all()->random();
+            if (is_null($user->city_id)) {
+                $i--;
+            } else {
+                $fromUser = $user->city;
+                $fromCity = City::find($user->city_id);
+                $this->assertEquals($fromUser->id, $fromCity->id);
+            }
+        }
+    }
+
+    public function test_role_relationship()
+    {
+        $samples = ceil(User::count() / 10);
+        for ($i = 0; $i < $samples; $i++) {
+            $user = User::all()->random();
+            $fromUser = $user->role;
+            $fromRole = Role::find($user->role_id);
+            $this->assertEquals($fromUser->id, $fromRole->id);
+        }
+    }
+
+    public function test_tickets_relationship()
+    {
+        $samples = ceil(User::count() / 10);
+        for ($i = 0; $i < $samples; $i++) {
+            $user = User::all()->random();
+            $fromUser = $user->tickets;
+            $fromTicket = Ticket::where('created_by', $user->id)->orderByDesc('created_at')->get();
+            for ($j = 0; $j < $fromUser->count(); $j++)
+                $this->assertEquals($fromUser[$j]->id, $fromTicket[$j]->id);
+        }
     }
 
     public function test_model_saving()

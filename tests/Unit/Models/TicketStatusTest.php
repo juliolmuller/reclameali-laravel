@@ -2,6 +2,7 @@
 
 namespace Tests\Unit\Models;
 
+use App\Model\Ticket;
 use App\Model\TicketStatus as Status;
 use PDOException;
 use Tests\TestCase;
@@ -27,6 +28,18 @@ class TicketStatusTest extends TestCase
         $status = factory(self::CLASS_NAME)->create();
         $status->name = null;
         $status->save();
+    }
+
+    public function test_tickets_relationship()
+    {
+        $samples = Status::count();
+        for ($i = 0; $i < $samples; $i++) {
+            $status = Status::all()->random();
+            $fromStatus = $status->tickets;
+            $fromTicket = Ticket::where('status_id', $status->id)->orderByDesc('created_at')->get();
+            for ($j = 0; $j < $fromStatus->count(); $j++)
+                $this->assertEquals($fromStatus[$j]->id, $fromTicket[$j]->id);
+        }
     }
 
     public function test_model_saving()

@@ -4,6 +4,7 @@ namespace Tests\Unit\Models;
 
 use App\Model\Product;
 use App\Model\Ticket;
+use App\Model\TicketMessage as Message;
 use App\Model\TicketStatus as Status;
 use App\Model\TicketType as Type;
 use App\Model\User;
@@ -85,6 +86,40 @@ class TicketTest extends TestCase
         $ticket = factory(self::CLASS_NAME)->create();
         $ticket->status_id = null;
         $ticket->save();
+    }
+
+    public function test_status_relationship()
+    {
+        $samples = ceil(Ticket::count() / 10);
+        for ($i = 0; $i < $samples; $i++) {
+            $ticket = Ticket::all()->random();
+            $fromTicket = $ticket->status;
+            $fromStatus = Status::find($ticket->status_id);
+            $this->assertEquals($fromTicket->id, $fromStatus->id);
+        }
+    }
+
+    public function test_type_relationship()
+    {
+        $samples = ceil(Ticket::count() / 10);
+        for ($i = 0; $i < $samples; $i++) {
+            $ticket = Ticket::all()->random();
+            $fromTicket = $ticket->type;
+            $fromType = Type::find($ticket->type_id);
+            $this->assertEquals($fromTicket->id, $fromType->id);
+        }
+    }
+
+    public function test_messages_relationship()
+    {
+        $samples = ceil(Ticket::count() / 10);
+        for ($i = 0; $i < $samples; $i++) {
+            $ticket = Ticket::all()->random();
+            $fromTicket = $ticket->messages;
+            $fromMessage = Message::where('ticket_id', $ticket->id)->orderBy('sent_at')->get();
+            for ($j = 0; $j < $fromTicket->count(); $j++)
+                $this->assertEquals($fromTicket[$j]->id, $fromMessage[$j]->id);
+        }
     }
 
     public function test_model_saving()
