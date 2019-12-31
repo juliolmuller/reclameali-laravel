@@ -2,9 +2,6 @@
 
 namespace App\Model;
 
-use App\Model\TicketMessage;
-use App\Model\TicketStatus;
-use App\Model\TicketType;
 use Illuminate\Database\Eloquent\Model;
 
 class Ticket extends Model

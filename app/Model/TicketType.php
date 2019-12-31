@@ -2,7 +2,6 @@
 
 namespace App\Model;
 
-use App\Model\Ticket;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 

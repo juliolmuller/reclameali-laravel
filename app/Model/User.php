@@ -2,9 +2,6 @@
 
 namespace App\Model;
 
-use App\Model\Role;
-use App\Model\State;
-use App\Model\Ticket;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;

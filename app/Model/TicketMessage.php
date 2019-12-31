@@ -2,8 +2,6 @@
 
 namespace App\Model;
 
-use App\Model\Ticket;
-use App\Model\User;
 use Illuminate\Database\Eloquent\Model;
 
 class TicketMessage extends Model
