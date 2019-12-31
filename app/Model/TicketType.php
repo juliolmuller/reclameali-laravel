@@ -23,6 +23,6 @@ class TicketType extends Model
      */
     public function tickets()
     {
-        return $this->hasMany(Ticket::class, 'type_id');
+        return $this->hasMany(Ticket::class, 'type_id')->orderByDesc('created_at');
     }
 }

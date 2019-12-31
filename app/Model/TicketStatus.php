@@ -30,6 +30,6 @@ class TicketStatus extends Model
      */
     public function tickets()
     {
-        return $this->hasMany(Ticket::class, 'status_id');
+        return $this->hasMany(Ticket::class, 'status_id')->orderByDesc('created_at');
     }
 }

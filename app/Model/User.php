@@ -6,10 +6,12 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Znck\Eloquent\Traits\BelongsToThrough;
 
 class User extends Authenticatable
 {
-    use SoftDeletes,
+    use BelongsToThrough,
+        SoftDeletes,
         Notifiable;
 
     /**
@@ -47,13 +49,23 @@ class User extends Authenticatable
     }
 
     /**
+     * Get the city associated with $this user
+     *
+     * @return \App\Model\City
+     */
+    public function city()
+    {
+        return $this->belongsTo(City::class);
+    }
+
+    /**
      * Get the state associated with $this user
      *
      * @return \App\Model\State
      */
     public function state()
     {
-        return $this->belongsTo(State::class);
+        return $this->belongsToThrough(State::class, City::class);
     }
 
     /**
@@ -63,6 +75,6 @@ class User extends Authenticatable
      */
     public function tickets()
     {
-        return $this->hasMany(Ticket::class, 'created_by');
+        return $this->hasMany(Ticket::class, 'created_by')->orderByDesc('created_at');
     }
 }

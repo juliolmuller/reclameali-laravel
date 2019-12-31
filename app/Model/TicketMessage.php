@@ -35,8 +35,8 @@ class TicketMessage extends Model
      *
      * @return \App\Model\User
      */
-    public function createdBy()
+    public function sentBy()
     {
-        return $this->belongsTo(User::class, 'created_by');
+        return $this->belongsTo(User::class, 'sent_by');
     }
 }

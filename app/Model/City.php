@@ -31,4 +31,14 @@ class City extends Model
     {
         return $this->belongsTo(State::class);
     }
+
+    /**
+     * Get the users associated with $this city
+     *
+     * @return \Illuminate\Database\Eloquent\Collection<\App\Model\User>
+     */
+    public function users()
+    {
+        return $this->hasMany(User::class)->orderBy('email');
+    }
 }

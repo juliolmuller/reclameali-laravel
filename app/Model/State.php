@@ -29,6 +29,16 @@ class State extends Model
      */
     public function cities()
     {
-        return $this->hasMany(City::class);
+        return $this->hasMany(City::class)->orderBy('name');
+    }
+
+    /**
+     * Get the users associated with $this state
+     *
+     * @return \Illuminate\Database\Eloquent\Collection<\App\Model\User>
+     */
+    public function users()
+    {
+        return $this->hasManyThrough(User::class, City::class)->orderBy('email');
     }
 }
