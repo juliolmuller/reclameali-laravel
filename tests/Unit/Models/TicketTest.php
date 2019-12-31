@@ -2,12 +2,12 @@
 
 namespace Tests\Unit\Models;
 
-use App\Model\Product;
-use App\Model\Ticket;
-use App\Model\TicketMessage as Message;
-use App\Model\TicketStatus as Status;
-use App\Model\TicketType as Type;
-use App\Model\User;
+use App\Models\Product;
+use App\Models\Ticket;
+use App\Models\TicketMessage as Message;
+use App\Models\TicketStatus as Status;
+use App\Models\TicketType as Type;
+use App\Models\User;
 use PDOException;
 use Tests\TestCase;
 

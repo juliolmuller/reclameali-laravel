@@ -1,8 +1,8 @@
 <?php
 
-use App\Model\User;
-use App\Model\Ticket;
-use App\Model\TicketMessage;
+use App\Models\User;
+use App\Models\Ticket;
+use App\Models\TicketMessage;
 use Faker\Generator as Faker;
 
 $factory->define(TicketMessage::class, function (Faker $faker) {

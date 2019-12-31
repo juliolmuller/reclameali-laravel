@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Factories;
 
-use App\Model\TicketStatus as Status;
+use App\Models\TicketStatus as Status;
 use Tests\TestCase;
 
 class TicketStatusFactoryTest extends TestCase

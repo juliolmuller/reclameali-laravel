@@ -1,6 +1,6 @@
 <?php
 
-use App\Model\TicketType as Type;
+use App\Models\TicketType as Type;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 

@@ -1,6 +1,6 @@
 <?php
 
-use App\Model\TicketStatus;
+use App\Models\TicketStatus;
 use Faker\Generator as Faker;
 
 $factory->define(TicketStatus::class, function (Faker $faker) {

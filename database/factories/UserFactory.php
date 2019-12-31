@@ -1,8 +1,8 @@
 <?php
 
-use App\Model\City;
-use App\Model\Role;
-use App\Model\User;
+use App\Models\City;
+use App\Models\Role;
+use App\Models\User;
 use Faker\Generator as Faker;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;

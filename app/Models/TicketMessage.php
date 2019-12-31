@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Model;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -23,7 +23,7 @@ class TicketMessage extends Model
     /**
      * Get the ticket associated with $this message
      *
-     * @return \App\Model\Ticket
+     * @return \App\Models\Ticket
      */
     public function ticket()
     {
@@ -33,7 +33,7 @@ class TicketMessage extends Model
     /**
      * Get the user associated with $this message
      *
-     * @return \App\Model\User
+     * @return \App\Models\User
      */
     public function sentBy()
     {

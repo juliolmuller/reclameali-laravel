@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Model;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -19,7 +19,7 @@ class Product extends Model
     /**
      * Get the category associated with $this product
      *
-     * @return \App\Model\Category
+     * @return \App\Models\Category
      */
     public function category()
     {
@@ -29,7 +29,7 @@ class Product extends Model
     /**
      * Get the tickets associated with $this product
      *
-     * @return \Illuminate\Database\Eloquent\Collection<\App\Model\Ticket>
+     * @return \Illuminate\Database\Eloquent\Collection<\App\Models\Ticket>
      */
     public function tickets()
     {

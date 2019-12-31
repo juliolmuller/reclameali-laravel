@@ -1,6 +1,6 @@
 <?php
 
-use App\Model\State;
+use App\Models\State;
 use GuzzleHttp\Client;
 use GuzzleHttp\Promise;
 use Illuminate\Database\Seeder;

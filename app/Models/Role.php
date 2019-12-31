@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Model;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -23,7 +23,7 @@ class Role extends Model
     /**
      * Get the users associated with $this role
      *
-     * @return \Illuminate\Database\Eloquent\Collection<\App\Model\User>
+     * @return \Illuminate\Database\Eloquent\Collection<\App\Models\User>
      */
     public function users()
     {

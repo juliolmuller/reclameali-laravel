@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Factories;
 
-use App\Model\TicketMessage as Message;
+use App\Models\TicketMessage as Message;
 use Tests\TestCase;
 
 class TicketMessageFactoryTest extends TestCase

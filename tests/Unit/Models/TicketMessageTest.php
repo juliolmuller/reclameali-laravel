@@ -2,9 +2,9 @@
 
 namespace Tests\Unit\Models;
 
-use App\Model\Ticket;
-use App\Model\TicketMessage as Message;
-use App\Model\User;
+use App\Models\Ticket;
+use App\Models\TicketMessage as Message;
+use App\Models\User;
 use PDOException;
 use Tests\TestCase;
 

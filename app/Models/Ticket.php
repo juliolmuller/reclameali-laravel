@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Model;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -25,7 +25,7 @@ class Ticket extends Model
     /**
      * Get the status associated with $this ticket
      *
-     * @return \App\Model\TicketStatus
+     * @return \App\Models\TicketStatus
      */
     public function status()
     {
@@ -35,7 +35,7 @@ class Ticket extends Model
     /**
      * Get the type associated with $this ticket
      *
-     * @return \App\Model\TicketType
+     * @return \App\Models\TicketType
      */
     public function type()
     {
@@ -45,7 +45,7 @@ class Ticket extends Model
     /**
      * Get the messages associated with $this ticket
      *
-     * @return \Illuminate\Database\Eloquent\Collection<\App\Model\TicketMessage>
+     * @return \Illuminate\Database\Eloquent\Collection<\App\Models\TicketMessage>
      */
     public function messages()
     {

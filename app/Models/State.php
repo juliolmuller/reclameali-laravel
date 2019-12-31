@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Model;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -25,7 +25,7 @@ class State extends Model
     /**
      * Get the cities associated with $this state
      *
-     * @return \Illuminate\Database\Eloquent\Collection<\App\Model\City>
+     * @return \Illuminate\Database\Eloquent\Collection<\App\Models\City>
      */
     public function cities()
     {
@@ -35,7 +35,7 @@ class State extends Model
     /**
      * Get the users associated with $this state
      *
-     * @return \Illuminate\Database\Eloquent\Collection<\App\Model\User>
+     * @return \Illuminate\Database\Eloquent\Collection<\App\Models\User>
      */
     public function users()
     {

@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Factories;
 
-use App\Model\User;
+use App\Models\User;
 use Tests\TestCase;
 
 class UserFactoryTest extends TestCase

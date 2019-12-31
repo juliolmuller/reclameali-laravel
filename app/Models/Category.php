@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Model;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -19,7 +19,7 @@ class Category extends Model
     /**
      * Get the products associated with $this category
      *
-     * @return \Illuminate\Database\Eloquent\Collection<\App\Model\Product>
+     * @return \Illuminate\Database\Eloquent\Collection<\App\Models\Product>
      */
     public function products()
     {

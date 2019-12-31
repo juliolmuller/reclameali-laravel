@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Model;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -19,7 +19,7 @@ class TicketType extends Model
     /**
      * Get the tickets associated with $this type
      *
-     * @return \Illuminate\Database\Eloquent\Collection<\App\Model\Ticket>
+     * @return \Illuminate\Database\Eloquent\Collection<\App\Models\Ticket>
      */
     public function tickets()
     {

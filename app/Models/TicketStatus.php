@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Model;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -26,7 +26,7 @@ class TicketStatus extends Model
     /**
      * Get the tickets associated with $this status
      *
-     * @return \Illuminate\Database\Eloquent\Collection<\App\Model\Ticket>
+     * @return \Illuminate\Database\Eloquent\Collection<\App\Models\Ticket>
      */
     public function tickets()
     {

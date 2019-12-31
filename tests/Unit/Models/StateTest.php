@@ -2,9 +2,9 @@
 
 namespace Tests\Unit\Models;
 
-use App\Model\City;
-use App\Model\State;
-use App\Model\User;
+use App\Models\City;
+use App\Models\State;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 use PDOException;

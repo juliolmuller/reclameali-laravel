@@ -2,8 +2,8 @@
 
 namespace Tests\Unit\Models;
 
-use App\Model\Category;
-use App\Model\Product;
+use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Support\Facades\DB;
 use PDOException;
 use Tests\TestCase;

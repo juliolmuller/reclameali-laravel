@@ -1,7 +1,7 @@
 <?php
 
-use App\Model\Ticket;
-use App\Model\TicketMessage;
+use App\Models\Ticket;
+use App\Models\TicketMessage;
 use Illuminate\Database\Seeder;
 
 class TicketsTableSeeder extends Seeder

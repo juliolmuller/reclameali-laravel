@@ -2,8 +2,8 @@
 
 namespace Tests\Unit\Models;
 
-use App\Model\Ticket;
-use App\Model\TicketStatus as Status;
+use App\Models\Ticket;
+use App\Models\TicketStatus as Status;
 use PDOException;
 use Tests\TestCase;
 

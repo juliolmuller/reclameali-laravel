@@ -2,8 +2,8 @@
 
 namespace Tests\Unit\Models;
 
-use App\Model\Ticket;
-use App\Model\TicketType as Type;
+use App\Models\Ticket;
+use App\Models\TicketType as Type;
 use PDOException;
 use Tests\TestCase;
 

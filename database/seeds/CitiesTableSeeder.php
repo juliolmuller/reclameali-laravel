@@ -1,6 +1,6 @@
 <?php
 
-use App\Model\City;
+use App\Models\City;
 use GuzzleHttp\Client;
 use GuzzleHttp\Promise;
 use Illuminate\Database\Seeder;

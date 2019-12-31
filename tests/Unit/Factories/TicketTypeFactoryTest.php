@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Factories;
 
-use App\Model\TicketType as Type;
+use App\Models\TicketType as Type;
 use Tests\TestCase;
 
 class TicketTypeFactoryTest extends TestCase

@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Factories;
 
-use App\Model\Product;
+use App\Models\Product;
 use Tests\TestCase;
 
 class ProductFactoryTest extends TestCase

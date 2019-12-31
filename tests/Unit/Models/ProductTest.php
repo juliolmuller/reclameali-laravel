@@ -2,9 +2,9 @@
 
 namespace Tests\Unit\Models;
 
-use App\Model\Category;
-use App\Model\Product;
-use App\Model\Ticket;
+use App\Models\Category;
+use App\Models\Product;
+use App\Models\Ticket;
 use PDOException;
 use Tests\TestCase;
 

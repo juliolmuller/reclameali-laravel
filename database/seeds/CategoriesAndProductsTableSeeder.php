@@ -1,7 +1,7 @@
 <?php
 
-use App\Model\Category;
-use App\Model\Product;
+use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Database\Seeder;
 
 class CategoriesAndProductsTableSeeder extends Seeder

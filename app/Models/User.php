@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Model;
+namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -41,7 +41,7 @@ class User extends Authenticatable
     /**
      * Get the role associated with $this user
      *
-     * @return \App\Model\Role
+     * @return \App\Models\Role
      */
     public function role()
     {
@@ -51,7 +51,7 @@ class User extends Authenticatable
     /**
      * Get the city associated with $this user
      *
-     * @return \App\Model\City
+     * @return \App\Models\City
      */
     public function city()
     {
@@ -61,7 +61,7 @@ class User extends Authenticatable
     /**
      * Get the state associated with $this user
      *
-     * @return \App\Model\State
+     * @return \App\Models\State
      */
     public function state()
     {
@@ -71,7 +71,7 @@ class User extends Authenticatable
     /**
      * Get the tickets associated with $this user
      *
-     * @return \Illuminate\Database\Eloquent\Collection<\App\Model\Ticket>
+     * @return \Illuminate\Database\Eloquent\Collection<\App\Models\Ticket>
      */
     public function tickets()
     {
