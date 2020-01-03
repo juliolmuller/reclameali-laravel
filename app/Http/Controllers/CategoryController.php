@@ -3,17 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
-use App\Http\Requests\CategoryFormRequest as FormRequest;
-use App\Http\Requests\NewCategoryFormRequest as NewFormRequest;
-use App\Http\Requests\UpdateCategoryFormRequest as UpdateFormRequest;
-use Illuminate\Http\Request;
+use App\Http\Requests\StoreCategoryRequest as StoreRequest;
+use App\Http\Requests\UpdateCategoryRequest as UpdateRequest;
 
 class CategoryController extends Controller
 {
     /**
      * Extract attributes from request and save them to the model
      */
-    private function save(Request $request, Category $category)
+    private function save($request, Category $category)
     {
         $category->name = $request->name;
         $category->save();
@@ -44,7 +42,7 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
         $category = new Category();
         $this->save($request, $category);
@@ -56,7 +54,7 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category)
+    public function update(UpdateRequest $request, Category $category)
     {
         $this->save($request, $category);
         return $category;
