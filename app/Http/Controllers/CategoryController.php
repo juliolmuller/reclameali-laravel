@@ -26,7 +26,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        return Category::orderBy('name')->get();
+        return Category::orderBy('name')->paginate(30);
     }
 
     /**
