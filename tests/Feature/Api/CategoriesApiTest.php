@@ -28,7 +28,7 @@ class CategoriesApiTest extends TestCase
     public function test_categories_show()
     {
         $category = Category::all()->random();
-        $url = route('categories.show', ['category' => $category->id]);
+        $url = route('categories.show', $category->id);
         $response = $this->getJson($url);
         $response->assertStatus(200);
         $response->assertJson([
@@ -43,25 +43,25 @@ class CategoriesApiTest extends TestCase
         $url = route('categories.store');
         $response = $this->postJson($url, compact('name'));
         $response->assertStatus(201);
-        $this->assertDatabaseHas('categories', compact('name'));
         $response->assertJson(compact('name'));
+        $this->assertDatabaseHas('categories', compact('name'));
     }
 
     public function test_categories_update()
     {
-        $id = $category = Category::all()->random()->id;
-        $name = 'Testing New Category';
-        $url = route('categories.update', compact('category'));
+        $id = factory(Category::class)->create()->id;
+        $name = 'Testing Update Category';
+        $url = route('categories.update', $id);
         $response = $this->putJson($url, compact('name'));
         $response->assertStatus(200);
-        $this->assertDatabaseHas('categories', compact('id', 'name'));
         $response->assertJson(compact('id', 'name'));
+        $this->assertDatabaseHas('categories', compact('id', 'name'));
     }
 
     public function test_categories_destroy()
     {
-        $id = $category = Category::all()->random()->id;
-        $url = route('categories.destroy', compact('category'));
+        $id = factory(Category::class)->create()->id;
+        $url = route('categories.destroy', $id);
         $response = $this->deleteJson($url);
         $response->assertStatus(200);
         $this->assertSoftDeleted('categories', compact('id'));
