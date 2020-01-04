@@ -13,7 +13,7 @@ class CategoryController extends Controller
      */
     private function save($request, Category $category)
     {
-        $category->name = $request->name ?? null;
+        $category->name = $request->name;
         $category->save();
     }
 

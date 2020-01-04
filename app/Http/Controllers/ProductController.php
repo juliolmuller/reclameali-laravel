@@ -12,12 +12,12 @@ class ProductController extends Controller
      */
     private function save($request, Product $product)
     {
-        $product->description = $request->description ?? null;
-        $product->category_id = $request->category ?? null;
-        $product->weight = $request->weight ?? null;
-        $product->name = $request->name ?? null;
-        $product->utc = $request->utc ?? null;
-        $product->ean = $request->ean ?? null;
+        $product->description = $request->description;
+        $product->category_id = $request->category;
+        $product->weight = $request->weight;
+        $product->name = $request->name;
+        $product->utc = $request->utc;
+        $product->ean = $request->ean;
         $product->save();
     }
 
