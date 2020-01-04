@@ -7,18 +7,18 @@ use Illuminate\Database\Eloquent\Model;
 class TicketMessage extends Model
 {
     /**
-     * Indicate if the model should be timestamped automatically
+     * Indicate the column name for 'created_at'
      *
-     * @var bool
+     * @var string
      */
-    public $timestamps = false;
+    const CREATED_AT = 'sent_at';
 
     /**
      * Mass assignable attributes
      *
      * @var array
      */
-    protected $fillable = ['message_body', 'ticket_id', 'sent_by', 'sent_at'];
+    protected $fillable = ['body', 'ticket_id', 'sent_by', 'sent_at'];
 
     /**
      * Get the ticket associated with $this message

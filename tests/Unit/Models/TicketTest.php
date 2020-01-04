@@ -16,24 +16,6 @@ class TicketTest extends TestCase
     private const TABLE_NAME = 'tickets';
     private const CLASS_NAME = Ticket::class;
 
-    public function test_not_null_constraint_for_createdBy_on_insert()
-    {
-        $this->expectException(PDOException::class);
-        $this->expectExceptionCode(23502);
-        $ticket = factory(self::CLASS_NAME)->make();
-        $ticket->created_by = null;
-        $ticket->save();
-    }
-
-    public function test_not_null_constraint_for_createdBy_on_update()
-    {
-        $this->expectException(PDOException::class);
-        $this->expectExceptionCode(23502);
-        $ticket = factory(self::CLASS_NAME)->create();
-        $ticket->created_by = null;
-        $ticket->save();
-    }
-
     public function test_not_null_constraint_for_product_on_insert()
     {
         $this->expectException(PDOException::class);

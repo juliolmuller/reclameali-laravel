@@ -10,12 +10,13 @@ class CreateTicketMessagesTable extends Migration
     {
         Schema::create('ticket_messages', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('message_body');
+            $table->string('body');
             $table->bigInteger('ticket_id')->unsigned()->index();
-            $table->bigInteger('sent_by')->unsigned()->index();
-            $table->timestamp('sent_at')->useCurrent();
+            $table->changesTracking([
+                'created_at' => 'sent_at',
+                'created_by' => 'sent_by',
+            ]);
             $table->foreign('ticket_id')->references('id')->on('tickets');
-            $table->foreign('sent_by')->references('id')->on('users');
         });
     }
 

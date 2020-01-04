@@ -13,21 +13,21 @@ class TicketMessageTest extends TestCase
     private const TABLE_NAME = 'ticket_messages';
     private const CLASS_NAME = Message::class;
 
-    public function test_not_null_constraint_for_messageBody_on_insert()
+    public function test_not_null_constraint_for_body_on_insert()
     {
         $this->expectException(PDOException::class);
         $this->expectExceptionCode(23502);
         $message = factory(self::CLASS_NAME)->make();
-        $message->message_body = null;
+        $message->body = null;
         $message->save();
     }
 
-    public function test_not_null_constraint_for_messageBody_on_update()
+    public function test_not_null_constraint_for_body_on_update()
     {
         $this->expectException(PDOException::class);
         $this->expectExceptionCode(23502);
         $message = factory(self::CLASS_NAME)->create();
-        $message->message_body = null;
+        $message->body = null;
         $message->save();
     }
 
@@ -46,42 +46,6 @@ class TicketMessageTest extends TestCase
         $this->expectExceptionCode(23502);
         $message = factory(self::CLASS_NAME)->create();
         $message->ticket_id = null;
-        $message->save();
-    }
-
-    public function test_not_null_constraint_for_sentBy_on_insert()
-    {
-        $this->expectException(PDOException::class);
-        $this->expectExceptionCode(23502);
-        $message = factory(self::CLASS_NAME)->make();
-        $message->sent_by = null;
-        $message->save();
-    }
-
-    public function test_not_null_constraint_for_sentBy_on_update()
-    {
-        $this->expectException(PDOException::class);
-        $this->expectExceptionCode(23502);
-        $message = factory(self::CLASS_NAME)->create();
-        $message->sent_by = null;
-        $message->save();
-    }
-
-    public function test_not_null_constraint_for_sentAt_on_insert()
-    {
-        $this->expectException(PDOException::class);
-        $this->expectExceptionCode(23502);
-        $message = factory(self::CLASS_NAME)->make();
-        $message->sent_at = null;
-        $message->save();
-    }
-
-    public function test_not_null_constraint_for_sentAt_on_update()
-    {
-        $this->expectException(PDOException::class);
-        $this->expectExceptionCode(23502);
-        $message = factory(self::CLASS_NAME)->create();
-        $message->sent_at = null;
         $message->save();
     }
 
@@ -113,14 +77,14 @@ class TicketMessageTest extends TestCase
         $message = factory(self::CLASS_NAME)->make();
         $status = $message->save();
         $id = $message->id;
-        $message_body = $message->message_body;
+        $body = $message->body;
         $ticket_id = $message->ticket_id;
         $sent_by = $message->sent_by;
         $sent_at = $message->sent_at;
         $after = Message::count();
         $this->assertTrue($status);
         $this->assertEquals(1, $after - $before);
-        $this->assertDatabaseHas(self::TABLE_NAME, compact('id', 'message_body', 'ticket_id', 'sent_by', 'sent_at'));
+        $this->assertDatabaseHas(self::TABLE_NAME, compact('id', 'body', 'ticket_id', 'sent_by', 'sent_at'));
     }
 
     public function test_model_update()
@@ -129,7 +93,7 @@ class TicketMessageTest extends TestCase
         $before = Message::count();
         $now = now();
         $id = $message->id;
-        $message->message_body = $message_body = 'New Message';
+        $message->body = $body = 'New Message';
         $message->ticket_id = $ticket_id = Ticket::all()->random()->id;
         $message->sent_by = $sent_by = User::all()->random()->id;
         $message->sent_at = $sent_at = $now;
@@ -137,7 +101,7 @@ class TicketMessageTest extends TestCase
         $after = Message::count();
         $this->assertTrue($status);
         $this->assertEquals(0, $after - $before);
-        $this->assertDatabaseHas(self::TABLE_NAME, compact('id', 'message_body', 'ticket_id', 'sent_by', 'sent_at'));
+        $this->assertDatabaseHas(self::TABLE_NAME, compact('id', 'body', 'ticket_id', 'sent_by', 'sent_at'));
     }
 
     public function test_model_deletion()
