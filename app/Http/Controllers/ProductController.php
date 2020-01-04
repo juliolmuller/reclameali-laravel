@@ -28,7 +28,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return Product::orderBy('name')->paginate(30);
+        return Product::with('category')->orderBy('name')->paginate(30);
     }
 
     /**
@@ -38,7 +38,7 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        return $product;
+        return $product->load('category');
     }
 
     /**
@@ -50,7 +50,7 @@ class ProductController extends Controller
     {
         $product = new Product();
         $this->save($request, $product);
-        return $product;
+        return $product->load('category');
     }
 
     /**
@@ -61,7 +61,7 @@ class ProductController extends Controller
     public function update(Request $request, Product $product)
     {
         $this->save($request, $product);
-        return $product;
+        return $product->load('category');
     }
 
     /**
@@ -71,7 +71,7 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        $product->delete();
+        $product->load('category')->delete();
         return $product;
     }
 }
