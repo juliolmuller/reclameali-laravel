@@ -66,7 +66,7 @@ class ProductController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Deletes given product
      *
      * @return \Illuminate\Http\Response
      */

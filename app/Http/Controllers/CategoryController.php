@@ -61,7 +61,7 @@ class CategoryController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Deletes given category
      *
      * @return \Illuminate\Http\Response
      */
