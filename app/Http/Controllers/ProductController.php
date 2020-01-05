@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
-use Illuminate\Http\Request;
+use App\Http\Requests\StoreProductRequest as StoreRequest;
+use App\Http\Requests\UpdateProductRequest as UpdateRequest;
 
 class ProductController extends Controller
 {
@@ -46,7 +47,7 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
         $product = new Product();
         $this->save($request, $product);
@@ -58,7 +59,7 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update(UpdateRequest $request, Product $product)
     {
         $this->save($request, $product);
         return $product->load('category');
