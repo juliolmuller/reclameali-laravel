@@ -12,7 +12,7 @@ class UpdateTicketTypeRequest extends TicketTypeFormRequest
     public function rules()
     {
         return [
-            'description' => 'bail|required|string|between:1,255|unique:ticket_types,description,' . $this->type->id,
+            'description' => ['bail', 'required', 'string', 'between:1,255', "unique:ticket_types,description,{$this->type->id}"],
         ];
     }
 }

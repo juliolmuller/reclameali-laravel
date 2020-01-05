@@ -13,7 +13,7 @@ class StoreTicketTypeRequest extends TicketTypeFormRequest
     public function rules()
     {
         return [
-            'description' => 'bail|required|string|between:1,255|unique:ticket_types,description',
+            'description' => ['bail', 'required', 'string', 'between:1,255', 'unique:ticket_types,description'],
         ];
     }
 }

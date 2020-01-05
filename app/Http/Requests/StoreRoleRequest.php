@@ -13,8 +13,8 @@ class StoreRoleRequest extends RoleFormRequest
     public function rules()
     {
         return [
-            'name'        => 'bail|required|alpha_dash|between:1,10|unique:access_roles,name',
-            'description' => 'bail|nullable|string|max:255',
+            'name'        => ['bail', 'required', 'alpha_dash', 'between:1,10', 'unique:access_roles,name'],
+            'description' => ['bail', 'nullable', 'string', 'max:255'],
         ];
     }
 }

@@ -12,7 +12,7 @@ class UpdateCategoryRequest extends CategoryFormRequest
     public function rules()
     {
         return [
-            'name' => 'bail|required|string|between:3,50|unique:categories,name,' . $this->category->id,
+            'name' => ['bail', 'required', 'string', 'between:3,50', "unique:categories,name,{$this->category->id}"],
         ];
     }
 }

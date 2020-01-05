@@ -12,8 +12,8 @@ class UpdateTicketStatusRequest extends TicketStatusFormRequest
     public function rules()
     {
         return [
-            'name'        => 'bail|required|alpha_dash|between:1,30|unique:ticket_status,name,' . $this->status->id,
-            'description' => 'bail|nullable|string|max:255',
+            'name'        => ['bail', 'required', 'alpha_dash', 'between:1,30', "unique:ticket_status,name,{$this->status->id}"],
+            'description' => ['bail', 'nullable', 'string', 'max:255'],
         ];
     }
 }
