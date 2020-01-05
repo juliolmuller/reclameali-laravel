@@ -3,8 +3,9 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreRoleRequest as StoreRequest;
+use App\Http\Requests\UpdateRoleRequest as UpdateRequest;
 use App\Models\Role;
-use Illuminate\Http\Request;
 
 class AccessRoleController extends Controller
 {
@@ -43,7 +44,7 @@ class AccessRoleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
         $role = new Role();
         $this->save($request, $role);
@@ -55,7 +56,7 @@ class AccessRoleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Role $role)
+    public function update(UpdateRequest $request, Role $role)
     {
         $this->save($request, $role);
         return $role;
