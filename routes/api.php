@@ -32,3 +32,11 @@ Route::prefix('/ticket-status')->group(function () {
     Route::put('/{status}', 'TicketStatusController@update')->name('ticket-status.update');
     Route::delete('/{status}', 'TicketStatusController@destroy')->name('ticket-status.destroy');
 });
+
+Route::prefix('/ticket-types')->group(function () {
+    Route::get('/', 'TicketTypeController@index')->name('ticket-types.index');
+    Route::post('/', 'TicketTypeController@store')->name('ticket-types.store');
+    Route::get('/{type}', 'TicketTypeController@show')->name('ticket-types.show');
+    Route::put('/{type}', 'TicketTypeController@update')->name('ticket-types.update');
+    Route::delete('/{type}', 'TicketTypeController@destroy')->name('ticket-types.destroy');
+});
