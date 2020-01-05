@@ -15,3 +15,12 @@ Route::prefix('/products')->group(function () {
     Route::put('/{product}', 'ProductController@update')->name('products.update');
     Route::delete('/{product}', 'ProductController@destroy')->name('products.destroy');
 });
+
+Route::prefix('/users')->group(function () {
+    Route::get('/', 'UserController@index')->name('users.index');
+    Route::post('/', 'UserController@store')->name('users.store');
+    Route::get('/{user}', 'UserController@show')->name('users.show');
+    Route::put('/{user}', 'UserController@update')->name('users.update');
+    Route::patch('/{user}', 'UserController@change')->name('users.change');
+    Route::delete('/{user}', 'UserController@destroy')->name('users.destroy');
+});
