@@ -10,7 +10,7 @@ class StoreRoleTest extends TestCase
     /**
      * Default required attributes to be used along the test
      */
-    const NAME = 'Fake_Name';
+    const NAME = 'fake_name';
 
     public function test_required_name_validation()
     {
@@ -26,7 +26,7 @@ class StoreRoleTest extends TestCase
 
     public function test_alpha_dash_name_validation()
     {
-        $role = ['name' => 'Fake Name'];
+        $role = ['name' => 'fake name'];
         $url = route('roles.store');
         $response = $this->postJson($url, $role);
         $response->assertStatus(422);
@@ -50,7 +50,7 @@ class StoreRoleTest extends TestCase
 
     public function test_max_length_name_validation()
     {
-        $role = ['name' => str_repeat('T', 11)]; // max is 10 characters
+        $role = ['name' => str_repeat('a', 11)]; // max is 10 characters
         $url = route('roles.store');
         $response = $this->postJson($url, $role);
         $response->assertStatus(422);

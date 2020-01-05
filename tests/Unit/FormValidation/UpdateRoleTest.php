@@ -10,11 +10,11 @@ class UpdateRoleTest extends TestCase
     /**
      * Default required attributes to be used along the test
      */
-    const NAME = 'Fake_Name';
+    const NAME = 'fake_name';
 
     public function test_required_name_validation()
     {
-        $model = new Role(['name' => 'FakeName']);
+        $model = new Role(['name' => 'fakename']);
         $model->save();
         $role = ['id'   => $model->id];
         $url = route('roles.update', $role['id']);
@@ -28,11 +28,11 @@ class UpdateRoleTest extends TestCase
 
     public function test_alpha_dash_name_validation()
     {
-        $model = new Role(['name' => 'FakeName']);
+        $model = new Role(['name' => 'fakename']);
         $model->save();
         $role = [
             'id'   => $model->id,
-            'name' => 'Fake Name',
+            'name' => 'fake name',
         ];
         $url = route('roles.update', $role['id']);
         $response = $this->putJson($url, $role);
@@ -79,11 +79,12 @@ class UpdateRoleTest extends TestCase
 
     public function test_unique_name_validation()
     {
+        $name = Role::all()->random()->name;
         $model = new Role(['name' => self::NAME]);
         $model->save();
         $role = [
             'id'   => $model->id,
-            'name' => Role::all()->random()->name,
+            'name' => $name,
         ];
         $url = route('roles.update', $role['id']);
         $response = $this->putJson($url, $role);

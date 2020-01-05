@@ -41,7 +41,7 @@ class AccessRolesApiTest extends TestCase
 
     public function test_roles_store()
     {
-        $name = 'NewRole';
+        $name = 'newrole';
         $url = route('roles.store');
         $response = $this->postJson($url, compact('name'));
         $response->assertStatus(201);
@@ -51,10 +51,10 @@ class AccessRolesApiTest extends TestCase
 
     public function test_roles_update()
     {
-        $role = new Role(['name' => 'NewRole']);
+        $role = new Role(['name' => 'newrole']);
         $role->save();
         $id = $role->id;
-        $name = 'UpdateRole';
+        $name = 'updaterole';
         $url = route('roles.update', $id);
         $response = $this->putJson($url, compact('name'));
         $response->assertStatus(200);

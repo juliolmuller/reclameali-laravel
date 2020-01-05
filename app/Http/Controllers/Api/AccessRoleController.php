@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreRoleRequest as StoreRequest;
 use App\Http\Requests\UpdateRoleRequest as UpdateRequest;
 use App\Models\Role;
+use Illuminate\Support\Str;
 
 class AccessRoleController extends Controller
 {
@@ -15,7 +16,7 @@ class AccessRoleController extends Controller
     private function save($request, Role $role)
     {
         $role->description = $request->description;
-        $role->name = $request->name;
+        $role->name = Str::lower($request->name);
         $role->save();
     }
 
