@@ -10,7 +10,7 @@ class CreateTicketTypesTable extends Migration
     {
         Schema::create('ticket_types', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('description');
+            $table->string('description')->unique();
             $table->changesTracking();
         });
     }
