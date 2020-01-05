@@ -41,7 +41,7 @@ class TicketStatusApiTest extends TestCase
 
     public function test_status_store()
     {
-        $name = 'Testing New Status';
+        $name = 'TESTING_NEW_STATUS';
         $url = route('ticket-status.store');
         $response = $this->postJson($url, compact('name'));
         $response->assertStatus(201);
@@ -52,7 +52,7 @@ class TicketStatusApiTest extends TestCase
     public function test_status_update()
     {
         $id = factory(Status::class)->create()->id;
-        $name = 'Testing Update Status';
+        $name = 'TESTING_UPDATE_STATUS';
         $url = route('ticket-status.update', $id);
         $response = $this->putJson($url, compact('name'));
         $response->assertStatus(200);

@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreTicketStatusRequest as StoreRequest;
+use App\Http\Requests\UpdateTicketStatusRequest as UpdateRequest;
 use App\Models\TicketStatus as Status;
-use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class TicketStatusController extends Controller
 {
@@ -14,7 +16,7 @@ class TicketStatusController extends Controller
     private function save($request, Status $status)
     {
         $status->description = $request->description;
-        $status->name = $request->name;
+        $status->name = Str::upper($request->name);
         $status->save();
     }
 
@@ -43,7 +45,7 @@ class TicketStatusController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
         $status = new Status();
         $this->save($request, $status);
@@ -55,7 +57,7 @@ class TicketStatusController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Status $status)
+    public function update(UpdateRequest $request, Status $status)
     {
         $this->save($request, $status);
         return $status;
