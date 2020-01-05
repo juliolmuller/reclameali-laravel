@@ -1,58 +1,58 @@
 <?php
 
 Route::prefix('/categories')->group(function () {
-    Route::get('/', 'CategoryController@index')->name('categories.index');
-    Route::post('/', 'CategoryController@store')->name('categories.store');
-    Route::get('/{category}', 'CategoryController@show')->name('categories.show');
-    Route::put('/{category}', 'CategoryController@update')->name('categories.update');
-    Route::delete('/{category}', 'CategoryController@destroy')->name('categories.destroy');
+    Route::get('/', 'Api\CategoryController@index')->name('categories.index');
+    Route::post('/', 'Api\CategoryController@store')->name('categories.store');
+    Route::get('/{category}', 'Api\CategoryController@show')->name('categories.show');
+    Route::put('/{category}', 'Api\CategoryController@update')->name('categories.update');
+    Route::delete('/{category}', 'Api\CategoryController@destroy')->name('categories.destroy');
 });
 
 Route::prefix('/products')->group(function () {
-    Route::get('/', 'ProductController@index')->name('products.index');
-    Route::post('/', 'ProductController@store')->name('products.store');
-    Route::get('/{product}', 'ProductController@show')->name('products.show');
-    Route::put('/{product}', 'ProductController@update')->name('products.update');
-    Route::delete('/{product}', 'ProductController@destroy')->name('products.destroy');
+    Route::get('/', 'Api\ProductController@index')->name('products.index');
+    Route::post('/', 'Api\ProductController@store')->name('products.store');
+    Route::get('/{product}', 'Api\ProductController@show')->name('products.show');
+    Route::put('/{product}', 'Api\ProductController@update')->name('products.update');
+    Route::delete('/{product}', 'Api\ProductController@destroy')->name('products.destroy');
 });
 
 Route::prefix('/access-roles')->group(function () {
-    Route::get('/', 'AccessRoleController@index')->name('roles.index');
-    Route::post('/', 'AccessRoleController@store')->name('roles.store');
-    Route::get('/{role}', 'AccessRoleController@show')->name('roles.show');
-    Route::put('/{role}', 'AccessRoleController@update')->name('roles.update');
-    Route::delete('/{role}', 'AccessRoleController@destroy')->name('roles.destroy');
+    Route::get('/', 'Api\AccessRoleController@index')->name('roles.index');
+    Route::post('/', 'Api\AccessRoleController@store')->name('roles.store');
+    Route::get('/{role}', 'Api\AccessRoleController@show')->name('roles.show');
+    Route::put('/{role}', 'Api\AccessRoleController@update')->name('roles.update');
+    Route::delete('/{role}', 'Api\AccessRoleController@destroy')->name('roles.destroy');
 });
 
 Route::prefix('/users')->group(function () {
-    Route::get('/', 'UserController@index')->name('users.index');
-    Route::post('/', 'UserController@store')->name('users.store');
-    Route::get('/{user}', 'UserController@show')->name('users.show');
-    Route::put('/{user}', 'UserController@update')->name('users.update');
-    Route::patch('/{user}', 'UserController@change')->name('users.change');
-    Route::delete('/{user}', 'UserController@destroy')->name('users.destroy');
+    Route::get('/', 'Api\UserController@index')->name('users.index');
+    Route::post('/', 'Api\UserController@store')->name('users.store');
+    Route::get('/{user}', 'Api\UserController@show')->name('users.show');
+    Route::put('/{user}', 'Api\UserController@update')->name('users.update');
+    Route::patch('/{user}', 'Api\UserController@change')->name('users.change');
+    Route::delete('/{user}', 'Api\UserController@destroy')->name('users.destroy');
 });
 
 Route::prefix('/ticket-status')->group(function () {
-    Route::get('/', 'TicketStatusController@index')->name('ticket-status.index');
-    Route::post('/', 'TicketStatusController@store')->name('ticket-status.store');
-    Route::get('/{status}', 'TicketStatusController@show')->name('ticket-status.show');
-    Route::put('/{status}', 'TicketStatusController@update')->name('ticket-status.update');
-    Route::delete('/{status}', 'TicketStatusController@destroy')->name('ticket-status.destroy');
+    Route::get('/', 'Api\TicketStatusController@index')->name('ticket-status.index');
+    Route::post('/', 'Api\TicketStatusController@store')->name('ticket-status.store');
+    Route::get('/{status}', 'Api\TicketStatusController@show')->name('ticket-status.show');
+    Route::put('/{status}', 'Api\TicketStatusController@update')->name('ticket-status.update');
+    Route::delete('/{status}', 'Api\TicketStatusController@destroy')->name('ticket-status.destroy');
 });
 
 Route::prefix('/ticket-types')->group(function () {
-    Route::get('/', 'TicketTypeController@index')->name('ticket-types.index');
-    Route::post('/', 'TicketTypeController@store')->name('ticket-types.store');
-    Route::get('/{type}', 'TicketTypeController@show')->name('ticket-types.show');
-    Route::put('/{type}', 'TicketTypeController@update')->name('ticket-types.update');
-    Route::delete('/{type}', 'TicketTypeController@destroy')->name('ticket-types.destroy');
+    Route::get('/', 'Api\TicketTypeController@index')->name('ticket-types.index');
+    Route::post('/', 'Api\TicketTypeController@store')->name('ticket-types.store');
+    Route::get('/{type}', 'Api\TicketTypeController@show')->name('ticket-types.show');
+    Route::put('/{type}', 'Api\TicketTypeController@update')->name('ticket-types.update');
+    Route::delete('/{type}', 'Api\TicketTypeController@destroy')->name('ticket-types.destroy');
 });
 
 Route::prefix('/tickets')->group(function () {
-    Route::get('/', 'TicketController@index')->name('tickets.index');
-    Route::post('/', 'TicketController@store')->name('tickets.store');
-    Route::get('/{ticket}', 'TicketController@show')->name('tickets.show');
-    Route::put('/{ticket}', 'TicketController@update')->name('tickets.update');
-    Route::patch('/{ticket}', 'TicketController@close')->name('tickets.close');
+    Route::get('/', 'Api\TicketController@index')->name('tickets.index');
+    Route::post('/', 'Api\TicketController@store')->name('tickets.store');
+    Route::get('/{ticket}', 'Api\TicketController@show')->name('tickets.show');
+    Route::put('/{ticket}', 'Api\TicketController@update')->name('tickets.update');
+    Route::patch('/{ticket}', 'Api\TicketController@close')->name('tickets.close');
 });

@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
-use App\Models\Role;
+use App\Http\Controllers\Controller;
+use App\Models\TicketType as Type;
 use Illuminate\Http\Request;
 
-class AccessRoleController extends Controller
+class TicketTypeController extends Controller
 {
     /**
-     * Return JSON of all roles
+     * Return JSON of all ticket types
      *
      * @return \Illuminate\Http\Response
      */
@@ -18,17 +19,17 @@ class AccessRoleController extends Controller
     }
 
     /**
-     * Return JSON of given role
+     * Return JSON of given ticket type
      *
      * @return \Illuminate\Http\Response
      */
-    public function show(Role $role)
+    public function show(Type $type)
     {
         //
     }
 
     /**
-     * Save new role
+     * Save new ticket type
      *
      * @return \Illuminate\Http\Response
      */
@@ -38,21 +39,21 @@ class AccessRoleController extends Controller
     }
 
     /**
-     * Update existing role
+     * Update existing ticket type
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Role $role)
+    public function update(Request $request, Type $type)
     {
         //
     }
 
     /**
-     * Deletes given role
+     * Deletes given ticket type
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Role $role)
+    public function destroy(Type $type)
     {
         //
     }

@@ -1,14 +1,16 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
-use App\Models\TicketType as Type;
+use App\Http\Controllers\Controller;
+use App\Models\Ticket;
+use App\Models\TicketMessage as Message;
 use Illuminate\Http\Request;
 
-class TicketTypeController extends Controller
+class TicketController extends Controller
 {
     /**
-     * Return JSON of all ticket types
+     * Return JSON of all tickets
      *
      * @return \Illuminate\Http\Response
      */
@@ -18,17 +20,17 @@ class TicketTypeController extends Controller
     }
 
     /**
-     * Return JSON of given ticket type
+     * Return JSON of given ticket
      *
      * @return \Illuminate\Http\Response
      */
-    public function show(Type $type)
+    public function show(Ticket $ticket)
     {
         //
     }
 
     /**
-     * Save new ticket type
+     * Save new ticket
      *
      * @return \Illuminate\Http\Response
      */
@@ -38,21 +40,21 @@ class TicketTypeController extends Controller
     }
 
     /**
-     * Update existing ticket type
+     * Processes message receipt for given ticket
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Type $type)
+    public function update(Request $request, Ticket $ticket)
     {
         //
     }
 
     /**
-     * Deletes given ticket type
+     * Switches given ticket status to 'closed'
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Type $type)
+    public function destroy(Ticket $ticket)
     {
         //
     }

@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
-use App\Models\TicketStatus as Status;
+use App\Http\Controllers\Controller;
+use App\Models\Role;
 use Illuminate\Http\Request;
 
-class TicketStatusController extends Controller
+class AccessRoleController extends Controller
 {
     /**
-     * Return JSON of all ticket status
+     * Return JSON of all roles
      *
      * @return \Illuminate\Http\Response
      */
@@ -18,17 +19,17 @@ class TicketStatusController extends Controller
     }
 
     /**
-     * Return JSON of given ticket status
+     * Return JSON of given role
      *
      * @return \Illuminate\Http\Response
      */
-    public function show(Status $status)
+    public function show(Role $role)
     {
         //
     }
 
     /**
-     * Save new ticket status
+     * Save new role
      *
      * @return \Illuminate\Http\Response
      */
@@ -38,21 +39,21 @@ class TicketStatusController extends Controller
     }
 
     /**
-     * Update existing ticket status
+     * Update existing role
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Status $status)
+    public function update(Request $request, Role $role)
     {
         //
     }
 
     /**
-     * Deletes given ticket status
+     * Deletes given role
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Status $status)
+    public function destroy(Role $role)
     {
         //
     }

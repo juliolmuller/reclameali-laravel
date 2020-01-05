@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
-use App\Models\Ticket;
-use App\Models\TicketMessage as Message;
+use App\Http\Controllers\Controller;
+use App\Models\TicketStatus as Status;
 use Illuminate\Http\Request;
 
-class TicketController extends Controller
+class TicketStatusController extends Controller
 {
     /**
-     * Return JSON of all tickets
+     * Return JSON of all ticket status
      *
      * @return \Illuminate\Http\Response
      */
@@ -19,17 +19,17 @@ class TicketController extends Controller
     }
 
     /**
-     * Return JSON of given ticket
+     * Return JSON of given ticket status
      *
      * @return \Illuminate\Http\Response
      */
-    public function show(Ticket $ticket)
+    public function show(Status $status)
     {
         //
     }
 
     /**
-     * Save new ticket
+     * Save new ticket status
      *
      * @return \Illuminate\Http\Response
      */
@@ -39,21 +39,21 @@ class TicketController extends Controller
     }
 
     /**
-     * Processes message receipt for given ticket
+     * Update existing ticket status
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Ticket $ticket)
+    public function update(Request $request, Status $status)
     {
         //
     }
 
     /**
-     * Switches given ticket status to 'closed'
+     * Deletes given ticket status
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Ticket $ticket)
+    public function destroy(Status $status)
     {
         //
     }
