@@ -16,6 +16,14 @@ Route::prefix('/products')->group(function () {
     Route::delete('/{product}', 'ProductController@destroy')->name('products.destroy');
 });
 
+Route::prefix('/access-roles')->group(function () {
+    Route::get('/', 'AccessRoleController@index')->name('roles.index');
+    Route::post('/', 'AccessRoleController@store')->name('roles.store');
+    Route::get('/{role}', 'AccessRoleController@show')->name('roles.show');
+    Route::put('/{role}', 'AccessRoleController@update')->name('roles.update');
+    Route::delete('/{role}', 'AccessRoleController@destroy')->name('roles.destroy');
+});
+
 Route::prefix('/users')->group(function () {
     Route::get('/', 'UserController@index')->name('users.index');
     Route::post('/', 'UserController@store')->name('users.store');
