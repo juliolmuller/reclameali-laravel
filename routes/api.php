@@ -24,3 +24,11 @@ Route::prefix('/users')->group(function () {
     Route::patch('/{user}', 'UserController@change')->name('users.change');
     Route::delete('/{user}', 'UserController@destroy')->name('users.destroy');
 });
+
+Route::prefix('/ticket-status')->group(function () {
+    Route::get('/', 'TicketStatusController@index')->name('ticket-status.index');
+    Route::post('/', 'TicketStatusController@store')->name('ticket-status.store');
+    Route::get('/{status}', 'TicketStatusController@show')->name('ticket-status.show');
+    Route::put('/{status}', 'TicketStatusController@update')->name('ticket-status.update');
+    Route::delete('/{status}', 'TicketStatusController@destroy')->name('ticket-status.destroy');
+});
