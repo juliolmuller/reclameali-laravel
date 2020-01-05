@@ -7,51 +7,61 @@ use Tests\TestCase;
 
 class UpdateCategoryTest extends TestCase
 {
-    public function test_required_validation()
+    /**
+     * Default required attributes to be used along the test
+     */
+    const NAME = 'Testing Validation on Store';
+
+    public function test_required_name_validation()
     {
-        $category = factory(Category::class)->create();
-        $id = $category->id;
-        $name = $category->name;
+        $category = [];
+        $id = factory(Category::class)->create()->id;
         $url = route('categories.update', $id);
-        $response = $this->putJson($url);
+        $response = $this->putJson($url, $category);
         $response->assertStatus(422);
-        $this->assertDatabaseHas('categories', compact('id', 'name'));
+        $category['name'] = self::NAME;
+        $response = $this->putJson($url, $category);
+        $response->assertStatus(200);
+        $this->assertDatabaseHas('categories', $category);
     }
 
-    public function test_min_length_validation()
+    public function test_min_length_name_validation()
     {
-        $category = factory(Category::class)->create();
-        $id = $category->id;
-        $oldName = $category->name;
-        $newName = 'TT'; // min is 3 characters
+        $category = ['name' => 'TT']; // min is 3 characters
+        $id = factory(Category::class)->create()->id;
         $url = route('categories.update', $id);
-        $response = $this->putJson($url, ['name' => $newName]);
+        $response = $this->putJson($url, $category);
         $response->assertStatus(422);
-        $this->assertDatabaseHas('categories', ['id' => $id, 'name' => $oldName]);
-        $this->assertDatabaseMissing('categories', ['id' => $id, 'name' => $newName]);
+        $category['name'] = self::NAME;
+        $response = $this->putJson($url, $category);
+        $response->assertStatus(200);
+        $this->assertDatabaseHas('categories', $category);
     }
 
-    public function test_max_length_validation()
+    public function test_max_length_name_validation()
     {
-        $category = factory(Category::class)->create();
-        $id = $category->id;
-        $oldName = $category->name;
-        $newName = str_repeat('T', 51); // max is 50 characters
+        $category = ['name' => str_repeat('T', 51)]; // max is 50 characters
+        $id = factory(Category::class)->create()->id;
         $url = route('categories.update', $id);
-        $response = $this->putJson($url, ['name' => $newName]);
+        $response = $this->putJson($url, $category);
         $response->assertStatus(422);
-        $this->assertDatabaseHas('categories', ['id' => $id, 'name' => $oldName]);
-        $this->assertDatabaseMissing('categories', ['id' => $id, 'name' => $newName]);
+        $category['name'] = self::NAME;
+        $response = $this->putJson($url, $category);
+        $response->assertStatus(200);
+        $this->assertDatabaseHas('categories', $category);
     }
 
-    public function test_unique_validation()
+    public function test_unique_name_validation()
     {
-        $name = Category::all()->random()->name;
-        $category = factory(Category::class)->create();
-        $id = $category->id;
+        $name = factory(Category::class)->create()->name;
+        $category = ['name' => $name];
+        $id = factory(Category::class)->create()->id;
         $url = route('categories.update', $id);
-        $response = $this->putJson($url, compact('name'));
+        $response = $this->putJson($url, $category);
         $response->assertStatus(422);
-        $this->assertDatabaseMissing('categories', compact('id', 'name'));
+        $category['name'] = self::NAME;
+        $response = $this->putJson($url, $category);
+        $response->assertStatus(200);
+        $this->assertDatabaseHas('categories', $category);
     }
 }

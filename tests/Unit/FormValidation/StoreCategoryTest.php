@@ -7,40 +7,57 @@ use Tests\TestCase;
 
 class StoreCategoryTest extends TestCase
 {
-    public function test_required_validation()
+    /**
+     * Default required attributes to be used along the test
+     */
+    const NAME = 'Testing Validation on Store';
+
+    public function test_required_name_validation()
     {
-        $before = Category::count();
+        $category = [];
         $url = route('categories.store');
-        $response = $this->postJson($url);
-        $after = Category::count();
+        $response = $this->postJson($url, $category);
         $response->assertStatus(422);
-        $this->assertEquals($before, $after);
+        $category['name'] = self::NAME;
+        $response = $this->postJson($url, $category);
+        $response->assertStatus(201);
+        $this->assertDatabaseHas('categories', $category);
     }
 
-    public function test_min_length_validation()
+    public function test_min_length_name_validation()
     {
-        $name = 'TT'; // min is 3 characters
+        $category = ['name' => 'TT']; // min is 3 characters
         $url = route('categories.store');
-        $response = $this->postJson($url, compact('name'));
+        $response = $this->postJson($url, $category);
         $response->assertStatus(422);
-        $this->assertDatabaseMissing('categories', compact('name'));
+        $category['name'] = self::NAME;
+        $response = $this->postJson($url, $category);
+        $response->assertStatus(201);
+        $this->assertDatabaseHas('categories', $category);
     }
 
-    public function test_max_length_validation()
+    public function test_max_length_name_validation()
     {
-        $name = str_repeat('T', 51); // max is 50 characters
+        $category = ['name' => str_repeat('T', 51)]; // max is 50 characters
         $url = route('categories.store');
-        $response = $this->postJson($url, compact('name'));
+        $response = $this->postJson($url, $category);
         $response->assertStatus(422);
-        $this->assertDatabaseMissing('categories', compact('name'));
+        $category['name'] = self::NAME;
+        $response = $this->postJson($url, $category);
+        $response->assertStatus(201);
+        $this->assertDatabaseHas('categories', $category);
     }
 
-    public function test_unique_validation()
+    public function test_unique_name_validation()
     {
-        $category = factory(Category::class)->create();
-        $name = $category->name;
+        $name = factory(Category::class)->create()->name;
+        $category = ['name' => $name];
         $url = route('categories.store');
-        $response = $this->postJson($url, compact('name'));
+        $response = $this->postJson($url, $category);
         $response->assertStatus(422);
+        $category['name'] = self::NAME;
+        $response = $this->postJson($url, $category);
+        $response->assertStatus(201);
+        $this->assertDatabaseHas('categories', $category);
     }
 }
