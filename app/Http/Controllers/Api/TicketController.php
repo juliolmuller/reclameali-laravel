@@ -16,7 +16,9 @@ class TicketController extends Controller
      */
     public function index()
     {
-        //
+        return Ticket::with(['status', 'type', 'product'])
+            ->orderBy('created_at', 'desc')
+            ->paginate(30);
     }
 
     /**
@@ -26,7 +28,7 @@ class TicketController extends Controller
      */
     public function show(Ticket $ticket)
     {
-        //
+        return $ticket->load(['status', 'type', 'product', 'messages']);
     }
 
     /**
@@ -36,7 +38,17 @@ class TicketController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $ticket = Ticket::create([
+            'product_id' => $request->product,
+            'status_id'  => $request->status,
+            'type_id'    => $request->type,
+            'created_by' => $request->user,
+        ]);
+        $ticket->messages()->create([
+            'body'      => $request->message,
+            'sent_by'   => $request->user,
+        ]);
+        return $ticket->load(['status', 'type', 'product', 'messages']);
     }
 
     /**
@@ -46,7 +58,11 @@ class TicketController extends Controller
      */
     public function update(Request $request, Ticket $ticket)
     {
-        //
+        $ticket->messages()->create([
+            'body'      => $request->message,
+            'sent_by'   => $request->user,
+        ]);
+        return $ticket->load(['status', 'type', 'product', 'messages']);
     }
 
     /**
@@ -54,8 +70,10 @@ class TicketController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Ticket $ticket)
+    public function close(Ticket $ticket)
     {
-        //
+        $ticket->closed_at = now();
+        $ticket->save();
+        return $ticket->load(['status', 'type', 'product', 'messages']);
     }
 }
