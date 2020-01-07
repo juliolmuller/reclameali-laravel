@@ -104,7 +104,9 @@ class TicketsApiTest extends TestCase
         $ticket = factory(Ticket::class)->create();
         $url = route('tickets.close', $ticket->id);
         $response = $this->patchJson($url, [
-            'user' => User::with('role')->where('role_id', '<>', 1)->get()->random()
+            'user' => User::whereHas('role', function ($query) {
+                $query->where('name', '<>', 'customer');
+            })->get()->random()
         ]);
         $response->assertStatus(200);
         $response->assertJson([
