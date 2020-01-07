@@ -70,6 +70,17 @@ class TicketTest extends TestCase
         $ticket->save();
     }
 
+    public function test_product_relationship()
+    {
+        $samples = ceil(Ticket::count() / 10);
+        for ($i = 0; $i < $samples; $i++) {
+            $ticket = Ticket::all()->random();
+            $fromTicket = $ticket->product;
+            $fromProduct = Product::find($ticket->product_id);
+            $this->assertEquals($fromTicket->id, $fromProduct->id);
+        }
+    }
+
     public function test_status_relationship()
     {
         $samples = ceil(Ticket::count() / 10);

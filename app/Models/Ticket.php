@@ -23,6 +23,16 @@ class Ticket extends Model
     ];
 
     /**
+     * Get the product associated with $this ticket
+     *
+     * @return \App\Models\TicketStatus
+     */
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
+
+    /**
      * Get the status associated with $this ticket
      *
      * @return \App\Models\TicketStatus
