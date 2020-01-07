@@ -3,15 +3,19 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Wildside\Userstamps\Userstamps;
 
 class TicketMessage extends Model
 {
+    use Userstamps;
+
     /**
-     * Indicate the column name for 'created_at'
+     * Indicate the column name for 'created_at' and 'created_by'
      *
      * @var string
      */
     const CREATED_AT = 'sent_at';
+    const CREATED_BY = 'sent_by';
 
     /**
      * Mass assignable attributes

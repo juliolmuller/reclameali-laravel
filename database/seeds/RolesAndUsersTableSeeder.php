@@ -35,6 +35,14 @@ class RolesAndUsersTableSeeder extends Seeder
         $role->save();
         $role->users()->saveMany(factory(User::class, 4)->make(['role_id' => $role->id]));
 
+        // Generate records for admins
+        $role = new Role([
+            'name'        => 'admin',
+            'description' => 'Admin',
+        ]);
+        $role->save();
+        $role->users()->saveMany(factory(User::class, 2)->make(['role_id' => $role->id]));
+
         // Generate records for visitors access
         $roles = Role::all();
         factory(User::class, count($roles))->make([

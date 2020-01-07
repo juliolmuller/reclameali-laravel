@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Wildside\Userstamps\Userstamps;
 
 class TicketStatus extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes,
+        Userstamps;
 
     /**
      * Table associated with the model

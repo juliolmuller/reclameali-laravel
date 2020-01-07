@@ -3,9 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Wildside\Userstamps\Userstamps;
 
 class Ticket extends Model
 {
+    use Userstamps;
+
     /**
      * Mass assignable attributes
      *
