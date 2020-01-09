@@ -3,15 +3,23 @@
 namespace Tests\Feature\Api;
 
 use App\Models\TicketType as Type;
+use App\Models\User;
 use Tests\TestCase;
 
 class TicketTypesApiTest extends TestCase
 {
+    private function getUser()
+    {
+        return User::whereHas('role', function ($query) {
+            $query->where('name', 'manager');
+        })->get()->random();
+    }
+
     public function test_type_index()
     {
         $type = Type::orderBy('description')->first();
         $url = route('ticket-types.index');
-        $response = $this->getJson($url);
+        $response = $this->actingAs($this->getUser())->getJson($url);
         $response->assertStatus(200);
         if ($type) {
             $response->assertJson([
@@ -29,7 +37,7 @@ class TicketTypesApiTest extends TestCase
     {
         $type = Type::all()->random();
         $url = route('ticket-types.show', $type->id);
-        $response = $this->getJson($url);
+        $response = $this->actingAs($this->getUser())->getJson($url);
         $response->assertStatus(200);
         $response->assertJson([
             'id'          => $type->id,
@@ -39,32 +47,44 @@ class TicketTypesApiTest extends TestCase
 
     public function test_type_store()
     {
-        $description = 'Testing New Type';
+        $user = $this->getUser();
+        $type = [
+            'description' => 'Testing New Type',
+            'created_by'  => $user->id,
+        ];
         $url = route('ticket-types.store');
-        $response = $this->postJson($url, compact('description'));
+        $response = $this->actingAs($user)->postJson($url, $type);
         $response->assertStatus(201);
-        $response->assertJson(compact('description'));
-        $this->assertDatabaseHas('ticket_types', compact('description'));
+        $response->assertJson($type);
+        $this->assertDatabaseHas('ticket_types', $type);
     }
 
     public function test_type_update()
     {
-        $id = factory(Type::class)->create()->id;
-        $description = 'Testing Update Type';
-        $url = route('ticket-types.update', $id);
-        $response = $this->putJson($url, compact('description'));
+        $user = $this->getUser();
+        $type = [
+            'id'          => factory(Type::class)->create()->id,
+            'description' => 'Testing Update Type',
+            'updated_by'  => $user->id,
+        ];
+        $url = route('ticket-types.update', $type['id']);
+        $response = $this->actingAs($user)->putJson($url, $type);
         $response->assertStatus(200);
-        $response->assertJson(compact('id', 'description'));
-        $this->assertDatabaseHas('ticket_types', compact('id', 'description'));
+        $response->assertJson($type);
+        $this->assertDatabaseHas('ticket_types', $type);
     }
 
     public function test_type_destroy()
     {
-        $id = factory(Type::class)->create()->id;
-        $url = route('ticket-types.destroy', $id);
-        $response = $this->deleteJson($url);
+        $user = $this->getUser();
+        $type = [
+            'id'         => factory(Type::class)->create()->id,
+            'deleted_by' => $user->id,
+        ];
+        $url = route('ticket-types.destroy', $type['id']);
+        $response = $this->actingAs($user)->deleteJson($url);
         $response->assertStatus(200);
-        $this->assertSoftDeleted('ticket_types', compact('id'));
-        $response->assertJson(compact('id'));
+        $response->assertJson($type);
+        $this->assertSoftDeleted('ticket_types', $type);
     }
 }

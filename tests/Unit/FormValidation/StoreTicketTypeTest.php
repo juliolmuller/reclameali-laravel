@@ -3,6 +3,7 @@
 namespace Tests\Unit\FormValidation;
 
 use App\Models\TicketType as Type;
+use App\Models\User;
 use Tests\TestCase;
 
 class StoreTicketTypeTest extends TestCase
@@ -12,14 +13,21 @@ class StoreTicketTypeTest extends TestCase
      */
     const DESCRIPTION = 'Testing Validation on Store';
 
+    private function getUser()
+    {
+        return User::whereHas('role', function ($query) {
+            $query->where('name', 'manager');
+        })->get()->random();
+    }
+
     public function test_required_description_validation()
     {
         $type = [];
         $url = route('ticket-types.store');
-        $response = $this->postJson($url, $type);
+        $response = $this->actingAs($this->getUser())->postJson($url, $type);
         $response->assertStatus(422);
         $type['description'] = self::DESCRIPTION;
-        $response = $this->postJson($url, $type);
+        $response = $this->actingAs($this->getUser())->postJson($url, $type);
         $response->assertStatus(201);
         $this->assertDatabaseHas('ticket_types', $type);
     }
@@ -28,10 +36,10 @@ class StoreTicketTypeTest extends TestCase
     {
         $type = ['description' => '']; // min is 1 characters
         $url = route('ticket-types.store');
-        $response = $this->postJson($url, $type);
+        $response = $this->actingAs($this->getUser())->postJson($url, $type);
         $response->assertStatus(422);
         $type['description'] = self::DESCRIPTION;
-        $response = $this->postJson($url, $type);
+        $response = $this->actingAs($this->getUser())->postJson($url, $type);
         $response->assertStatus(201);
         $this->assertDatabaseHas('ticket_types', $type);
     }
@@ -40,10 +48,10 @@ class StoreTicketTypeTest extends TestCase
     {
         $type = ['description' => str_repeat('A', 256)]; // max is 255 characters
         $url = route('ticket-types.store');
-        $response = $this->postJson($url, $type);
+        $response = $this->actingAs($this->getUser())->postJson($url, $type);
         $response->assertStatus(422);
         $type['description'] = str_repeat('A', 255);
-        $response = $this->postJson($url, $type);
+        $response = $this->actingAs($this->getUser())->postJson($url, $type);
         $response->assertStatus(201);
         $this->assertDatabaseHas('ticket_types', $type);
     }
@@ -53,10 +61,10 @@ class StoreTicketTypeTest extends TestCase
         $description = factory(Type::class)->create()->description;
         $type = ['description' => $description];
         $url = route('ticket-types.store');
-        $response = $this->postJson($url, $type);
+        $response = $this->actingAs($this->getUser())->postJson($url, $type);
         $response->assertStatus(422);
         $type['description'] = self::DESCRIPTION;
-        $response = $this->postJson($url, $type);
+        $response = $this->actingAs($this->getUser())->postJson($url, $type);
         $response->assertStatus(201);
         $this->assertDatabaseHas('ticket_types', $type);
     }

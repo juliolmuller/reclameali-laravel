@@ -3,6 +3,7 @@
 namespace Tests\Unit\FormValidation;
 
 use App\Models\Role;
+use App\Models\User;
 use Tests\TestCase;
 
 class StoreRoleTest extends TestCase
@@ -12,14 +13,21 @@ class StoreRoleTest extends TestCase
      */
     const NAME = 'fake_name';
 
+    private function getUser()
+    {
+        return User::whereHas('role', function ($query) {
+            $query->where('name', 'admin');
+        })->get()->random();
+    }
+
     public function test_required_name_validation()
     {
         $role = [];
         $url = route('roles.store');
-        $response = $this->postJson($url, $role);
+        $response = $this->actingAs($this->getUser())->postJson($url, $role);
         $response->assertStatus(422);
         $role['name'] = self::NAME;
-        $response = $this->postJson($url, $role);
+        $response = $this->actingAs($this->getUser())->postJson($url, $role);
         $response->assertStatus(201);
         $this->assertDatabaseHas('access_roles', $role);
     }
@@ -28,10 +36,10 @@ class StoreRoleTest extends TestCase
     {
         $role = ['name' => 'fake name'];
         $url = route('roles.store');
-        $response = $this->postJson($url, $role);
+        $response = $this->actingAs($this->getUser())->postJson($url, $role);
         $response->assertStatus(422);
         $role['name'] = self::NAME;
-        $response = $this->postJson($url, $role);
+        $response = $this->actingAs($this->getUser())->postJson($url, $role);
         $response->assertStatus(201);
         $this->assertDatabaseHas('access_roles', $role);
     }
@@ -40,10 +48,10 @@ class StoreRoleTest extends TestCase
     {
         $role = ['name' => '']; // min is 1 characters
         $url = route('roles.store');
-        $response = $this->postJson($url, $role);
+        $response = $this->actingAs($this->getUser())->postJson($url, $role);
         $response->assertStatus(422);
         $role['name'] = self::NAME;
-        $response = $this->postJson($url, $role);
+        $response = $this->actingAs($this->getUser())->postJson($url, $role);
         $response->assertStatus(201);
         $this->assertDatabaseHas('access_roles', $role);
     }
@@ -52,10 +60,10 @@ class StoreRoleTest extends TestCase
     {
         $role = ['name' => str_repeat('a', 11)]; // max is 10 characters
         $url = route('roles.store');
-        $response = $this->postJson($url, $role);
+        $response = $this->actingAs($this->getUser())->postJson($url, $role);
         $response->assertStatus(422);
         $role['name'] = self::NAME;
-        $response = $this->postJson($url, $role);
+        $response = $this->actingAs($this->getUser())->postJson($url, $role);
         $response->assertStatus(201);
         $this->assertDatabaseHas('access_roles', $role);
     }
@@ -66,10 +74,10 @@ class StoreRoleTest extends TestCase
         $model = new Role($role);
         $model->save();
         $url = route('roles.store');
-        $response = $this->postJson($url, $role);
+        $response = $this->actingAs($this->getUser())->postJson($url, $role);
         $response->assertStatus(422);
         $role['name'] = self::NAME . '2';
-        $response = $this->postJson($url, $role);
+        $response = $this->actingAs($this->getUser())->postJson($url, $role);
         $response->assertStatus(201);
         $this->assertDatabaseHas('access_roles', $role);
     }
@@ -81,10 +89,10 @@ class StoreRoleTest extends TestCase
             'description' => str_repeat('T', 256), // max is 255 characters
         ];
         $url = route('roles.store');
-        $response = $this->postJson($url, $role);
+        $response = $this->actingAs($this->getUser())->postJson($url, $role);
         $response->assertStatus(422);
         $role['description'] = str_repeat('T', 255);
-        $response = $this->postJson($url, $role);
+        $response = $this->actingAs($this->getUser())->postJson($url, $role);
         $response->assertStatus(201);
         $this->assertDatabaseHas('access_roles', $role);
     }

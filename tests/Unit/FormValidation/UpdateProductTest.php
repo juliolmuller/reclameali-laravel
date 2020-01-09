@@ -4,6 +4,7 @@ namespace Tests\Unit\FormValidation;
 
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\User;
 use Tests\TestCase;
 
 class UpdateProductTest extends TestCase
@@ -15,11 +16,18 @@ class UpdateProductTest extends TestCase
     const CATEGORY = 1;
     const UTC = '000000000000';
 
+    private function getUser()
+    {
+        return User::whereHas('role', function ($query) {
+            $query->where('name', 'attendant');
+        })->get()->random();
+    }
+
     public function test_required_validation()
     {
         $id = factory(Product::class)->create()->id;
         $url = route('products.update', $id);
-        $response = $this->putJson($url);
+        $response = $this->actingAs($this->getUser())->putJson($url);
         $response->assertStatus(422);
         $product = [
             'name'        => self::NAME,
@@ -27,7 +35,7 @@ class UpdateProductTest extends TestCase
             'category'    => self::CATEGORY,
             'utc'         => self::UTC,
         ];
-        $response = $this->putJson($url, $product);
+        $response = $this->actingAs($this->getUser())->putJson($url, $product);
         $response->assertStatus(200);
         unset($product['category']);
         $this->assertDatabaseHas('products', $product);
@@ -43,10 +51,10 @@ class UpdateProductTest extends TestCase
         ];
         $id = factory(Product::class)->create()->id;
         $url = route('products.update', $id);
-        $response = $this->putJson($url, $product);
+        $response = $this->actingAs($this->getUser())->putJson($url, $product);
         $response->assertStatus(422);
         $product['name'] = self::NAME;
-        $response = $this->putJson($url, $product);
+        $response = $this->actingAs($this->getUser())->putJson($url, $product);
         $response->assertStatus(200);
         unset($product['category']);
         $this->assertDatabaseHas('products', $product);
@@ -61,10 +69,10 @@ class UpdateProductTest extends TestCase
         ];
         $id = factory(Product::class)->create()->id;
         $url = route('products.update', $id);
-        $response = $this->putJson($url, $product);
+        $response = $this->actingAs($this->getUser())->putJson($url, $product);
         $response->assertStatus(422);
         $product['category'] = self::CATEGORY;
-        $response = $this->putJson($url, $product);
+        $response = $this->actingAs($this->getUser())->putJson($url, $product);
         $response->assertStatus(200);
         unset($product['category']);
         $this->assertDatabaseHas('products', $product);
@@ -79,10 +87,10 @@ class UpdateProductTest extends TestCase
         ];
         $id = factory(Product::class)->create()->id;
         $url = route('products.update', $id);
-        $response = $this->putJson($url, $product);
+        $response = $this->actingAs($this->getUser())->putJson($url, $product);
         $response->assertStatus(422);
         $product['utc'] = self::UTC;
-        $response = $this->putJson($url, $product);
+        $response = $this->actingAs($this->getUser())->putJson($url, $product);
         $response->assertStatus(200);
         unset($product['category']);
         $this->assertDatabaseHas('products', $product);
@@ -98,10 +106,10 @@ class UpdateProductTest extends TestCase
         ];
         $id = factory(Product::class)->create()->id;
         $url = route('products.update', $id);
-        $response = $this->putJson($url, $product);
+        $response = $this->actingAs($this->getUser())->putJson($url, $product);
         $response->assertStatus(422);
         $product['name'] = self::NAME;
-        $response = $this->putJson($url, $product);
+        $response = $this->actingAs($this->getUser())->putJson($url, $product);
         $response->assertStatus(200);
         unset($product['category']);
         $this->assertDatabaseHas('products', $product);
@@ -117,10 +125,10 @@ class UpdateProductTest extends TestCase
         ];
         $id = factory(Product::class)->create()->id;
         $url = route('products.update', $id);
-        $response = $this->putJson($url, $product);
+        $response = $this->actingAs($this->getUser())->putJson($url, $product);
         $response->assertStatus(422);
         $product['name'] = self::NAME;
-        $response = $this->putJson($url, $product);
+        $response = $this->actingAs($this->getUser())->putJson($url, $product);
         $response->assertStatus(200);
         unset($product['category']);
         $this->assertDatabaseHas('products', $product);
@@ -137,10 +145,10 @@ class UpdateProductTest extends TestCase
         ];
         $id = factory(Product::class)->create()->id;
         $url = route('products.update', $id);
-        $response = $this->putJson($url, $product);
+        $response = $this->actingAs($this->getUser())->putJson($url, $product);
         $response->assertStatus(422);
         $product['name'] = self::NAME;
-        $response = $this->putJson($url, $product);
+        $response = $this->actingAs($this->getUser())->putJson($url, $product);
         $response->assertStatus(200);
         unset($product['category']);
         $this->assertDatabaseHas('products', $product);
@@ -157,10 +165,10 @@ class UpdateProductTest extends TestCase
         ];
         $id = factory(Product::class)->create()->id;
         $url = route('products.update', $id);
-        $response = $this->putJson($url, $product);
+        $response = $this->actingAs($this->getUser())->putJson($url, $product);
         $response->assertStatus(422);
         $product['description'] = self::NAME;
-        $response = $this->putJson($url, $product);
+        $response = $this->actingAs($this->getUser())->putJson($url, $product);
         $response->assertStatus(200);
         unset($product['category']);
         $this->assertDatabaseHas('products', $product);
@@ -177,10 +185,10 @@ class UpdateProductTest extends TestCase
         ];
         $id = factory(Product::class)->create()->id;
         $url = route('products.update', $id);
-        $response = $this->putJson($url, $product);
+        $response = $this->actingAs($this->getUser())->putJson($url, $product);
         $response->assertStatus(422);
         $product['weight'] = 0;
-        $response = $this->putJson($url, $product);
+        $response = $this->actingAs($this->getUser())->putJson($url, $product);
         $response->assertStatus(200);
         unset($product['category']);
         $this->assertDatabaseHas('products', $product);
@@ -196,10 +204,10 @@ class UpdateProductTest extends TestCase
         ];
         $id = factory(Product::class)->create()->id;
         $url = route('products.update', $id);
-        $response = $this->putJson($url, $product);
+        $response = $this->actingAs($this->getUser())->putJson($url, $product);
         $response->assertStatus(422);
         $product['category'] = self::CATEGORY;
-        $response = $this->putJson($url, $product);
+        $response = $this->actingAs($this->getUser())->putJson($url, $product);
         $response->assertStatus(200);
         unset($product['category']);
         $this->assertDatabaseHas('products', $product);
@@ -215,10 +223,10 @@ class UpdateProductTest extends TestCase
         ];
         $id = factory(Product::class)->create()->id;
         $url = route('products.update', $id);
-        $response = $this->putJson($url, $product);
+        $response = $this->actingAs($this->getUser())->putJson($url, $product);
         $response->assertStatus(422);
         $product['utc'] = self::UTC;
-        $response = $this->putJson($url, $product);
+        $response = $this->actingAs($this->getUser())->putJson($url, $product);
         $response->assertStatus(200);
         unset($product['category']);
         $this->assertDatabaseHas('products', $product);
@@ -234,10 +242,10 @@ class UpdateProductTest extends TestCase
         ];
         $id = factory(Product::class)->create()->id;
         $url = route('products.update', $id);
-        $response = $this->putJson($url, $product);
+        $response = $this->actingAs($this->getUser())->putJson($url, $product);
         $response->assertStatus(422);
         $product['utc'] = self::UTC;
-        $response = $this->putJson($url, $product);
+        $response = $this->actingAs($this->getUser())->putJson($url, $product);
         $response->assertStatus(200);
         unset($product['category']);
         $this->assertDatabaseHas('products', $product);
@@ -253,10 +261,10 @@ class UpdateProductTest extends TestCase
         ];
         $id = factory(Product::class)->create()->id;
         $url = route('products.update', $id);
-        $response = $this->putJson($url, $product);
+        $response = $this->actingAs($this->getUser())->putJson($url, $product);
         $response->assertStatus(422);
         $product['utc'] = self::UTC;
-        $response = $this->putJson($url, $product);
+        $response = $this->actingAs($this->getUser())->putJson($url, $product);
         $response->assertStatus(200);
         unset($product['category']);
         $this->assertDatabaseHas('products', $product);
@@ -273,10 +281,10 @@ class UpdateProductTest extends TestCase
         ];
         $id = factory(Product::class)->create()->id;
         $url = route('products.update', $id);
-        $response = $this->putJson($url, $product);
+        $response = $this->actingAs($this->getUser())->putJson($url, $product);
         $response->assertStatus(422);
         $product['utc'] = self::UTC;
-        $response = $this->putJson($url, $product);
+        $response = $this->actingAs($this->getUser())->putJson($url, $product);
         $response->assertStatus(200);
         unset($product['category']);
         $this->assertDatabaseHas('products', $product);
@@ -293,10 +301,10 @@ class UpdateProductTest extends TestCase
         ];
         $id = factory(Product::class)->create()->id;
         $url = route('products.update', $id);
-        $response = $this->putJson($url, $product);
+        $response = $this->actingAs($this->getUser())->putJson($url, $product);
         $response->assertStatus(422);
         $product['ean'] = str_repeat('0', 13);
-        $response = $this->putJson($url, $product);
+        $response = $this->actingAs($this->getUser())->putJson($url, $product);
         $response->assertStatus(200);
         unset($product['category']);
         $this->assertDatabaseHas('products', $product);
@@ -313,10 +321,10 @@ class UpdateProductTest extends TestCase
         ];
         $id = factory(Product::class)->create()->id;
         $url = route('products.update', $id);
-        $response = $this->putJson($url, $product);
+        $response = $this->actingAs($this->getUser())->putJson($url, $product);
         $response->assertStatus(422);
         $product['ean'] = str_repeat('0', 13);
-        $response = $this->putJson($url, $product);
+        $response = $this->actingAs($this->getUser())->putJson($url, $product);
         $response->assertStatus(200);
         unset($product['category']);
         $this->assertDatabaseHas('products', $product);
@@ -333,10 +341,10 @@ class UpdateProductTest extends TestCase
         ];
         $id = factory(Product::class)->create()->id;
         $url = route('products.update', $id);
-        $response = $this->putJson($url, $product);
+        $response = $this->actingAs($this->getUser())->putJson($url, $product);
         $response->assertStatus(422);
         $product['ean'] = str_repeat('0', 13);
-        $response = $this->putJson($url, $product);
+        $response = $this->actingAs($this->getUser())->putJson($url, $product);
         $response->assertStatus(200);
         unset($product['category']);
         $this->assertDatabaseHas('products', $product);
@@ -356,10 +364,10 @@ class UpdateProductTest extends TestCase
         ];
         $id = factory(Product::class)->create()->id;
         $url = route('products.update', $id);
-        $response = $this->putJson($url, $product);
+        $response = $this->actingAs($this->getUser())->putJson($url, $product);
         $response->assertStatus(422);
         $product['ean'] = str_repeat('0', 13);
-        $response = $this->putJson($url, $product);
+        $response = $this->actingAs($this->getUser())->putJson($url, $product);
         $response->assertStatus(200);
         unset($product['category']);
         $this->assertDatabaseHas('products', $product);

@@ -3,6 +3,7 @@
 namespace Tests\Unit\FormValidation;
 
 use App\Models\Category;
+use App\Models\User;
 use Tests\TestCase;
 
 class StoreCategoryTest extends TestCase
@@ -12,14 +13,21 @@ class StoreCategoryTest extends TestCase
      */
     const NAME = 'Testing Validation on Store';
 
+    private function getUser()
+    {
+        return User::whereHas('role', function ($query) {
+            $query->where('name', 'attendant');
+        })->get()->random();
+    }
+
     public function test_required_name_validation()
     {
         $category = [];
         $url = route('categories.store');
-        $response = $this->postJson($url, $category);
+        $response = $this->actingAs($this->getUser())->postJson($url, $category);
         $response->assertStatus(422);
         $category['name'] = self::NAME;
-        $response = $this->postJson($url, $category);
+        $response = $this->actingAs($this->getUser())->postJson($url, $category);
         $response->assertStatus(201);
         $this->assertDatabaseHas('categories', $category);
     }
@@ -28,10 +36,10 @@ class StoreCategoryTest extends TestCase
     {
         $category = ['name' => 'TT']; // min is 3 characters
         $url = route('categories.store');
-        $response = $this->postJson($url, $category);
+        $response = $this->actingAs($this->getUser())->postJson($url, $category);
         $response->assertStatus(422);
         $category['name'] = self::NAME;
-        $response = $this->postJson($url, $category);
+        $response = $this->actingAs($this->getUser())->postJson($url, $category);
         $response->assertStatus(201);
         $this->assertDatabaseHas('categories', $category);
     }
@@ -40,10 +48,10 @@ class StoreCategoryTest extends TestCase
     {
         $category = ['name' => str_repeat('T', 51)]; // max is 50 characters
         $url = route('categories.store');
-        $response = $this->postJson($url, $category);
+        $response = $this->actingAs($this->getUser())->postJson($url, $category);
         $response->assertStatus(422);
         $category['name'] = self::NAME;
-        $response = $this->postJson($url, $category);
+        $response = $this->actingAs($this->getUser())->postJson($url, $category);
         $response->assertStatus(201);
         $this->assertDatabaseHas('categories', $category);
     }
@@ -53,10 +61,10 @@ class StoreCategoryTest extends TestCase
         $name = factory(Category::class)->create()->name;
         $category = ['name' => $name];
         $url = route('categories.store');
-        $response = $this->postJson($url, $category);
+        $response = $this->actingAs($this->getUser())->postJson($url, $category);
         $response->assertStatus(422);
         $category['name'] = self::NAME;
-        $response = $this->postJson($url, $category);
+        $response = $this->actingAs($this->getUser())->postJson($url, $category);
         $response->assertStatus(201);
         $this->assertDatabaseHas('categories', $category);
     }

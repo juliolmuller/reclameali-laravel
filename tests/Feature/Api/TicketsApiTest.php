@@ -12,26 +12,18 @@ use Tests\TestCase;
 
 class TicketsApiTest extends TestCase
 {
-    private function toModel(array $ticket)
+    private function getUser($user)
     {
-        return [
-            'product_id' => $ticket['product'],
-            'status_id'  => $ticket['status'],
-            'type_id'    => $ticket['type'],
-            'created_by' => $ticket['user'],
-            'messages'   => [
-                [
-                    'body' => $ticket['message'],
-                ],
-            ],
-        ];
+        return User::whereHas('role', function ($query) use ($user) {
+            $query->where('name', $user);
+        })->get()->random();
     }
 
     public function test_tickets_index()
     {
         $ticket = Ticket::orderBy('created_at', 'desc')->first();
         $url = route('tickets.index');
-        $response = $this->getJson($url);
+        $response = $this->actingAs($this->getUser('attendant'))->getJson($url);
         $response->assertStatus(200);
         if ($ticket) {
             $response->assertJson([
@@ -52,7 +44,7 @@ class TicketsApiTest extends TestCase
     {
         $ticket = Ticket::all()->random();
         $url = route('tickets.show', $ticket->id);
-        $response = $this->getJson($url);
+        $response = $this->actingAs($this->getUser('customer'))->getJson($url);
         $response->assertStatus(200);
         $response->assertJson([
             'id'         => $ticket->id,
@@ -65,17 +57,28 @@ class TicketsApiTest extends TestCase
 
     public function test_tickets_store()
     {
+        $user = $this->getUser('customer');
         $ticket = [
             'product' => Product::all()->random()->id,
             'status'  => Status::all()->random()->id,
             'type'    => Type::all()->random()->id,
-            'user'    => User::all()->random()->id,
+            'user'    => $user->id,
             'message' => 'Testing new message'
         ];
         $url = route('tickets.store');
-        $response = $this->postJson($url, $ticket);
+        $response = $this->actingAs($user)->postJson($url, $ticket);
         $response->assertStatus(201);
-        $ticket = $this->toModel($ticket);
+        $ticket = [
+            'product_id' => $ticket['product'],
+            'status_id'  => $ticket['status'],
+            'type_id'    => $ticket['type'],
+            'created_by' => $ticket['user'],
+            'messages'   => [
+                [
+                    'body' => $ticket['message'],
+                ],
+            ],
+        ];
         $response->assertJson($ticket);
         unset($ticket['messages']);
         $this->assertDatabaseHas('tickets', $ticket);
@@ -83,31 +86,34 @@ class TicketsApiTest extends TestCase
 
     public function test_tickets_update()
     {
-        $ticket = factory(Ticket::class)->create();
-        $message = [
-            'user'      => $ticket->created_by,
-            'message'   => 'Testing new message'
-        ];
+        $user = $this->getUser('customer');
+        $ticket = factory(Ticket::class)->create(['created_by' => $user->id]);
+        $message = 'Testing new message';
         $url = route('tickets.update', $ticket->id);
-        $response = $this->putJson($url, $message);
+        $response = $this->actingAs($user)->putJson($url, compact('message'));
         $response->assertStatus(200);
-        $response->assertJson(['id' => $ticket->id]);
-        unset($ticket['messages']);
+        $response->assertJson([
+            'id' => $ticket->id,
+            'messages' => [
+                [
+                    'body'    => $message,
+                    'sent_by' => $user->id,
+                ],
+            ],
+        ]);
         $this->assertDatabaseHas('ticket_messages', [
             'ticket_id' => $ticket->id,
-            'body'      => $message['message'],
+            'body'      => $message,
+            'sent_by'   => $user->id,
         ]);
     }
 
     public function test_tickets_close()
     {
         $ticket = factory(Ticket::class)->create();
+        $user = $this->getUser('attendant');
         $url = route('tickets.close', $ticket->id);
-        $response = $this->patchJson($url, [
-            'user' => User::whereHas('role', function ($query) {
-                $query->where('name', '<>', 'customer');
-            })->get()->random()
-        ]);
+        $response = $this->actingAs($user)->patchJson($url, []);
         $response->assertStatus(200);
         $response->assertJson([
             'product_id' => $ticket->product_id,

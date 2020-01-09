@@ -4,6 +4,7 @@ namespace Tests\Unit\FormValidation;
 
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\User;
 use Tests\TestCase;
 
 class StoreProductTest extends TestCase
@@ -15,10 +16,17 @@ class StoreProductTest extends TestCase
     const CATEGORY = 1;
     const UTC = '000000000000';
 
+    private function getUser()
+    {
+        return User::whereHas('role', function ($query) {
+            $query->where('name', 'attendant');
+        })->get()->random();
+    }
+
     public function test_required_validation()
     {
         $url = route('products.store');
-        $response = $this->postJson($url);
+        $response = $this->actingAs($this->getUser())->postJson($url);
         $response->assertStatus(422);
         $product = [
             'name'        => self::NAME,
@@ -26,7 +34,7 @@ class StoreProductTest extends TestCase
             'category'    => self::CATEGORY,
             'utc'         => self::UTC,
         ];
-        $response = $this->postJson($url, $product);
+        $response = $this->actingAs($this->getUser())->postJson($url, $product);
         $response->assertStatus(201);
         unset($product['category']);
         $this->assertDatabaseHas('products', $product);
@@ -41,10 +49,10 @@ class StoreProductTest extends TestCase
             'utc'         => self::UTC,
         ];
         $url = route('products.store');
-        $response = $this->postJson($url, $product);
+        $response = $this->actingAs($this->getUser())->postJson($url, $product);
         $response->assertStatus(422);
         $product['name'] = self::NAME;
-        $response = $this->postJson($url, $product);
+        $response = $this->actingAs($this->getUser())->postJson($url, $product);
         $response->assertStatus(201);
         unset($product['category']);
         $this->assertDatabaseHas('products', $product);
@@ -58,10 +66,10 @@ class StoreProductTest extends TestCase
             'utc'         => self::UTC,
         ];
         $url = route('products.store');
-        $response = $this->postJson($url, $product);
+        $response = $this->actingAs($this->getUser())->postJson($url, $product);
         $response->assertStatus(422);
         $product['category'] = self::CATEGORY;
-        $response = $this->postJson($url, $product);
+        $response = $this->actingAs($this->getUser())->postJson($url, $product);
         $response->assertStatus(201);
         unset($product['category']);
         $this->assertDatabaseHas('products', $product);
@@ -75,10 +83,10 @@ class StoreProductTest extends TestCase
             'category'    => self::CATEGORY,
         ];
         $url = route('products.store');
-        $response = $this->postJson($url, $product);
+        $response = $this->actingAs($this->getUser())->postJson($url, $product);
         $response->assertStatus(422);
         $product['utc'] = self::UTC;
-        $response = $this->postJson($url, $product);
+        $response = $this->actingAs($this->getUser())->postJson($url, $product);
         $response->assertStatus(201);
         unset($product['category']);
         $this->assertDatabaseHas('products', $product);
@@ -93,10 +101,10 @@ class StoreProductTest extends TestCase
             'utc'         => self::UTC,
         ];
         $url = route('products.store');
-        $response = $this->postJson($url, $product);
+        $response = $this->actingAs($this->getUser())->postJson($url, $product);
         $response->assertStatus(422);
         $product['name'] = self::NAME;
-        $response = $this->postJson($url, $product);
+        $response = $this->actingAs($this->getUser())->postJson($url, $product);
         $response->assertStatus(201);
         unset($product['category']);
         $this->assertDatabaseHas('products', $product);
@@ -111,10 +119,10 @@ class StoreProductTest extends TestCase
             'utc'         => self::UTC,
         ];
         $url = route('products.store');
-        $response = $this->postJson($url, $product);
+        $response = $this->actingAs($this->getUser())->postJson($url, $product);
         $response->assertStatus(422);
         $product['name'] = self::NAME;
-        $response = $this->postJson($url, $product);
+        $response = $this->actingAs($this->getUser())->postJson($url, $product);
         $response->assertStatus(201);
         unset($product['category']);
         $this->assertDatabaseHas('products', $product);
@@ -130,10 +138,10 @@ class StoreProductTest extends TestCase
             'utc'         => self::UTC,
         ];
         $url = route('products.store');
-        $response = $this->postJson($url, $product);
+        $response = $this->actingAs($this->getUser())->postJson($url, $product);
         $response->assertStatus(422);
         $product['name'] = self::NAME;
-        $response = $this->postJson($url, $product);
+        $response = $this->actingAs($this->getUser())->postJson($url, $product);
         $response->assertStatus(201);
         unset($product['category']);
         $this->assertDatabaseHas('products', $product);
@@ -149,10 +157,10 @@ class StoreProductTest extends TestCase
             'utc'         => self::UTC,
         ];
         $url = route('products.store');
-        $response = $this->postJson($url, $product);
+        $response = $this->actingAs($this->getUser())->postJson($url, $product);
         $response->assertStatus(422);
         $product['description'] = self::NAME;
-        $response = $this->postJson($url, $product);
+        $response = $this->actingAs($this->getUser())->postJson($url, $product);
         $response->assertStatus(201);
         unset($product['category']);
         $this->assertDatabaseHas('products', $product);
@@ -168,10 +176,10 @@ class StoreProductTest extends TestCase
             'utc'         => self::UTC,
         ];
         $url = route('products.store');
-        $response = $this->postJson($url, $product);
+        $response = $this->actingAs($this->getUser())->postJson($url, $product);
         $response->assertStatus(422);
         $product['weight'] = 0;
-        $response = $this->postJson($url, $product);
+        $response = $this->actingAs($this->getUser())->postJson($url, $product);
         $response->assertStatus(201);
         unset($product['category']);
         $this->assertDatabaseHas('products', $product);
@@ -186,10 +194,10 @@ class StoreProductTest extends TestCase
             'utc'         => self::UTC,
         ];
         $url = route('products.store');
-        $response = $this->postJson($url, $product);
+        $response = $this->actingAs($this->getUser())->postJson($url, $product);
         $response->assertStatus(422);
         $product['category'] = self::CATEGORY;
-        $response = $this->postJson($url, $product);
+        $response = $this->actingAs($this->getUser())->postJson($url, $product);
         $response->assertStatus(201);
         unset($product['category']);
         $this->assertDatabaseHas('products', $product);
@@ -204,10 +212,10 @@ class StoreProductTest extends TestCase
             'utc'         => str_repeat('A', 12),
         ];
         $url = route('products.store');
-        $response = $this->postJson($url, $product);
+        $response = $this->actingAs($this->getUser())->postJson($url, $product);
         $response->assertStatus(422);
         $product['utc'] = self::UTC;
-        $response = $this->postJson($url, $product);
+        $response = $this->actingAs($this->getUser())->postJson($url, $product);
         $response->assertStatus(201);
         unset($product['category']);
         $this->assertDatabaseHas('products', $product);
@@ -222,10 +230,10 @@ class StoreProductTest extends TestCase
             'utc'         => str_repeat('0', 11), // min is 12 characters
         ];
         $url = route('products.store');
-        $response = $this->postJson($url, $product);
+        $response = $this->actingAs($this->getUser())->postJson($url, $product);
         $response->assertStatus(422);
         $product['utc'] = self::UTC;
-        $response = $this->postJson($url, $product);
+        $response = $this->actingAs($this->getUser())->postJson($url, $product);
         $response->assertStatus(201);
         unset($product['category']);
         $this->assertDatabaseHas('products', $product);
@@ -240,10 +248,10 @@ class StoreProductTest extends TestCase
             'utc'         => str_repeat('0', 13), // max is 12 characters
         ];
         $url = route('products.store');
-        $response = $this->postJson($url, $product);
+        $response = $this->actingAs($this->getUser())->postJson($url, $product);
         $response->assertStatus(422);
         $product['utc'] = self::UTC;
-        $response = $this->postJson($url, $product);
+        $response = $this->actingAs($this->getUser())->postJson($url, $product);
         $response->assertStatus(201);
         unset($product['category']);
         $this->assertDatabaseHas('products', $product);
@@ -259,10 +267,10 @@ class StoreProductTest extends TestCase
             'utc'         => $utc,
         ];
         $url = route('products.store');
-        $response = $this->postJson($url, $product);
+        $response = $this->actingAs($this->getUser())->postJson($url, $product);
         $response->assertStatus(422);
         $product['utc'] = self::UTC;
-        $response = $this->postJson($url, $product);
+        $response = $this->actingAs($this->getUser())->postJson($url, $product);
         $response->assertStatus(201);
         unset($product['category']);
         $this->assertDatabaseHas('products', $product);
@@ -278,10 +286,10 @@ class StoreProductTest extends TestCase
             'ean'         => str_repeat('A', 13),
         ];
         $url = route('products.store');
-        $response = $this->postJson($url, $product);
+        $response = $this->actingAs($this->getUser())->postJson($url, $product);
         $response->assertStatus(422);
         $product['ean'] = str_repeat('0', 13);
-        $response = $this->postJson($url, $product);
+        $response = $this->actingAs($this->getUser())->postJson($url, $product);
         $response->assertStatus(201);
         unset($product['category']);
         $this->assertDatabaseHas('products', $product);
@@ -297,10 +305,10 @@ class StoreProductTest extends TestCase
             'ean'         => str_repeat('0', 12), // min is 13 characters
         ];
         $url = route('products.store');
-        $response = $this->postJson($url, $product);
+        $response = $this->actingAs($this->getUser())->postJson($url, $product);
         $response->assertStatus(422);
         $product['ean'] = str_repeat('0', 13);
-        $response = $this->postJson($url, $product);
+        $response = $this->actingAs($this->getUser())->postJson($url, $product);
         $response->assertStatus(201);
         unset($product['category']);
         $this->assertDatabaseHas('products', $product);
@@ -316,10 +324,10 @@ class StoreProductTest extends TestCase
             'ean'         => str_repeat('0', 14), // max is 13 characters
         ];
         $url = route('products.store');
-        $response = $this->postJson($url, $product);
+        $response = $this->actingAs($this->getUser())->postJson($url, $product);
         $response->assertStatus(422);
         $product['ean'] = str_repeat('0', 13);
-        $response = $this->postJson($url, $product);
+        $response = $this->actingAs($this->getUser())->postJson($url, $product);
         $response->assertStatus(201);
         unset($product['category']);
         $this->assertDatabaseHas('products', $product);
@@ -338,10 +346,10 @@ class StoreProductTest extends TestCase
             'ean'         => $ean,
         ];
         $url = route('products.store');
-        $response = $this->postJson($url, $product);
+        $response = $this->actingAs($this->getUser())->postJson($url, $product);
         $response->assertStatus(422);
         $product['ean'] = str_repeat('0', 13);
-        $response = $this->postJson($url, $product);
+        $response = $this->actingAs($this->getUser())->postJson($url, $product);
         $response->assertStatus(201);
         unset($product['category']);
         $this->assertDatabaseHas('products', $product);
