@@ -177,6 +177,7 @@ return [
         App\Providers\FakerServiceProvider::class,
         App\Providers\MigrationServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
 
     ],
 
