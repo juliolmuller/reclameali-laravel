@@ -66,7 +66,29 @@ class TicketsApiTest extends TestCase
     {
         $ticket = Ticket::all()->random();
         $url = route('tickets.show', $ticket->id);
-        $response = $this->actingAs($this->getUser('customer'))->getJson($url);
+        $response = $this->actingAs($this->getUser('attendant'))->getJson($url);
+        $response->assertStatus(200);
+        $response->assertJson([
+            'id'         => $ticket->id,
+            'product_id' => $ticket->product_id,
+            'status_id'  => $ticket->status_id,
+            'type_id'    => $ticket->type_id,
+            'created_by' => $ticket->created_by,
+        ]);
+    }
+
+    public function test_tickets_show_for_customer()
+    {
+        do {
+            $user = $this->getUser('customer');
+        } while (!$user->tickets->count());
+        $ticket = Ticket::where('created_by', '<>', $user->id)->get()->random();
+        $url = route('tickets.show', $ticket->id);
+        $response = $this->actingAs($user)->getJson($url);
+        $response->assertStatus(403);
+        $ticket = $user->tickets[0];
+        $url = route('tickets.show', $ticket->id);
+        $response = $this->actingAs($user)->getJson($url);
         $response->assertStatus(200);
         $response->assertJson([
             'id'         => $ticket->id,
@@ -108,7 +130,7 @@ class TicketsApiTest extends TestCase
 
     public function test_tickets_update()
     {
-        $user = $this->getUser('customer');
+        $user = $this->getUser('attendant');
         $ticket = factory(Ticket::class)->create(['created_by' => $user->id]);
         $message = 'Testing new message';
         $url = route('tickets.update', $ticket->id);
@@ -123,6 +145,27 @@ class TicketsApiTest extends TestCase
                 ],
             ],
         ]);
+        $this->assertDatabaseHas('ticket_messages', [
+            'ticket_id' => $ticket->id,
+            'body'      => $message,
+            'sent_by'   => $user->id,
+        ]);
+    }
+
+    public function test_tickets_update_for_customer()
+    {
+        do {
+            $user = $this->getUser('customer');
+        } while (!$user->tickets->count());
+        $message = 'Testing new message';
+        $ticket = Ticket::where('created_by', '<>', $user->id)->get()->random();
+        $url = route('tickets.update', $ticket->id);
+        $response = $this->actingAs($user)->putJson($url, compact('message'));
+        $response->assertStatus(403);
+        $ticket = $user->tickets[0];
+        $url = route('tickets.update', $ticket->id);
+        $response = $this->actingAs($user)->putJson($url, compact('message'));
+        $response->assertStatus(200);
         $this->assertDatabaseHas('ticket_messages', [
             'ticket_id' => $ticket->id,
             'body'      => $message,

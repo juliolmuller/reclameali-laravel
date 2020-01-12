@@ -26,7 +26,7 @@ class TicketController extends Controller
                 ->orderBy('created_at', 'desc')
                 ->paginate(30);
         }
-        return response($tickets, 200);
+        return $tickets;
     }
 
     /**
@@ -34,8 +34,11 @@ class TicketController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function show(Ticket $ticket)
+    public function show(Request $request, Ticket $ticket)
     {
+        if ($request->header(OwnDataOnlyMiddleware::HEADER) && auth()->user()->id !== $ticket->created_by) {
+            abort(403);
+        }
         return $ticket->load(['status', 'type', 'product', 'messages', 'creator', 'editor', 'destroyer']);
     }
 
@@ -64,6 +67,9 @@ class TicketController extends Controller
      */
     public function update(Request $request, Ticket $ticket)
     {
+        if ($request->header(OwnDataOnlyMiddleware::HEADER) && auth()->user()->id !== $ticket->created_by) {
+            abort(403);
+        }
         $ticket->messages()->create([
             'body'      => $request->message,
         ]);
