@@ -40,6 +40,28 @@ class TicketsApiTest extends TestCase
         }
     }
 
+    public function test_tickets_index_for_customer()
+    {
+        do {
+            $user = $this->getUser('customer');
+        } while (!$user->tickets->count());
+        $ticket = $user->tickets[0];
+        $url = route('tickets.index');
+        $response = $this->actingAs($user)->getJson($url);
+        $response->assertStatus(200);
+        $response->assertJson([
+            'data' => [
+                [
+                    'id'         => $ticket->id,
+                    'product_id' => $ticket->product_id,
+                    'status_id'  => $ticket->status_id,
+                    'type_id'    => $ticket->type_id,
+                    'created_by' => $ticket->created_by,
+                ],
+            ],
+        ]);
+    }
+
     public function test_tickets_show()
     {
         $ticket = Ticket::all()->random();

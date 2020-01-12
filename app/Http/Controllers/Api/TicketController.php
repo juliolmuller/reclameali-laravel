@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Middleware\OwnDataOnlyMiddleware;
 use App\Models\Ticket;
 use Illuminate\Http\Request;
 
@@ -13,11 +14,19 @@ class TicketController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return Ticket::with(['status', 'type', 'product', 'creator', 'editor', 'destroyer'])
-            ->orderBy('created_at', 'desc')
-            ->paginate(30);
+        if ($request->header(OwnDataOnlyMiddleware::HEADER)) {
+            $tickets = Ticket::with(['status', 'type', 'product', 'creator', 'editor', 'destroyer'])
+                ->where('created_by', auth()->user()->id)
+                ->orderBy('created_at', 'desc')
+                ->paginate(30);
+        } else {
+            $tickets = Ticket::with(['status', 'type', 'product', 'creator', 'editor', 'destroyer'])
+                ->orderBy('created_at', 'desc')
+                ->paginate(30);
+        }
+        return response($tickets, 200);
     }
 
     /**
