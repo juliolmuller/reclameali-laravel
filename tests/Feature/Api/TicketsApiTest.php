@@ -4,14 +4,18 @@ namespace Tests\Feature\Api;
 
 use App\Models\Product;
 use App\Models\Ticket;
-use App\Models\TicketMessage as Message;
-use App\Models\TicketStatus as Status;
 use App\Models\TicketType as Type;
 use App\Models\User;
 use Tests\TestCase;
 
 class TicketsApiTest extends TestCase
 {
+    /**
+     * Default required attributes to be used along the test
+     */
+    const OPEN = 1;
+    const CLOSED = 2;
+
     private function getUser($user)
     {
         return User::whereHas('role', function ($query) use ($user) {
@@ -104,7 +108,6 @@ class TicketsApiTest extends TestCase
         $user = $this->getUser('customer');
         $ticket = [
             'product' => Product::all()->random()->id,
-            'status'  => Status::all()->random()->id,
             'type'    => Type::all()->random()->id,
             'user'    => $user->id,
             'message' => 'Testing new message'
@@ -114,7 +117,7 @@ class TicketsApiTest extends TestCase
         $response->assertStatus(201);
         $ticket = [
             'product_id' => $ticket['product'],
-            'status_id'  => $ticket['status'],
+            'status_id'  => self::OPEN,
             'type_id'    => $ticket['type'],
             'created_by' => $ticket['user'],
             'messages'   => [
@@ -131,7 +134,7 @@ class TicketsApiTest extends TestCase
     public function test_tickets_update()
     {
         $user = $this->getUser('attendant');
-        $ticket = factory(Ticket::class)->create(['created_by' => $user->id]);
+        $ticket = factory(Ticket::class)->create(['status_id' => self::OPEN, 'created_by' => $user->id]);
         $message = 'Testing new message';
         $url = route('tickets.update', $ticket->id);
         $response = $this->actingAs($user)->putJson($url, compact('message'));
@@ -182,7 +185,7 @@ class TicketsApiTest extends TestCase
         $response->assertStatus(200);
         $response->assertJson([
             'product_id' => $ticket->product_id,
-            'status_id'  => $ticket->status_id,
+            'status_id'  => self::CLOSED,
             'type_id'    => $ticket->type_id,
             'created_by' => $ticket->created_by,
         ]);

@@ -4,7 +4,10 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Middleware\OwnDataOnlyMiddleware;
+use App\Http\Requests\StoreTicketRequest;
+use App\Http\Requests\StoreTicketMessageRequest;
 use App\Models\Ticket;
+use App\Models\TicketStatus;
 use Illuminate\Http\Request;
 
 class TicketController extends Controller
@@ -47,15 +50,15 @@ class TicketController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreTicketRequest $request)
     {
         $ticket = Ticket::create([
+            'status_id'  => TicketStatus::where('name', 'OPEN')->first()->id,
             'product_id' => $request->product,
-            'status_id'  => $request->status,
             'type_id'    => $request->type,
         ]);
         $ticket->messages()->create([
-            'body'      => $request->message,
+            'body' => $request->message,
         ]);
         return $ticket->load(['status', 'type', 'product', 'messages', 'creator', 'editor', 'destroyer']);
     }
@@ -65,13 +68,13 @@ class TicketController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Ticket $ticket)
+    public function update(StoreTicketMessageRequest $request, Ticket $ticket)
     {
         if ($request->header(OwnDataOnlyMiddleware::HEADER) && auth()->user()->id !== $ticket->created_by) {
             abort(403);
         }
         $ticket->messages()->create([
-            'body'      => $request->message,
+            'body' => $request->message,
         ]);
         return $ticket->load(['status', 'type', 'product', 'messages', 'creator', 'editor', 'destroyer']);
     }
@@ -84,6 +87,7 @@ class TicketController extends Controller
     public function close(Ticket $ticket)
     {
         $ticket->closed_at = now();
+        $ticket->status_id = TicketStatus::where('name', 'CLOSED')->first()->id;
         $ticket->save();
         return $ticket->load(['status', 'type', 'product', 'messages', 'creator', 'editor', 'destroyer']);
     }
