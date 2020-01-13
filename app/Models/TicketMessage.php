@@ -25,6 +25,13 @@ class TicketMessage extends Model
     protected $fillable = ['body', 'ticket_id', 'sent_by', 'sent_at'];
 
     /**
+     * Relationships to be touched when model is created/updated
+     *
+     * @var array
+     */
+    protected $touches = ['ticket'];
+
+    /**
      * Get the ticket associated with $this message
      *
      * @return \App\Models\Ticket
