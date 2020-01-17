@@ -8,6 +8,9 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Znck\Eloquent\Traits\BelongsToThrough;
 
+/**
+ * @mixin Eloquent
+ */
 class User extends Authenticatable
 {
     use BelongsToThrough,
@@ -34,7 +37,6 @@ class User extends Authenticatable
      * @var array
      */
     protected $casts = [
-        'date_of_birth' => 'datetime',
         'email_verified_at' => 'datetime',
     ];
 

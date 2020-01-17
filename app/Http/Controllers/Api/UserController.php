@@ -3,11 +3,61 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Middleware\OwnDataOnlyMiddleware;
+use App\Models\Role;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+    /**
+     * Extract user data from request
+     *
+     * @return void
+     */
+    private function getData($request, User $user)
+    {
+        $user->role_id = $request->role ?? Role::where('name', 'customer')->first()->id;
+        $user->date_of_birth = $request->date_of_birth;
+        $user->complement = $request->complement;
+        $user->first_name = $request->first_name;
+        $user->last_name = $request->last_name;
+        $user->zip_code = $request->zip_code;
+        $user->street = $request->street;
+        $user->number = $request->number;
+        $user->city_id = $request->city;
+        $user->phone = $request->phone;
+        $user->email = $request->email;
+        $user->cpf = $request->cpf;
+    }
+
+    /**
+     * Extract user password from request
+     *
+     * @return void
+     */
+    private function getPassword($request, User $user)
+    {
+        $user->password = Hash::make($request->password);
+    }
+
+    /**
+     * Checks user's over the data being changed, overwriting $user instance if needed
+     *
+     * @return bool
+     */
+    private function checkOwnDataOnly($request, User &$user)
+    {
+        $checkHeader = $request->header(OwnDataOnlyMiddleware::HEADER);
+        if ($checkHeader) {
+            $user = Auth::user();
+        }
+        return $checkHeader;
+    }
+
     /**
      * Return JSON of all users
      *
@@ -15,7 +65,11 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        return User::whereHas('role', fn(Builder $query) => $query->where('name', '<>', 'customer'))
+            ->with(['city.state', 'role'])
+            ->orderBy('first_name')
+            ->orderBy('last_name')
+            ->paginate(30);
     }
 
     /**
@@ -23,9 +77,10 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show(Request $request, User $user)
     {
-        //
+        $this->checkOwnDataOnly($request, $user);
+        return $user->load(['city.state', 'role']);
     }
 
     /**
@@ -35,7 +90,11 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user = new User();
+        $this->getData($request, $user);
+        $this->getPassword($request, $user);
+        $user->save();
+        return $user->load(['city.state', 'role']);
     }
 
     /**
@@ -43,9 +102,12 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function updateData(Request $request, User $user)
     {
-        //
+        $this->checkOwnDataOnly($request, $user);
+        $this->getData($request, $user);
+        $user->save();
+        return $user->load(['city.state', 'role']);
     }
 
     /**
@@ -53,9 +115,12 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function change(Request $request, User $user)
+    public function udpatePassword(Request $request, User $user)
     {
-        //
+        $this->checkOwnDataOnly($request, $user);
+        $this->getPassword($request, $user);
+        $user->save();
+        return $user->load(['city.state', 'role']);
     }
 
     /**
@@ -65,6 +130,7 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+        $user->load(['city.state', 'role'])->delete();
+        return $user;
     }
 }
