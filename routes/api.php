@@ -24,6 +24,15 @@ Route::group(['prefix' => '/access-roles', 'as' => 'roles.'], function () {
     Route::delete('/{role}', 'Api\AccessRoleController@destroy')->name('destroy');
 });
 
+Route::group(['prefix' => '/users', 'as' => 'users.'], function () {
+    Route::get('/', 'Api\UserController@index')->name('index');
+    Route::post('/', 'Api\UserController@store')->name('store');
+    Route::get('/{user}', 'Api\UserController@show')->name('show');
+    Route::put('/{user}', 'Api\UserController@updateData')->name('update-data');
+    Route::patch('/{user}', 'Api\UserController@udpatePassword')->name('update-password');
+    Route::delete('/{user}', 'Api\UserController@destroy')->name('destroy');
+});
+
 Route::group(['prefix' => '/ticket-status', 'as' => 'ticket-status.'], function () {
     Route::get('/', 'Api\TicketStatusController@index')->name('index');
     Route::post('/', 'Api\TicketStatusController@store')->name('store');
