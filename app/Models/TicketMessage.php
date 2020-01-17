@@ -2,9 +2,16 @@
 
 namespace App\Models;
 
+use Eloquent;
 use Illuminate\Database\Eloquent\Model;
 use Wildside\Userstamps\Userstamps;
 
+/**
+ * Model Ticket Message
+ *
+ * @package App\Models
+ * @mixin Eloquent
+ */
 class TicketMessage extends Model
 {
     use Userstamps;

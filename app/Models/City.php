@@ -2,8 +2,15 @@
 
 namespace App\Models;
 
+use Eloquent;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Model City
+ *
+ * @package App\Models
+ * @mixin Eloquent
+ */
 class City extends Model
 {
     /**

@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-use App\Models\User;
-
 class Customer extends User
 {
     /**

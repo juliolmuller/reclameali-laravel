@@ -2,10 +2,17 @@
 
 namespace App\Models;
 
+use Eloquent;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Wildside\Userstamps\Userstamps;
 
+/**
+ * Model Ticket Status
+ *
+ * @package App\Models
+ * @mixin Eloquent
+ */
 class TicketStatus extends Model
 {
     use SoftDeletes,

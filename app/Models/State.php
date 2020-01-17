@@ -2,8 +2,15 @@
 
 namespace App\Models;
 
+use Eloquent;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Model State
+ *
+ * @package App\Models
+ * @mixin Eloquent
+ */
 class State extends Model
 {
     /**
