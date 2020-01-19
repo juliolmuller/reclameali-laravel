@@ -5,6 +5,7 @@ namespace Tests\Feature\Api;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
 class UsersApiTest extends TestCase
@@ -129,63 +130,109 @@ class UsersApiTest extends TestCase
         $response->assertJson($newUser);
     }
 
-//    public function test_users_update()
-//    {
-//        $user = $this->getUser();
-//        $user = factory(User::class)->create(['status_id' => self::OPEN, 'created_by' => $user->id]);
-//        $message = 'Testing new message';
-//        $url = route('users.update', $user->id);
-//        $response = $this->actingAs($user)->putJson($url, compact('message'));
-//        $response->assertStatus(200);
-//        $response->assertJson([
-//            'id' => $user->id,
-//            'messages' => [
-//                [
-//                    'body'    => $message,
-//                    'sent_by' => $user->id,
-//                ],
-//            ],
-//        ]);
-//        $this->assertDatabaseHas('user_messages', [
-//            'user_id' => $user->id,
-//            'body'      => $message,
-//            'sent_by'   => $user->id,
-//        ]);
-//    }
-//
-//    public function test_users_update_for_customer()
-//    {
-//        do {
-//            $user = $this->getUser('customer');
-//        } while (!$user->users->count());
-//        $message = 'Testing new message';
-//        $user = User::where('created_by', '<>', $user->id)->get()->random();
-//        $url = route('users.update', $user->id);
-//        $response = $this->actingAs($user)->putJson($url, compact('message'));
-//        $response->assertStatus(403);
-//        $user = $user->users[0];
-//        $url = route('users.update', $user->id);
-//        $response = $this->actingAs($user)->putJson($url, compact('message'));
-//        $response->assertStatus(200);
-//        $this->assertDatabaseHas('user_messages', [
-//            'user_id' => $user->id,
-//            'body'      => $message,
-//            'sent_by'   => $user->id,
-//        ]);
-//    }
-//
-//    public function test_users_destroy()
-//    {
-//        $user = factory(User::class)->create();
-//        $user = $this->getUser('attendant');
-//        $url = route('users.close', $user->id);
-//        $response = $this->actingAs($user)->patchJson($url, []);
-//        $response->assertStatus(200);
-//        $response->assertJson([
-//            'product_id' => $user->product_id,
-//            'status_id'  => self::CLOSED,
-//            'type_id'    => $user->type_id,
-//            'created_by' => $user->created_by,
-//        ]);
-//    }
+    public function test_users_updateData()
+    {
+        $user = $this->getUser();
+        $savedUser = factory(User::class)->create([
+            'role_id' => Role::where('name', '<>', 'customer')->get()->random()->id,
+        ]);
+        $userData = [
+            'first_name'            => self::FIRST_NAME,
+            'last_name'             => self::LAST_NAME,
+            'cpf'                   => self::CPF,
+            'email'                 => self::EMAIL,
+            'date_of_birth'         => self::DATE_BIRTH,
+            'role'                  => Role::where('name', '<>', 'customer')->get()->random()->id,
+        ];
+        $url = route('users.update-data', $savedUser->id);
+        $response = $this->actingAs($user)->putJson($url, $userData);
+        $response->assertStatus(200);
+        $userData['role_id'] = $userData['role'];
+        unset($userData['role']);
+        $this->assertDatabaseHas('users', $userData);
+        $response->assertJson($userData);
+    }
+
+    public function test_users_updateData_for_customer()
+    {
+        $user = factory(User::class)->create([
+            'role_id' => Role::where('name', 'customer')->first()->id,
+        ]);
+        do {
+            $otherUserId = User::all()->random();
+        } while ($otherUserId === $user->id);
+        $userData = [
+            'id'            => $user->id,
+            'first_name'    => self::FIRST_NAME,
+            'last_name'     => self::LAST_NAME,
+            'cpf'           => self::CPF,
+            'email'         => self::EMAIL,
+            'date_of_birth' => self::DATE_BIRTH,
+        ];
+        $url = route('users.update-data', $otherUserId);
+        $response = $this->actingAs($user)->putJson($url, $userData);
+        $response->assertStatus(200);
+        $response->assertJson($userData);
+        $this->assertDatabaseHas('users', $userData);
+        $url = route('users.update-data', $user->id);
+        $response = $this->actingAs($user)->putJson($url, $userData);
+        $response->assertStatus(200);
+        $response->assertJson($userData);
+        $this->assertDatabaseHas('users', $userData);
+    }
+
+    public function test_users_updatePassword()
+    {
+        $user = $this->getUser();
+        $savedUser = factory(User::class)->create([
+            'password' => Hash::make(self::PSWD),
+            'role_id'  => Role::where('name', '<>', 'customer')->get()->random()->id,
+        ]);
+        $userData = [
+            'old_password'          => self::PSWD,
+            'password'              => self::PSWD,
+            'password_confirmation' => self::PSWD,
+        ];
+        $url = route('users.update-data', $savedUser->id);
+        $response = $this->actingAs($user)->patchJson($url, $userData);
+        $response->assertStatus(200);
+        $response->assertJson(['id' => $savedUser->id]);
+    }
+
+    public function test_users_updatePassword_for_customer()
+    {
+        $user = factory(User::class)->create([
+            'password' => Hash::make(self::PSWD),
+            'role_id'  => Role::where('name', 'customer')->first()->id,
+        ]);
+        do {
+            $otherUserId = User::all()->random();
+        } while ($otherUserId === $user->id);
+        $userData = [
+            'old_password'          => self::PSWD,
+            'password'              => self::PSWD,
+            'password_confirmation' => self::PSWD,
+        ];
+        $url = route('users.update-data', $otherUserId);
+        $response = $this->actingAs($user)->patchJson($url, $userData);
+        $response->assertStatus(200);
+        $response->assertJson(['id' => $user->id]);
+        $url = route('users.update-data', $user->id);
+        $response = $this->actingAs($user)->patchJson($url, $userData);
+        $response->assertStatus(200);
+        $response->assertJson(['id' => $user->id]);
+    }
+
+    public function test_users_destroy()
+    {
+        $user = $this->getUser();
+        $savedUser = factory(User::class)->create([
+            'role_id'  => Role::where('name', '<>', 'customer')->get()->random()->id,
+        ]);
+        $url = route('users.destroy', $savedUser->id);
+        $response = $this->actingAs($user)->deleteJson($url);
+        $response->assertStatus(200);
+        $response->assertJson(['id' => $savedUser->id]);
+        $this->assertSoftDeleted('users', ['id' => $savedUser->id]);
+    }
 }
