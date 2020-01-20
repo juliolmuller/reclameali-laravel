@@ -11,9 +11,10 @@ trait UserPasswordRequestTrait
      */
     public function rules()
     {
+        $userId = $this->user->id ?? '';
         return [
-            'old_password' => ['bail', 'required'],
-            'password'     => ['bail', 'required', 'confirmed'],
+            'old_password' => ['bail', 'required', "protect:{$userId}"],
+            'password'     => ['bail', 'required', 'confirmed', 'min:8'],
         ];
     }
 }

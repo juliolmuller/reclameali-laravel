@@ -15,7 +15,7 @@ trait UserDataRequestTrait
         return [
             'first_name'    => ['bail', 'required', 'string', 'regex:/^[A-Za-zÀ-ÖØ-öø-ÿ ]+/', 'between:1,30'],
             'last_name'     => ['bail', 'required', 'string', 'regex:/^[A-Za-zÀ-ÖØ-öø-ÿ ]+/', 'between:1,150'],
-            'cpf'           => ['bail', 'required', 'integer', 'digits:11', "unique:users,cpf{$exception}"],
+            'cpf'           => ['bail', 'required', 'integer', 'cpf', 'digits:11', "unique:users,cpf{$exception}"],
             'date_of_birth' => ['bail', 'required', 'before_or_equal:-18 years'],
             'email'         => ['bail', 'required', 'email', "unique:users,email{$exception}"],
             'phone'         => ['bail', 'nullable', 'digits_between:10,11'],

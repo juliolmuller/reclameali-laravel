@@ -207,7 +207,7 @@ class UsersApiTest extends TestCase
         ]);
         do {
             $otherUserId = User::all()->random();
-        } while ($otherUserId === $user->id);
+        } while ($otherUserId->id === $user->id);
         $userData = [
             'old_password'          => self::PSWD,
             'password'              => self::PSWD,
@@ -215,8 +215,7 @@ class UsersApiTest extends TestCase
         ];
         $url = route('users.update-data', $otherUserId);
         $response = $this->actingAs($user)->patchJson($url, $userData);
-        $response->assertStatus(200);
-        $response->assertJson(['id' => $user->id]);
+        $response->assertStatus(422);
         $url = route('users.update-data', $user->id);
         $response = $this->actingAs($user)->patchJson($url, $userData);
         $response->assertStatus(200);
