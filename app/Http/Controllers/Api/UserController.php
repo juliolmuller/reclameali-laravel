@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreUserRequest as StoreRequest;
+use App\Http\Requests\UpdateUserDataRequest as UpdateDataRequest;
+use App\Http\Requests\UpdateUserPasswordRequest as UpdatePasswordRequest;
 use App\Http\Middleware\OwnDataOnlyMiddleware;
 use App\Models\Role;
 use App\Models\User;
@@ -88,7 +91,7 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
         $user = new User();
         $this->getData($request, $user);
@@ -102,7 +105,7 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function updateData(Request $request, User $user)
+    public function updateData(UpdateDataRequest $request, User $user)
     {
         $this->checkOwnDataOnly($request, $user);
         $this->getData($request, $user);
@@ -115,7 +118,7 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function udpatePassword(Request $request, User $user)
+    public function udpatePassword(UpdatePasswordRequest $request, User $user)
     {
         $this->checkOwnDataOnly($request, $user);
         $this->getPassword($request, $user);
