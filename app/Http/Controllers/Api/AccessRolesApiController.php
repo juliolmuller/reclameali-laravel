@@ -8,7 +8,7 @@ use App\Http\Requests\UpdateRoleRequest as UpdateRequest;
 use App\Models\Role;
 use Illuminate\Support\Str;
 
-class AccessRoleController extends Controller
+class AccessRolesApiController extends Controller
 {
     /**
      * Extract attributes from request and save them to the model

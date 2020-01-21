@@ -7,7 +7,7 @@ use App\Http\Requests\StoreProductRequest as StoreRequest;
 use App\Http\Requests\UpdateProductRequest as UpdateRequest;
 use App\Models\Product;
 
-class ProductController extends Controller
+class ProductsApiController extends Controller
 {
     /**
      * Extract attributes from request and save them to the model

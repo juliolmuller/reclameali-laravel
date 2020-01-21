@@ -8,7 +8,7 @@ use App\Http\Requests\UpdateTicketStatusRequest as UpdateRequest;
 use App\Models\TicketStatus as Status;
 use Illuminate\Support\Str;
 
-class TicketStatusController extends Controller
+class TicketStatusApiController extends Controller
 {
     /**
      * Extract attributes from request and save them to the model

@@ -10,7 +10,7 @@ use App\Models\Ticket;
 use App\Models\TicketStatus;
 use Illuminate\Http\Request;
 
-class TicketController extends Controller
+class TicketsApiController extends Controller
 {
     /**
      * Return JSON of all tickets

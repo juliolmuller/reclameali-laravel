@@ -7,7 +7,7 @@ use App\Http\Requests\StoreCategoryRequest as StoreRequest;
 use App\Http\Requests\UpdateCategoryRequest as UpdateRequest;
 use App\Models\Category;
 
-class CategoryController extends Controller
+class CategoriesApiController extends Controller
 {
     /**
      * Extract attributes from request and save them to the model

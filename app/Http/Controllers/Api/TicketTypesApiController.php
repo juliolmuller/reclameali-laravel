@@ -7,7 +7,7 @@ use App\Http\Requests\StoreTicketTypeRequest as StoreRequest;
 use App\Http\Requests\UpdateTicketTypeRequest as UpdateRequest;
 use App\Models\TicketType as Type;
 
-class TicketTypeController extends Controller
+class TicketTypesApiController extends Controller
 {
     /**
      * Extract attributes from request and save them to the model
