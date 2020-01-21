@@ -1,5 +1,11 @@
 <?php
 
+Route::group(['prefix' => '/location'], function () {
+    Route::get('/states', 'Api\LocationApiController@states')->name('states.index');
+    Route::get('/cities', 'Api\LocationApiController@cities')->name('cities.index');
+    Route::get('/{state}/cities', 'Api\LocationApiController@citiesByState')->name('cities.filter');
+});
+
 Route::group(['prefix' => '/categories', 'as' => 'categories.'], function () {
     Route::get('/', 'Api\CategoriesApiController@index')->name('index');
     Route::post('/', 'Api\CategoriesApiController@store')->name('store');
