@@ -24,7 +24,7 @@ $factory->define(User::class, function (Faker $faker) {
         'complement'        => $faker->optional(0.7)->secondaryAddress,
         'city_id'           => $faker->numberBetween(0, 4) ? City::all()->random() : null,
         'role_id'           => Role::all()->random(),
-        'password'          => Hash::make($faker->password),
+        'password'          => Hash::make($faker->password(8)),
         'remember_token'    => Str::random(10),
     ];
 });
