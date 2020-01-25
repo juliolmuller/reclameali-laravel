@@ -15,7 +15,7 @@
     "bootstrap": "4.*",
     "jquery": "3.*",
     "jquery-mask-plugin": "1.*",
-    "popper.js": "1.*",
+    "popper.js": "^1.16.1",
     "toastr": "2.*"
   },
   "devDependencies": {
@@ -23,8 +23,8 @@
     "laravel-mix": "5.*",
     "lodash": "4.*",
     "resolve-url-loader": "3.*",
-    "sass": "1.*",
-    "sass-loader": "8.*",
+    "sass": "^1.25.0",
+    "sass-loader": "^8.0.2",
     "vue-template-compiler": "2.*"
   }
 }
