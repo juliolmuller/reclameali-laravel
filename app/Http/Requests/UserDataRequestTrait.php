@@ -11,7 +11,7 @@ trait UserDataRequestTrait
      */
     public function rules()
     {
-        $nameRegex = '/^[A-Za-zÀ-ÖØ-öø-ÿ\- ]+$/';
+        $nameRegex = '/^[A-Za-zÀ-ÖØ-öø-ÿ\-\' ]+$/';
         $numericRegex = '/^[0-9]+$/';
         $exception = $this->isMethod('POST') ? '' : ",{$this->user->id}";
         return [
