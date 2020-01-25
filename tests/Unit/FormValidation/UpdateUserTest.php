@@ -44,14 +44,6 @@ class UpdateUserTest extends TestCase
         return $user;
     }
 
-    private function renameKey(&$arr, $oldKey, $newKey)
-    {
-        if (isset($arr[$oldKey])) {
-            $arr[$newKey] = $arr[$oldKey];
-            Arr::forget($arr, $oldKey);
-        }
-    }
-
     private function unset(&$arr, ...$elements)
     {
         foreach ($elements as $el) {
