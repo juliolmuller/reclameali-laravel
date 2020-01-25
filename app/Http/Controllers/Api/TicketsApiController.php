@@ -42,7 +42,7 @@ class TicketsApiController extends Controller
         if ($request->header(OwnDataOnlyMiddleware::HEADER) && auth()->user()->id !== $ticket->created_by) {
             abort(403);
         }
-        return $ticket->load(['status', 'type', 'product', 'messages', 'creator', 'editor', 'destroyer']);
+        return $ticket->load(['status', 'type', 'product', 'messages.sender', 'creator', 'editor', 'destroyer']);
     }
 
     /**
@@ -60,7 +60,7 @@ class TicketsApiController extends Controller
         $ticket->messages()->create([
             'body' => $request->message,
         ]);
-        return $ticket->load(['status', 'type', 'product', 'messages', 'creator', 'editor', 'destroyer']);
+        return $ticket->load(['status', 'type', 'product', 'messages.sender', 'creator', 'editor', 'destroyer']);
     }
 
     /**
@@ -76,7 +76,7 @@ class TicketsApiController extends Controller
         $ticket->messages()->create([
             'body' => $request->message,
         ]);
-        return $ticket->load(['status', 'type', 'product', 'messages', 'creator', 'editor', 'destroyer']);
+        return $ticket->load(['status', 'type', 'product', 'messages.sender', 'creator', 'editor', 'destroyer']);
     }
 
     /**
@@ -89,6 +89,6 @@ class TicketsApiController extends Controller
         $ticket->closed_at = now();
         $ticket->status_id = TicketStatus::where('name', 'CLOSED')->first()->id;
         $ticket->save();
-        return $ticket->load(['status', 'type', 'product', 'messages', 'creator', 'editor', 'destroyer']);
+        return $ticket->load(['status', 'type', 'product', 'messages.sender', 'creator', 'editor', 'destroyer']);
     }
 }

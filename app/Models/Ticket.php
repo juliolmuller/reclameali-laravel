@@ -7,9 +7,27 @@ use Illuminate\Database\Eloquent\Model;
 use Wildside\Userstamps\Userstamps;
 
 /**
- * Model Ticket
+ * Ticket Model
+ *   Table:
+ *     tickets
+ *   Attributes:
+ *     id:         required | integer | unique
+ *     product_id: required | \App\Models\Product::id (integer)
+ *     status_id:  required | \App\Models\TicketStatus::id (integer)
+ *     type_id:    required | \App\Models\TicketType::id (integer)
+ *     closed_at:  nullable | timestamp
+ *     created_at: nullable | timestamp
+ *     created_by: nullable | \App\Models\User::id (integer)
+ *     updated_at: nullable | timestamp
+ *     updated_by: nullable | \App\Models\User::id (integer)
+ *   Relationships:
+ *     product:   \App\Models\Product (BelongsTo)
+ *     status:    \App\Models\TicketStatus (BelongsTo)
+ *     type:      \App\Models\TicketType (BelongsTo)
+ *     creator:   \App\Models\User (BelongsTo)
+ *     editor:    \App\Models\User (BelongsTo)
+ *     messages:  \App\Models\TicketMessages[] (HasMany)
  *
- * @package App\Models
  * @mixin Eloquent
  */
 class Ticket extends Model
@@ -35,7 +53,7 @@ class Ticket extends Model
     /**
      * Get the product associated with $this ticket
      *
-     * @return \App\Models\TicketStatus
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function product()
     {
@@ -45,7 +63,7 @@ class Ticket extends Model
     /**
      * Get the status associated with $this ticket
      *
-     * @return \App\Models\TicketStatus
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function status()
     {
@@ -55,7 +73,7 @@ class Ticket extends Model
     /**
      * Get the type associated with $this ticket
      *
-     * @return \App\Models\TicketType
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function type()
     {
@@ -65,7 +83,7 @@ class Ticket extends Model
     /**
      * Get the messages associated with $this ticket
      *
-     * @return \Illuminate\Database\Eloquent\Collection<\App\Models\TicketMessage>
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function messages()
     {

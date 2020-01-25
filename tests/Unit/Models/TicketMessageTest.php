@@ -54,8 +54,8 @@ class TicketMessageTest extends TestCase
         $samples = ceil(Message::count() / 10);
         for ($i = 0; $i < $samples; $i++) {
             $message = Message::all()->random();
-            $fromMessage = $message->sentBy;
-            $fromUser = User::find($message->sentBy->id);
+            $fromMessage = $message->sender;
+            $fromUser = User::find($message->sender->id);
             $this->assertEquals($fromMessage->id, $fromUser->id);
         }
     }

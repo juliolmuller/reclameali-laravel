@@ -8,9 +8,24 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Wildside\Userstamps\Userstamps;
 
 /**
- * Model Category
+ * Category Model
+ *   Table:
+ *     categories
+ *   Attributes:
+ *     id:         required | integer | unique
+ *     name:       required | string(3-50) | unique
+ *     created_at: nullable | timestamp
+ *     created_by: nullable | \App\Models\User::id (integer)
+ *     updated_at: nullable | timestamp
+ *     updated_by: nullable | \App\Models\User::id (integer)
+ *     deleted_at: nullable | timestamp
+ *     deleted_by: nullable | \App\Models\User::id (integer)
+ *   Relationships:
+ *     creator:   \App\Models\User (BelongsTo)
+ *     editor:    \App\Models\User (BelongsTo)
+ *     destroyer: \App\Models\User (BelongsTo)
+ *     products:  \App\Models\Product[] (HasMany)
  *
- * @package App\Models
  * @mixin Eloquent
  */
 class Category extends Model
@@ -28,7 +43,7 @@ class Category extends Model
     /**
      * Get the products associated with $this category
      *
-     * @return \Illuminate\Database\Eloquent\Collection<\App\Models\Product>
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function products()
     {

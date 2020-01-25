@@ -9,9 +9,41 @@ use Illuminate\Notifications\Notifiable;
 use Znck\Eloquent\Traits\BelongsToThrough;
 
 /**
- * Model User
+ * User Model
+ *   Table:
+ *     users
+ *   Attributes:
+ *     id:                required | integer | unique
+ *     first_name:        required | string(1-30)
+ *     last_name:         required | string(1-150)
+ *     cpf:               required | string(11)
+ *     email:             required | string(1-255)
+ *     date_of_birth:     required | date
+ *     password:          required | string(60)
+ *     role_id:           required | \App\Models\Role::id (integer)
+ *     phone:             nullable | string(0-16)
+ *     email_verified_at: nullable | timestamp
+ *     remember_token:    nullable | string(100)
+ *     strett:            nullable | string(0-255)
+ *     number:            nullable | integer
+ *     complement:        nullable | string(0-20)
+ *     zip_code:          nullable | string(8)
+ *     city_id:           nullable | \App\Models\City::id (integer)
+ *     created_at:        nullable | timestamp
+ *     created_by:        nullable | \App\Models\User::id (integer)
+ *     updated_at:        nullable | timestamp
+ *     updated_by:        nullable | \App\Models\User::id (integer)
+ *     deleted_at:        nullable | timestamp
+ *     deleted_by:        nullable | \App\Models\User::id (integer)
+ *   Relationships:
+ *     role:      \App\Models\Role (BelongsTo)
+ *     city:      \App\Models\City (BelongsTo)
+ *     state:     \App\Models\State (BelongsToThrough)
+ *     creator:   \App\Models\User (BelongsTo)
+ *     editor:    \App\Models\User (BelongsTo)
+ *     destroyer: \App\Models\User (BelongsTo)
+ *     tickets:   \App\Models\Ticket[] (HasMany)
  *
- * @package App\Models
  * @mixin Eloquent
  */
 class User extends Authenticatable
@@ -46,7 +78,7 @@ class User extends Authenticatable
     /**
      * Get the role associated with $this user
      *
-     * @return \App\Models\Role
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function role()
     {
@@ -56,7 +88,7 @@ class User extends Authenticatable
     /**
      * Get the city associated with $this user
      *
-     * @return \App\Models\City
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function city()
     {
@@ -66,7 +98,7 @@ class User extends Authenticatable
     /**
      * Get the state associated with $this user
      *
-     * @return \App\Models\State
+     * @return \Znck\Eloquent\Relations\BelongsToThrough
      */
     public function state()
     {
@@ -76,7 +108,7 @@ class User extends Authenticatable
     /**
      * Get the tickets associated with $this user
      *
-     * @return \Illuminate\Database\Eloquent\Collection<\App\Models\Ticket>
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function tickets()
     {

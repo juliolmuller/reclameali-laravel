@@ -6,9 +6,19 @@ use Eloquent;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Model State
+ * State Model
+ *   Table:
+ *     states
+ *   Attributes:
+ *     id:          required | integer | unique
+ *     name:        required | string(0-19)
+ *     abreviation: required | string(2)
+ *     created_at:  nullable | timestamp
+ *     updated_at:  nullable | timestamp
+ *   Relationships:
+ *     cities: \App\Models\City[] (HasMany)
+ *     users:  \App\Models\User[] (HasManyThrough)
  *
- * @package App\Models
  * @mixin Eloquent
  */
 class State extends Model
@@ -32,7 +42,7 @@ class State extends Model
     /**
      * Get the cities associated with $this state
      *
-     * @return \Illuminate\Database\Eloquent\Collection<\App\Models\City>
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function cities()
     {
@@ -42,7 +52,7 @@ class State extends Model
     /**
      * Get the users associated with $this state
      *
-     * @return \Illuminate\Database\Eloquent\Collection<\App\Models\User>
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
      */
     public function users()
     {

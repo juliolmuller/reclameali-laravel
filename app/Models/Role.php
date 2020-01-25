@@ -6,9 +6,18 @@ use Eloquent;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Model Access Role
+ * Role Model
+ *   Table:
+ *     access_roles
+ *   Attributes:
+ *     id:          required | integer | unique
+ *     name:        required | string(1-10) | unique
+ *     description: nullable | string(0-255)
+ *     created_at:  nullable | timestamp
+ *     updated_at:  nullable | timestamp
+ *   Relationships:
+ *     users: \App\Models\User[] (HasMany)
  *
- * @package App\Models
  * @mixin Eloquent
  */
 class Role extends Model
@@ -30,7 +39,7 @@ class Role extends Model
     /**
      * Get the users associated with $this role
      *
-     * @return \Illuminate\Database\Eloquent\Collection<\App\Models\User>
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function users()
     {

@@ -8,9 +8,30 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Wildside\Userstamps\Userstamps;
 
 /**
- * Model Product
+ * Product Model
+ *   Table:
+ *     products
+ *   Attributes:
+ *     id:          required | integer | unique
+ *     name:        required | string(3-255) | unique
+ *     category_id: required | \App\Models\Category::id (integer)
+ *     utc:         required | string(12)
+ *     description: nullable | string(0-5000)
+ *     weight:      nullable | float(>0)
+ *     ean:         nullable | string(13)
+ *     created_at:  nullable | timestamp
+ *     created_by:  nullable | \App\Models\User::id (integer)
+ *     updated_at:  nullable | timestamp
+ *     updated_by:  nullable | \App\Models\User::id (integer)
+ *     deleted_at:  nullable | timestamp
+ *     deleted_by:  nullable | \App\Models\User::id (integer)
+ *   Relationships:
+ *     category:  \App\Models\Category (BelongsTo)
+ *     creator:   \App\Models\User (BelongsTo)
+ *     editor:    \App\Models\User (BelongsTo)
+ *     destroyer: \App\Models\User (BelongsTo)
+ *     tickets:   \App\Models\Ticket[] (HasMany)
  *
- * @package App\Models
  * @mixin Eloquent
  */
 class Product extends Model
@@ -28,7 +49,7 @@ class Product extends Model
     /**
      * Get the category associated with $this product
      *
-     * @return \App\Models\Category
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function category()
     {
@@ -38,7 +59,7 @@ class Product extends Model
     /**
      * Get the tickets associated with $this product
      *
-     * @return \Illuminate\Database\Eloquent\Collection<\App\Models\Ticket>
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function tickets()
     {

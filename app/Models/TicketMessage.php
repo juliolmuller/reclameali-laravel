@@ -7,9 +7,23 @@ use Illuminate\Database\Eloquent\Model;
 use Wildside\Userstamps\Userstamps;
 
 /**
- * Model Ticket Message
+ * Ticket Message Model
+ *   Table:
+ *     ticket_messages
+ *   Attributes:
+ *     id:         required | integer | unique
+ *     body:       required | string(1-255) | unique
+ *     ticket_id:  required | \App\Models\Ticket::id (integer)
+ *     sent_at:    nullable | timestamp
+ *     sent_by:    nullable | \App\Models\User::id (integer)
+ *     updated_at: nullable | timestamp
+ *     updated_by: nullable | \App\Models\User::id (integer)
+ *   Relationships:
+ *     ticket:    \App\Models\Ticket (BelongsTo)
+ *     sender:    \App\Models\User (BelongsTo)
+ *     creator:   \App\Models\User (BelongsTo)
+ *     editor:    \App\Models\User (BelongsTo)
  *
- * @package App\Models
  * @mixin Eloquent
  */
 class TicketMessage extends Model
@@ -41,7 +55,7 @@ class TicketMessage extends Model
     /**
      * Get the ticket associated with $this message
      *
-     * @return \App\Models\Ticket
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function ticket()
     {
@@ -51,10 +65,10 @@ class TicketMessage extends Model
     /**
      * Get the user associated with $this message
      *
-     * @return \App\Models\User
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function sentBy()
+    public function sender()
     {
-        return $this->belongsTo(User::class, 'sent_by');
+        return $this->creator();
     }
 }

@@ -8,9 +8,24 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Wildside\Userstamps\Userstamps;
 
 /**
- * Model Ticket Type
+ * Ticket Type Model
+ *   Table:
+ *     ticket_types
+ *   Attributes:
+ *     id:          required | integer | unique
+ *     description: required | string(0-255) | unique
+ *     created_at:  nullable | timestamp
+ *     created_by:  nullable | \App\Models\User::id (integer)
+ *     updated_at:  nullable | timestamp
+ *     updated_by:  nullable | \App\Models\User::id (integer)
+ *     deleted_at:  nullable | timestamp
+ *     deleted_by:  nullable | \App\Models\User::id (integer)
+ *   Relationships:
+ *     creator:   \App\Models\User (BelongsTo)
+ *     editor:    \App\Models\User (BelongsTo)
+ *     destroyer: \App\Models\User (BelongsTo)
+ *     tickets:   \App\Models\Ticket[] (HasMany)
  *
- * @package App\Models
  * @mixin Eloquent
  */
 class TicketType extends Model
@@ -28,7 +43,7 @@ class TicketType extends Model
     /**
      * Get the tickets associated with $this type
      *
-     * @return \Illuminate\Database\Eloquent\Collection<\App\Models\Ticket>
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function tickets()
     {
