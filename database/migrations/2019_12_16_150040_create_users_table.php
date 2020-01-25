@@ -13,7 +13,7 @@ class CreateUsersTable extends Migration
             $table->string('first_name', 30);
             $table->string('last_name', 150);
             $table->char('cpf', 11)->unique()->index();
-            $table->date('date_of_birth')->nullable();
+            $table->date('date_of_birth');
             $table->string('phone', 16)->nullable();
             $table->string('email')->unique()->index();
             $table->timestamp('email_verified_at')->nullable();
