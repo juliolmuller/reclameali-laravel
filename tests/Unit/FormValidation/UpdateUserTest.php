@@ -37,7 +37,14 @@ class UpdateUserTest extends TestCase
 
     private function createUser($modifiers = [])
     {
-        $user = factory(User::class)->create($modifiers)->toArray();
+        $user = null;
+        while (is_null($user)) {
+            try {
+                $user = factory(User::class)->create($modifiers)->toArray();
+            } catch (\PDOException $ex) {
+                continue;
+            }
+        }
         Arr::set($user, 'role', $user['role_id']);
         Arr::set($user, 'city', $user['city_id']);
         $this->unset($user,  'password', 'created_at', 'updated_at');;
