@@ -8,18 +8,11 @@ use Tests\TestCase;
 
 class TicketTypesApiTest extends TestCase
 {
-    private function getUser()
-    {
-        return User::whereHas('role', function ($query) {
-            $query->where('name', 'manager');
-        })->get()->random();
-    }
-
     public function test_type_index()
     {
         $type = Type::orderBy('description')->first();
         $url = route('ticket-types.index');
-        $response = $this->actingAs($this->getUser())->getJson($url);
+        $response = $this->actingAs($this->getUser('manager'))->getJson($url);
         $response->assertStatus(200);
         if ($type) {
             $response->assertJson([
@@ -37,7 +30,7 @@ class TicketTypesApiTest extends TestCase
     {
         $type = Type::all()->random();
         $url = route('ticket-types.show', $type->id);
-        $response = $this->actingAs($this->getUser())->getJson($url);
+        $response = $this->actingAs($this->getUser('manager'))->getJson($url);
         $response->assertStatus(200);
         $response->assertJson([
             'id'          => $type->id,
@@ -47,7 +40,7 @@ class TicketTypesApiTest extends TestCase
 
     public function test_type_store()
     {
-        $user = $this->getUser();
+        $user = $this->getUser('manager');
         $type = [
             'description' => 'Testing New Type',
             'created_by'  => $user->id,
@@ -61,7 +54,7 @@ class TicketTypesApiTest extends TestCase
 
     public function test_type_update()
     {
-        $user = $this->getUser();
+        $user = $this->getUser('manager');
         $type = [
             'id'          => factory(Type::class)->create()->id,
             'description' => 'Testing Update Type',
@@ -76,7 +69,7 @@ class TicketTypesApiTest extends TestCase
 
     public function test_type_destroy()
     {
-        $user = $this->getUser();
+        $user = $this->getUser('manager');
         $type = [
             'id'         => factory(Type::class)->create()->id,
             'deleted_by' => $user->id,

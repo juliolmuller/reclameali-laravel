@@ -25,16 +25,9 @@ class StoreUserTest extends TestCase
     const ZIP_CODE = '80123100';
     const PSWD = '!l0v3c1ick';
 
-    private function getUser($user = 'manager')
-    {
-        return User::whereHas('role', function (Builder $query) use ($user) {
-            $query->where('name', $user);
-        })->get()->random();
-    }
-
     public function test_required_validation()
     {
-        $user = $this->getUser();
+        $user = $this->getUser('manager');
         $url = route('users.store');
         $response = $this->actingAs($user)->postJson($url);
         $response->assertStatus(422);
@@ -44,7 +37,7 @@ class StoreUserTest extends TestCase
             'cpf'                   => self::CPF,
             'email'                 => self::EMAIL,
             'date_of_birth'         => self::DATE_BIRTH,
-            'role'                  => $this->getUser()->role_id,
+            'role'                  => $this->getUser('manager')->role_id,
             'password'              => self::PSWD,
             'password_confirmation' => self::PSWD,
         ];
@@ -59,13 +52,13 @@ class StoreUserTest extends TestCase
 
     public function test_required_firstName_validation()
     {
-        $user = $this->getUser();
+        $user = $this->getUser('manager');
         $newUser = [
             'last_name'             => self::LAST_NAME,
             'cpf'                   => self::CPF,
             'email'                 => self::EMAIL,
             'date_of_birth'         => self::DATE_BIRTH,
-            'role'                  => $this->getUser()->role_id,
+            'role'                  => $this->getUser('manager')->role_id,
             'password'              => self::PSWD,
             'password_confirmation' => self::PSWD,
         ];
@@ -84,13 +77,13 @@ class StoreUserTest extends TestCase
 
     public function test_required_lastName_validation()
     {
-        $user = $this->getUser();
+        $user = $this->getUser('manager');
         $newUser = [
             'first_name'            => self::FIRST_NAME,
             'cpf'                   => self::CPF,
             'email'                 => self::EMAIL,
             'date_of_birth'         => self::DATE_BIRTH,
-            'role'                  => $this->getUser()->role_id,
+            'role'                  => $this->getUser('manager')->role_id,
             'password'              => self::PSWD,
             'password_confirmation' => self::PSWD,
         ];
@@ -109,13 +102,13 @@ class StoreUserTest extends TestCase
 
     public function test_required_cpf_validation()
     {
-        $user = $this->getUser();
+        $user = $this->getUser('manager');
         $newUser = [
             'first_name'            => self::FIRST_NAME,
             'last_name'             => self::LAST_NAME,
             'email'                 => self::EMAIL,
             'date_of_birth'         => self::DATE_BIRTH,
-            'role'                  => $this->getUser()->role_id,
+            'role'                  => $this->getUser('manager')->role_id,
             'password'              => self::PSWD,
             'password_confirmation' => self::PSWD,
         ];
@@ -134,13 +127,13 @@ class StoreUserTest extends TestCase
 
     public function test_required_email_validation()
     {
-        $user = $this->getUser();
+        $user = $this->getUser('manager');
         $newUser = [
             'first_name'            => self::FIRST_NAME,
             'last_name'             => self::LAST_NAME,
             'cpf'                   => self::CPF,
             'date_of_birth'         => self::DATE_BIRTH,
-            'role'                  => $this->getUser()->role_id,
+            'role'                  => $this->getUser('manager')->role_id,
             'password'              => self::PSWD,
             'password_confirmation' => self::PSWD,
         ];
@@ -159,13 +152,13 @@ class StoreUserTest extends TestCase
 
     public function test_required_dateOfBirth_validation()
     {
-        $user = $this->getUser();
+        $user = $this->getUser('manager');
         $newUser = [
             'first_name'            => self::FIRST_NAME,
             'last_name'             => self::LAST_NAME,
             'cpf'                   => self::CPF,
             'email'                 => self::EMAIL,
-            'role'                  => $this->getUser()->role_id,
+            'role'                  => $this->getUser('manager')->role_id,
             'password'              => self::PSWD,
             'password_confirmation' => self::PSWD,
         ];
@@ -184,14 +177,14 @@ class StoreUserTest extends TestCase
 
     public function test_required_password_validation()
     {
-        $user = $this->getUser();
+        $user = $this->getUser('manager');
         $newUser = [
             'first_name'            => self::FIRST_NAME,
             'last_name'             => self::LAST_NAME,
             'cpf'                   => self::CPF,
             'email'                 => self::EMAIL,
             'date_of_birth'         => self::DATE_BIRTH,
-            'role'                  => $this->getUser()->role_id,
+            'role'                  => $this->getUser('manager')->role_id,
             'password_confirmation' => self::PSWD,
         ];
         $url = route('users.store');
@@ -209,14 +202,14 @@ class StoreUserTest extends TestCase
 
     public function test_required_passwordConfirmation_validation()
     {
-        $user = $this->getUser();
+        $user = $this->getUser('manager');
         $newUser = [
             'first_name'    => self::FIRST_NAME,
             'last_name'     => self::LAST_NAME,
             'cpf'           => self::CPF,
             'email'         => self::EMAIL,
             'date_of_birth' => self::DATE_BIRTH,
-            'role'          => $this->getUser()->role_id,
+            'role'          => $this->getUser('manager')->role_id,
             'password'      => self::PSWD,
         ];
         $url = route('users.store');
@@ -234,14 +227,14 @@ class StoreUserTest extends TestCase
 
     public function test_is_numeric_cpf_validation()
     {
-        $user = $this->getUser();
+        $user = $this->getUser('manager');
         $newUser = [
             'first_name'            => self::FIRST_NAME,
             'last_name'             => self::LAST_NAME,
             'cpf'                   => 'A1234567890',
             'email'                 => self::EMAIL,
             'date_of_birth'         => self::DATE_BIRTH,
-            'role'                  => $this->getUser()->role_id,
+            'role'                  => $this->getUser('manager')->role_id,
             'password'              => self::PSWD,
             'password_confirmation' => self::PSWD,
         ];
@@ -260,7 +253,7 @@ class StoreUserTest extends TestCase
 
     public function test_is_numeric_phone_validation()
     {
-        $user = $this->getUser();
+        $user = $this->getUser('manager');
         $newUser = [
             'first_name'            => self::FIRST_NAME,
             'last_name'             => self::LAST_NAME,
@@ -268,7 +261,7 @@ class StoreUserTest extends TestCase
             'email'                 => self::EMAIL,
             'phone'                 => '4198518773A',
             'date_of_birth'         => self::DATE_BIRTH,
-            'role'                  => $this->getUser()->role_id,
+            'role'                  => $this->getUser('manager')->role_id,
             'password'              => self::PSWD,
             'password_confirmation' => self::PSWD,
         ];
@@ -287,7 +280,7 @@ class StoreUserTest extends TestCase
 
     public function test_is_numeric_streetNumber_validation()
     {
-        $user = $this->getUser();
+        $user = $this->getUser('manager');
         $newUser = [
             'first_name'            => self::FIRST_NAME,
             'last_name'             => self::LAST_NAME,
@@ -295,7 +288,7 @@ class StoreUserTest extends TestCase
             'email'                 => self::EMAIL,
             'date_of_birth'         => self::DATE_BIRTH,
             'number'                => 'A',
-            'role'                  => $this->getUser()->role_id,
+            'role'                  => $this->getUser('manager')->role_id,
             'password'              => self::PSWD,
             'password_confirmation' => self::PSWD,
         ];
@@ -314,7 +307,7 @@ class StoreUserTest extends TestCase
 
     public function test_is_numeric_zipCode_validation()
     {
-        $user = $this->getUser();
+        $user = $this->getUser('manager');
         $newUser = [
             'first_name'            => self::FIRST_NAME,
             'last_name'             => self::LAST_NAME,
@@ -322,7 +315,7 @@ class StoreUserTest extends TestCase
             'email'                 => self::EMAIL,
             'date_of_birth'         => self::DATE_BIRTH,
             'zip_code'              => '80123A00',
-            'role'                  => $this->getUser()->role_id,
+            'role'                  => $this->getUser('manager')->role_id,
             'password'              => self::PSWD,
             'password_confirmation' => self::PSWD,
         ];
@@ -341,14 +334,14 @@ class StoreUserTest extends TestCase
 
     public function test_size_zipCode_validation()
     {
-        $user = $this->getUser();
+        $user = $this->getUser('manager');
         $newUser = [
             'first_name'            => self::FIRST_NAME,
             'last_name'             => self::LAST_NAME,
             'cpf'                   => self::CPF,
             'email'                 => self::EMAIL,
             'date_of_birth'         => self::DATE_BIRTH,
-            'role'                  => $this->getUser()->role_id,
+            'role'                  => $this->getUser('manager')->role_id,
             'password'              => self::PSWD,
             'password_confirmation' => self::PSWD,
         ];
@@ -372,14 +365,14 @@ class StoreUserTest extends TestCase
 
     public function test_min_length_firstName_validation()
     {
-        $user = $this->getUser();
+        $user = $this->getUser('manager');
         $newUser = [
             'first_name'            => '', // min is 1 character
             'last_name'             => self::LAST_NAME,
             'cpf'                   => self::CPF,
             'email'                 => self::EMAIL,
             'date_of_birth'         => self::DATE_BIRTH,
-            'role'                  => $this->getUser()->role_id,
+            'role'                  => $this->getUser('manager')->role_id,
             'password'              => self::PSWD,
             'password_confirmation' => self::PSWD,
         ];
@@ -398,14 +391,14 @@ class StoreUserTest extends TestCase
 
     public function test_min_length_lastName_validation()
     {
-        $user = $this->getUser();
+        $user = $this->getUser('manager');
         $newUser = [
             'first_name'            => self::FIRST_NAME,
             'last_name'             => '', // min is 1 character
             'cpf'                   => self::CPF,
             'email'                 => self::EMAIL,
             'date_of_birth'         => self::DATE_BIRTH,
-            'role'                  => $this->getUser()->role_id,
+            'role'                  => $this->getUser('manager')->role_id,
             'password'              => self::PSWD,
             'password_confirmation' => self::PSWD,
         ];
@@ -424,7 +417,7 @@ class StoreUserTest extends TestCase
 
     public function test_min_length_phone_validation()
     {
-        $user = $this->getUser();
+        $user = $this->getUser('manager');
         $newUser = [
             'first_name'            => self::FIRST_NAME,
             'last_name'             => self::LAST_NAME,
@@ -432,7 +425,7 @@ class StoreUserTest extends TestCase
             'email'                 => self::EMAIL,
             'phone'                 => '123456789', // min is 10 digits
             'date_of_birth'         => self::DATE_BIRTH,
-            'role'                  => $this->getUser()->role_id,
+            'role'                  => $this->getUser('manager')->role_id,
             'password'              => self::PSWD,
             'password_confirmation' => self::PSWD,
         ];
@@ -451,14 +444,14 @@ class StoreUserTest extends TestCase
 
     public function test_min_length_password_validation()
     {
-        $user = $this->getUser();
+        $user = $this->getUser('manager');
         $newUser = [
             'first_name'            => self::FIRST_NAME,
             'last_name'             => self::LAST_NAME,
             'cpf'                   => self::CPF,
             'email'                 => self::EMAIL,
             'date_of_birth'         => self::DATE_BIRTH,
-            'role'                  => $this->getUser()->role_id,
+            'role'                  => $this->getUser('manager')->role_id,
             'password'              => 'PASSNOW', // min is 8 characters
             'password_confirmation' => 'PASSNOW', // min is 8 characters
         ];
@@ -478,14 +471,14 @@ class StoreUserTest extends TestCase
 
     public function test_min_value_dateOfBirth_validation()
     {
-        $user = $this->getUser();
+        $user = $this->getUser('manager');
         $newUser = [
             'first_name'            => self::FIRST_NAME,
             'last_name'             => self::LAST_NAME,
             'cpf'                   => self::CPF,
             'email'                 => self::EMAIL,
             'date_of_birth'         => now()->subYears(18)->addDay(),
-            'role'                  => $this->getUser()->role_id,
+            'role'                  => $this->getUser('manager')->role_id,
             'password'              => self::PSWD,
             'password_confirmation' => self::PSWD,
         ];
@@ -504,7 +497,7 @@ class StoreUserTest extends TestCase
 
     public function test_min_value_streetNumber_validation()
     {
-        $user = $this->getUser();
+        $user = $this->getUser('manager');
         $newUser = [
             'first_name'            => self::FIRST_NAME,
             'last_name'             => self::LAST_NAME,
@@ -512,7 +505,7 @@ class StoreUserTest extends TestCase
             'email'                 => self::EMAIL,
             'date_of_birth'         => self::DATE_BIRTH,
             'number'                => -1, // min is value 0
-            'role'                  => $this->getUser()->role_id,
+            'role'                  => $this->getUser('manager')->role_id,
             'password'              => self::PSWD,
             'password_confirmation' => self::PSWD,
         ];
@@ -531,14 +524,14 @@ class StoreUserTest extends TestCase
 
     public function test_max_length_firstName_validation()
     {
-        $user = $this->getUser();
+        $user = $this->getUser('manager');
         $newUser = [
             'first_name'            => str_repeat('T', 31), // max is 30 characters
             'last_name'             => self::LAST_NAME,
             'cpf'                   => self::CPF,
             'email'                 => self::EMAIL,
             'date_of_birth'         => self::DATE_BIRTH,
-            'role'                  => $this->getUser()->role_id,
+            'role'                  => $this->getUser('manager')->role_id,
             'password'              => self::PSWD,
             'password_confirmation' => self::PSWD,
         ];
@@ -557,14 +550,14 @@ class StoreUserTest extends TestCase
 
     public function test_max_length_lastName_validation()
     {
-        $user = $this->getUser();
+        $user = $this->getUser('manager');
         $newUser = [
             'first_name'            => self::FIRST_NAME,
             'last_name'             => str_repeat('T', 151), // max is 150 characters
             'cpf'                   => self::CPF,
             'email'                 => self::EMAIL,
             'date_of_birth'         => self::DATE_BIRTH,
-            'role'                  => $this->getUser()->role_id,
+            'role'                  => $this->getUser('manager')->role_id,
             'password'              => self::PSWD,
             'password_confirmation' => self::PSWD,
         ];
@@ -583,7 +576,7 @@ class StoreUserTest extends TestCase
 
     public function test_max_length_phone_validation()
     {
-        $user = $this->getUser();
+        $user = $this->getUser('manager');
         $newUser = [
             'first_name'            => self::FIRST_NAME,
             'last_name'             => self::LAST_NAME,
@@ -591,7 +584,7 @@ class StoreUserTest extends TestCase
             'email'                 => self::EMAIL,
             'phone'                 => '123456789000', // max is 11 digits
             'date_of_birth'         => self::DATE_BIRTH,
-            'role'                  => $this->getUser()->role_id,
+            'role'                  => $this->getUser('manager')->role_id,
             'password'              => self::PSWD,
             'password_confirmation' => self::PSWD,
         ];
@@ -610,7 +603,7 @@ class StoreUserTest extends TestCase
 
     public function test_max_length_street_validation()
     {
-        $user = $this->getUser();
+        $user = $this->getUser('manager');
         $newUser = [
             'first_name'            => self::FIRST_NAME,
             'last_name'             => self::LAST_NAME,
@@ -618,7 +611,7 @@ class StoreUserTest extends TestCase
             'email'                 => self::EMAIL,
             'date_of_birth'         => self::DATE_BIRTH,
             'street'                => str_repeat('S', 256), // max is 255 characters
-            'role'                  => $this->getUser()->role_id,
+            'role'                  => $this->getUser('manager')->role_id,
             'password'              => self::PSWD,
             'password_confirmation' => self::PSWD,
         ];
@@ -637,7 +630,7 @@ class StoreUserTest extends TestCase
 
     public function test_max_length_complement_validation()
     {
-        $user = $this->getUser();
+        $user = $this->getUser('manager');
         $newUser = [
             'first_name'            => self::FIRST_NAME,
             'last_name'             => self::LAST_NAME,
@@ -645,7 +638,7 @@ class StoreUserTest extends TestCase
             'email'                 => self::EMAIL,
             'date_of_birth'         => self::DATE_BIRTH,
             'complement'            => str_repeat('S', 21), // max is 20 characters
-            'role'                  => $this->getUser()->role_id,
+            'role'                  => $this->getUser('manager')->role_id,
             'password'              => self::PSWD,
             'password_confirmation' => self::PSWD,
         ];
@@ -664,14 +657,14 @@ class StoreUserTest extends TestCase
 
     public function test_unique_cpf_validation()
     {
-        $user = $this->getUser();
+        $user = $this->getUser('manager');
         $newUser = [
             'first_name'            => self::FIRST_NAME,
             'last_name'             => self::LAST_NAME,
             'cpf'                   => User::get()->random()->cpf,
             'email'                 => self::EMAIL,
             'date_of_birth'         => self::DATE_BIRTH,
-            'role'                  => $this->getUser()->role_id,
+            'role'                  => $this->getUser('manager')->role_id,
             'password'              => self::PSWD,
             'password_confirmation' => self::PSWD,
         ];
@@ -690,14 +683,14 @@ class StoreUserTest extends TestCase
 
     public function test_unique_email_validation()
     {
-        $user = $this->getUser();
+        $user = $this->getUser('manager');
         $newUser = [
             'first_name'            => self::FIRST_NAME,
             'last_name'             => self::LAST_NAME,
             'cpf'                   => self::CPF,
             'email'                 => User::get()->random()->email,
             'date_of_birth'         => self::DATE_BIRTH,
-            'role'                  => $this->getUser()->role_id,
+            'role'                  => $this->getUser('manager')->role_id,
             'password'              => self::PSWD,
             'password_confirmation' => self::PSWD,
         ];
@@ -716,7 +709,7 @@ class StoreUserTest extends TestCase
 
     public function test_exists_state_validation()
     {
-        $user = $this->getUser();
+        $user = $this->getUser('manager');
         $newUser = [
             'first_name'            => self::FIRST_NAME,
             'last_name'             => self::LAST_NAME,
@@ -724,7 +717,7 @@ class StoreUserTest extends TestCase
             'email'                 => self::EMAIL,
             'date_of_birth'         => self::DATE_BIRTH,
             'state'                 => 0,
-            'role'                  => $this->getUser()->role_id,
+            'role'                  => $this->getUser('manager')->role_id,
             'password'              => self::PSWD,
             'password_confirmation' => self::PSWD,
         ];
@@ -744,7 +737,7 @@ class StoreUserTest extends TestCase
 
     public function test_exists_city_validation()
     {
-        $user = $this->getUser();
+        $user = $this->getUser('manager');
         $newUser = [
             'first_name'            => self::FIRST_NAME,
             'last_name'             => self::LAST_NAME,
@@ -752,7 +745,7 @@ class StoreUserTest extends TestCase
             'email'                 => self::EMAIL,
             'date_of_birth'         => self::DATE_BIRTH,
             'city'                  => 0,
-            'role'                  => $this->getUser()->role_id,
+            'role'                  => $this->getUser('manager')->role_id,
             'password'              => self::PSWD,
             'password_confirmation' => self::PSWD,
         ];
@@ -772,7 +765,7 @@ class StoreUserTest extends TestCase
 
     public function test_exists_role_validation()
     {
-        $user = $this->getUser();
+        $user = $this->getUser('manager');
         $newUser = [
             'first_name'            => self::FIRST_NAME,
             'last_name'             => self::LAST_NAME,
@@ -786,7 +779,7 @@ class StoreUserTest extends TestCase
         $url = route('users.store');
         $response = $this->actingAs($user)->postJson($url, $newUser);
         $response->assertStatus(422);
-        $newUser['role'] = $this->getUser()->role_id;
+        $newUser['role'] = $this->getUser('manager')->role_id;
         $response = $this->actingAs($user)->postJson($url, $newUser);
         $response->assertStatus(201);
         $newUser['role_id'] = $newUser['role'];
@@ -798,14 +791,14 @@ class StoreUserTest extends TestCase
 
     public function test_is_valid_firstName_validation()
     {
-        $user = $this->getUser();
+        $user = $this->getUser('manager');
         $newUser = [
             'first_name'            => 'Josnei 22',
             'last_name'             => self::LAST_NAME,
             'cpf'                   => self::CPF,
             'email'                 => self::EMAIL,
             'date_of_birth'         => self::DATE_BIRTH,
-            'role'                  => $this->getUser()->role_id,
+            'role'                  => $this->getUser('manager')->role_id,
             'password'              => self::PSWD,
             'password_confirmation' => self::PSWD,
         ];
@@ -824,14 +817,14 @@ class StoreUserTest extends TestCase
 
     public function test_is_valid_lastName_validation()
     {
-        $user = $this->getUser();
+        $user = $this->getUser('manager');
         $newUser = [
             'first_name'            => self::FIRST_NAME,
             'last_name'             => 'Silva 22',
             'cpf'                   => self::CPF,
             'email'                 => self::EMAIL,
             'date_of_birth'         => self::DATE_BIRTH,
-            'role'                  => $this->getUser()->role_id,
+            'role'                  => $this->getUser('manager')->role_id,
             'password'              => self::PSWD,
             'password_confirmation' => self::PSWD,
         ];
@@ -850,14 +843,14 @@ class StoreUserTest extends TestCase
 
     public function test_is_valid_cpf_validation()
     {
-        $user = $this->getUser();
+        $user = $this->getUser('manager');
         $newUser = [
             'first_name'            => self::FIRST_NAME,
             'last_name'             => self::LAST_NAME,
             'cpf'                   => '90094905052',
             'email'                 => self::EMAIL,
             'date_of_birth'         => self::DATE_BIRTH,
-            'role'                  => $this->getUser()->role_id,
+            'role'                  => $this->getUser('manager')->role_id,
             'password'              => self::PSWD,
             'password_confirmation' => self::PSWD,
         ];
@@ -876,14 +869,14 @@ class StoreUserTest extends TestCase
 
     public function test_is_valid_email_validation()
     {
-        $user = $this->getUser();
+        $user = $this->getUser('manager');
         $newUser = [
             'first_name'            => self::FIRST_NAME,
             'last_name'             => self::LAST_NAME,
             'cpf'                   => self::CPF,
             'email'                 => 'josnei.silva_email.com',
             'date_of_birth'         => self::DATE_BIRTH,
-            'role'                  => $this->getUser()->role_id,
+            'role'                  => $this->getUser('manager')->role_id,
             'password'              => self::PSWD,
             'password_confirmation' => self::PSWD,
         ];

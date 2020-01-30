@@ -9,18 +9,11 @@ use Tests\TestCase;
 
 class ProductsApiTest extends TestCase
 {
-    private function getUser()
-    {
-        return User::whereHas('role', function ($query) {
-            $query->where('name', 'attendant');
-        })->get()->random();
-    }
-
     public function test_products_index()
     {
         $product = Product::orderBy('name')->first();
         $url = route('products.index');
-        $response = $this->actingAs($this->getUser())->getJson($url);
+        $response = $this->actingAs($this->getUser('attendant'))->getJson($url);
         $response->assertStatus(200);
         if ($product) {
             $response->assertJson([
@@ -38,7 +31,7 @@ class ProductsApiTest extends TestCase
     {
         $product = Product::all()->random();
         $url = route('products.show', $product->id);
-        $response = $this->actingAs($this->getUser())->getJson($url);
+        $response = $this->actingAs($this->getUser('attendant'))->getJson($url);
         $response->assertStatus(200);
         $response->assertJson([
             'id'   => $product->id,
@@ -49,7 +42,7 @@ class ProductsApiTest extends TestCase
     public function test_products_store()
     {
         $categoryId = Category::all()->random()->id;
-        $user = $this->getUser();
+        $user = $this->getUser('attendant');
         $product = [
             'name'        => 'Testing New Product',
             'category_id' => $categoryId,
@@ -69,7 +62,7 @@ class ProductsApiTest extends TestCase
     public function test_products_update()
     {
         $categoryId = Category::all()->random()->id;
-        $user = $this->getUser();
+        $user = $this->getUser('attendant');
         $product = [
             'id'          => factory(Product::class)->create()->id,
             'name'        => 'Testing New Product',
@@ -89,7 +82,7 @@ class ProductsApiTest extends TestCase
 
     public function test_products_destroy()
     {
-        $user = $this->getUser();
+        $user = $this->getUser('attendant');
         $product = [
             'id'         => factory(Product::class)->create()->id,
             'deleted_by' => $user->id,

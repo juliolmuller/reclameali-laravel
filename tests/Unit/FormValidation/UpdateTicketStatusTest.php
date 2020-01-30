@@ -13,22 +13,15 @@ class UpdateTicketStatusTest extends TestCase
      */
     const NAME = 'TESTING_VALIDATION_ON_STORE';
 
-    private function getUser()
-    {
-        return User::whereHas('role', function ($query) {
-            $query->where('name', 'manager');
-        })->get()->random();
-    }
-
     public function test_required_name_validation()
     {
         $status = [];
         $id = factory(Status::class)->create()->id;
         $url = route('ticket-status.update', $id);
-        $response = $this->actingAs($this->getUser())->putJson($url, $status);
+        $response = $this->actingAs($this->getUser('manager'))->putJson($url, $status);
         $response->assertStatus(422);
         $status['name'] = self::NAME;
-        $response = $this->actingAs($this->getUser())->putJson($url, $status);
+        $response = $this->actingAs($this->getUser('manager'))->putJson($url, $status);
         $response->assertStatus(200);
         $this->assertDatabaseHas('ticket_status', $status);
     }
@@ -38,10 +31,10 @@ class UpdateTicketStatusTest extends TestCase
         $status = ['name' => '']; // min is 1 characters
         $id = factory(Status::class)->create()->id;
         $url = route('ticket-status.update', $id);
-        $response = $this->actingAs($this->getUser())->putJson($url, $status);
+        $response = $this->actingAs($this->getUser('manager'))->putJson($url, $status);
         $response->assertStatus(422);
         $status['name'] = self::NAME;
-        $response = $this->actingAs($this->getUser())->putJson($url, $status);
+        $response = $this->actingAs($this->getUser('manager'))->putJson($url, $status);
         $response->assertStatus(200);
         $this->assertDatabaseHas('ticket_status', $status);
     }
@@ -51,10 +44,10 @@ class UpdateTicketStatusTest extends TestCase
         $status = ['name' => str_repeat('A', 31)]; // max is 30 characters
         $id = factory(Status::class)->create()->id;
         $url = route('ticket-status.update', $id);
-        $response = $this->actingAs($this->getUser())->putJson($url, $status);
+        $response = $this->actingAs($this->getUser('manager'))->putJson($url, $status);
         $response->assertStatus(422);
         $status['name'] = self::NAME;
-        $response = $this->actingAs($this->getUser())->putJson($url, $status);
+        $response = $this->actingAs($this->getUser('manager'))->putJson($url, $status);
         $response->assertStatus(200);
         $this->assertDatabaseHas('ticket_status', $status);
     }
@@ -65,10 +58,10 @@ class UpdateTicketStatusTest extends TestCase
         $status = ['name' => $name];
         $id = factory(Status::class)->create()->id;
         $url = route('ticket-status.update', $id);
-        $response = $this->actingAs($this->getUser())->putJson($url, $status);
+        $response = $this->actingAs($this->getUser('manager'))->putJson($url, $status);
         $response->assertStatus(422);
         $status['name'] = self::NAME;
-        $response = $this->actingAs($this->getUser())->putJson($url, $status);
+        $response = $this->actingAs($this->getUser('manager'))->putJson($url, $status);
         $response->assertStatus(200);
         $this->assertDatabaseHas('ticket_status', $status);
     }
@@ -81,10 +74,10 @@ class UpdateTicketStatusTest extends TestCase
         ];
         $id = factory(Status::class)->create()->id;
         $url = route('ticket-status.update', $id);
-        $response = $this->actingAs($this->getUser())->putJson($url, $status);
+        $response = $this->actingAs($this->getUser('manager'))->putJson($url, $status);
         $response->assertStatus(422);
         $status['description'] = str_repeat('A', 255);
-        $response = $this->actingAs($this->getUser())->putJson($url, $status);
+        $response = $this->actingAs($this->getUser('manager'))->putJson($url, $status);
         $response->assertStatus(200);
         $this->assertDatabaseHas('ticket_status', $status);
     }

@@ -8,18 +8,11 @@ use Tests\TestCase;
 
 class AccessRolesApiTest extends TestCase
 {
-    private function getUser()
-    {
-        return User::whereHas('role', function ($query) {
-            $query->where('name', 'admin');
-        })->get()->random();
-    }
-
     public function test_roles_index()
     {
         $role = Role::orderBy('name')->first();
         $url = route('roles.index');
-        $response = $this->actingAs($this->getUser())->getJson($url);
+        $response = $this->actingAs($this->getUser('admin'))->getJson($url);
         $response->assertStatus(200);
         if ($role) {
             $response->assertJson([
@@ -38,7 +31,7 @@ class AccessRolesApiTest extends TestCase
     {
         $role = Role::all()->random();
         $url = route('roles.show', $role->id);
-        $response = $this->actingAs($this->getUser())->getJson($url);
+        $response = $this->actingAs($this->getUser('admin'))->getJson($url);
         $response->assertStatus(200);
         $response->assertJson([
             'id'          => $role->id,
@@ -51,7 +44,7 @@ class AccessRolesApiTest extends TestCase
     {
         $name = 'newrole';
         $url = route('roles.store');
-        $response = $this->actingAs($this->getUser())->postJson($url, compact('name'));
+        $response = $this->actingAs($this->getUser('admin'))->postJson($url, compact('name'));
         $response->assertStatus(201);
         $response->assertJson(compact('name'));
         $this->assertDatabaseHas('access_roles', compact('name'));
@@ -64,7 +57,7 @@ class AccessRolesApiTest extends TestCase
         $id = $role->id;
         $name = 'updaterole';
         $url = route('roles.update', $id);
-        $response = $this->actingAs($this->getUser())->putJson($url, compact('name'));
+        $response = $this->actingAs($this->getUser('admin'))->putJson($url, compact('name'));
         $response->assertStatus(200);
         $response->assertJson(compact('id', 'name'));
         $this->assertDatabaseHas('access_roles', compact('id', 'name'));
@@ -76,7 +69,7 @@ class AccessRolesApiTest extends TestCase
         $role->save();
         $id = $role->id;
         $url = route('roles.destroy', $id);
-        $response = $this->actingAs($this->getUser())->deleteJson($url);
+        $response = $this->actingAs($this->getUser('admin'))->deleteJson($url);
         $response->assertStatus(200);
         $this->assertDeleted('access_roles', compact('id'));
         $response->assertJson(compact('id'));

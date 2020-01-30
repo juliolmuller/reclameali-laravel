@@ -8,18 +8,11 @@ use Tests\TestCase;
 
 class CategoriesApiTest extends TestCase
 {
-    private function getUser()
-    {
-        return User::whereHas('role', function ($query) {
-            $query->where('name', 'attendant');
-        })->get()->random();
-    }
-
     public function test_categories_index()
     {
         $category = Category::orderBy('name')->first();
         $url = route('categories.index');
-        $response = $this->actingAs($this->getUser())->getJson($url);
+        $response = $this->actingAs($this->getUser('attendant'))->getJson($url);
         $response->assertStatus(200);
         if ($category) {
             $response->assertJson([
@@ -37,7 +30,7 @@ class CategoriesApiTest extends TestCase
     {
         $category = Category::all()->random();
         $url = route('categories.show', $category->id);
-        $response = $this->actingAs($this->getUser())->getJson($url);
+        $response = $this->actingAs($this->getUser('attendant'))->getJson($url);
         $response->assertStatus(200);
         $response->assertJson([
             'id'   => $category->id,
@@ -47,7 +40,7 @@ class CategoriesApiTest extends TestCase
 
     public function test_categories_store()
     {
-        $user = $this->getUser();
+        $user = $this->getUser('attendant');
         $category = [
             'name'       => 'Testing New Category',
             'created_by' => $user->id,
@@ -61,7 +54,7 @@ class CategoriesApiTest extends TestCase
 
     public function test_categories_update()
     {
-        $user = $this->getUser();
+        $user = $this->getUser('attendant');
         $category = [
             'id'         => factory(Category::class)->create()->id,
             'name'       => 'Testing Update Category',
@@ -76,7 +69,7 @@ class CategoriesApiTest extends TestCase
 
     public function test_categories_destroy()
     {
-        $user = $this->getUser();
+        $user = $this->getUser('attendant');
         $category = [
             'id'         => factory(Category::class)->create()->id,
             'deleted_by' => $user->id,

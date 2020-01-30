@@ -12,13 +12,6 @@ class StoreTicketMessageTest extends TestCase
      */
     const MESSAGE = 'Testing New Message for Ticket';
 
-    private function getUser($user)
-    {
-        return User::whereHas('role', function ($query) use ($user) {
-            $query->where('name', $user);
-        })->get()->random();
-    }
-
     public function test_required_message_validation()
     {
         do {

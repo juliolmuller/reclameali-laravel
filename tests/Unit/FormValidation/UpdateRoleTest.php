@@ -13,23 +13,16 @@ class UpdateRoleTest extends TestCase
      */
     const NAME = 'fake_name';
 
-    private function getUser()
-    {
-        return User::whereHas('role', function ($query) {
-            $query->where('name', 'admin');
-        })->get()->random();
-    }
-
     public function test_required_name_validation()
     {
         $model = new Role(['name' => 'fakename']);
         $model->save();
         $role = ['id'   => $model->id];
         $url = route('roles.update', $role['id']);
-        $response = $this->actingAs($this->getUser())->putJson($url, $role);
+        $response = $this->actingAs($this->getUser('admin'))->putJson($url, $role);
         $response->assertStatus(422);
         $role['name'] = self::NAME;
-        $response = $this->actingAs($this->getUser())->putJson($url, $role);
+        $response = $this->actingAs($this->getUser('admin'))->putJson($url, $role);
         $response->assertStatus(200);
         $this->assertDatabaseHas('access_roles', $role);
     }
@@ -43,10 +36,10 @@ class UpdateRoleTest extends TestCase
             'name' => 'fake name',
         ];
         $url = route('roles.update', $role['id']);
-        $response = $this->actingAs($this->getUser())->putJson($url, $role);
+        $response = $this->actingAs($this->getUser('admin'))->putJson($url, $role);
         $response->assertStatus(422);
         $role['name'] = self::NAME;
-        $response = $this->actingAs($this->getUser())->putJson($url, $role);
+        $response = $this->actingAs($this->getUser('admin'))->putJson($url, $role);
         $response->assertStatus(200);
         $this->assertDatabaseHas('access_roles', $role);
     }
@@ -60,10 +53,10 @@ class UpdateRoleTest extends TestCase
             'name' => '', // min is 1 characters
         ];
         $url = route('roles.update', $role['id']);
-        $response = $this->actingAs($this->getUser())->putJson($url, $role);
+        $response = $this->actingAs($this->getUser('admin'))->putJson($url, $role);
         $response->assertStatus(422);
         $role['name'] = self::NAME;
-        $response = $this->actingAs($this->getUser())->putJson($url, $role);
+        $response = $this->actingAs($this->getUser('admin'))->putJson($url, $role);
         $response->assertStatus(200);
         $this->assertDatabaseHas('access_roles', $role);
     }
@@ -77,10 +70,10 @@ class UpdateRoleTest extends TestCase
             'name' => str_repeat('T', 11), // max is 10 characters
         ];
         $url = route('roles.update', $role['id']);
-        $response = $this->actingAs($this->getUser())->putJson($url, $role);
+        $response = $this->actingAs($this->getUser('admin'))->putJson($url, $role);
         $response->assertStatus(422);
         $role['name'] = self::NAME;
-        $response = $this->actingAs($this->getUser())->putJson($url, $role);
+        $response = $this->actingAs($this->getUser('admin'))->putJson($url, $role);
         $response->assertStatus(200);
         $this->assertDatabaseHas('access_roles', $role);
     }
@@ -95,10 +88,10 @@ class UpdateRoleTest extends TestCase
             'name' => $name,
         ];
         $url = route('roles.update', $role['id']);
-        $response = $this->actingAs($this->getUser())->putJson($url, $role);
+        $response = $this->actingAs($this->getUser('admin'))->putJson($url, $role);
         $response->assertStatus(422);
         $role['name'] = self::NAME . '2';
-        $response = $this->actingAs($this->getUser())->putJson($url, $role);
+        $response = $this->actingAs($this->getUser('admin'))->putJson($url, $role);
         $response->assertStatus(200);
         $this->assertDatabaseHas('access_roles', $role);
     }
@@ -113,10 +106,10 @@ class UpdateRoleTest extends TestCase
             'description' => str_repeat('T', 256), // max is 255 characters
         ];
         $url = route('roles.update', $role['id']);
-        $response = $this->actingAs($this->getUser())->putJson($url, $role);
+        $response = $this->actingAs($this->getUser('admin'))->putJson($url, $role);
         $response->assertStatus(422);
         $role['description'] = str_repeat('T', 255);
-        $response = $this->actingAs($this->getUser())->putJson($url, $role);
+        $response = $this->actingAs($this->getUser('admin'))->putJson($url, $role);
         $response->assertStatus(200);
         $this->assertDatabaseHas('access_roles', $role);
     }

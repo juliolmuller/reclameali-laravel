@@ -16,13 +16,6 @@ class TicketsApiTest extends TestCase
     const OPEN = 1;
     const CLOSED = 2;
 
-    private function getUser($user)
-    {
-        return User::whereHas('role', function ($query) use ($user) {
-            $query->where('name', $user);
-        })->get()->random();
-    }
-
     public function test_tickets_index()
     {
         $ticket = Ticket::orderBy('created_at', 'desc')->first();

@@ -8,18 +8,11 @@ use Tests\TestCase;
 
 class TicketStatusApiTest extends TestCase
 {
-    private function getUser()
-    {
-        return User::whereHas('role', function ($query) {
-            $query->where('name', 'manager');
-        })->get()->random();
-    }
-
     public function test_status_index()
     {
         $status = Status::orderBy('name')->first();
         $url = route('ticket-status.index');
-        $response = $this->actingAs($this->getUser())->getJson($url);
+        $response = $this->actingAs($this->getUser('manager'))->getJson($url);
         $response->assertStatus(200);
         if ($status) {
             $response->assertJson([
@@ -38,7 +31,7 @@ class TicketStatusApiTest extends TestCase
     {
         $status = Status::all()->random();
         $url = route('ticket-status.show', $status->id);
-        $response = $this->actingAs($this->getUser())->getJson($url);
+        $response = $this->actingAs($this->getUser('manager'))->getJson($url);
         $response->assertStatus(200);
         $response->assertJson([
             'id'          => $status->id,
@@ -49,7 +42,7 @@ class TicketStatusApiTest extends TestCase
 
     public function test_status_store()
     {
-        $user = $this->getUser();
+        $user = $this->getUser('manager');
         $status = [
             'name'       => 'TESTING_NEW_STATUS',
             'created_by' => $user->id,
@@ -63,7 +56,7 @@ class TicketStatusApiTest extends TestCase
 
     public function test_status_update()
     {
-        $user = $this->getUser();
+        $user = $this->getUser('manager');
         $status = [
             'id'         => factory(Status::class)->create()->id,
             'name'       => 'TESTING_UPDATE_STATUS',
@@ -78,7 +71,7 @@ class TicketStatusApiTest extends TestCase
 
     public function test_status_destroy()
     {
-        $user = $this->getUser();
+        $user = $this->getUser('manager');
         $status = [
             'id'         => factory(Status::class)->create()->id,
             'deleted_by' => $user->id,

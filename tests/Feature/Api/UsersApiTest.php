@@ -20,13 +20,6 @@ class UsersApiTest extends TestCase
     const DATE_BIRTH = '1990-03-30';
     const PSWD = '!l0v3c1ick';
 
-    private function getUser($user = 'manager')
-    {
-        return User::whereHas('role', function ($query) use ($user) {
-            $query->where('name', $user);
-        })->get()->random();
-    }
-
     public function test_users_index()
     {
         $user = User::whereHas('role', fn(Builder $query) => $query->where('name', '<>', 'customer'))
@@ -34,7 +27,7 @@ class UsersApiTest extends TestCase
             ->orderBy('first_name')
             ->first();
         $url = route('users.index');
-        $response = $this->actingAs($this->getUser())->getJson($url);
+        $response = $this->actingAs($this->getUser('manager'))->getJson($url);
         $response->assertStatus(200);
         $response->assertJson([
             'data' => [
@@ -57,7 +50,7 @@ class UsersApiTest extends TestCase
     {
         $user = User::all()->random();
         $url = route('users.show', $user->id);
-        $response = $this->actingAs($this->getUser())->getJson($url);
+        $response = $this->actingAs($this->getUser('manager'))->getJson($url);
         $response->assertStatus(200);
         $response->assertJson([
             'id'            => $user->id,
@@ -108,7 +101,7 @@ class UsersApiTest extends TestCase
 
     public function test_users_store()
     {
-        $user = $this->getUser();
+        $user = $this->getUser('manager');
         $newUser = [
             'first_name'            => self::FIRST_NAME,
             'last_name'             => self::LAST_NAME,
@@ -132,7 +125,7 @@ class UsersApiTest extends TestCase
 
     public function test_users_updateData()
     {
-        $user = $this->getUser();
+        $user = $this->getUser('manager');
         $savedUser = factory(User::class)->create([
             'role_id' => Role::where('name', '<>', 'customer')->get()->random()->id,
         ]);
@@ -183,7 +176,7 @@ class UsersApiTest extends TestCase
 
     public function test_users_updatePassword()
     {
-        $user = $this->getUser();
+        $user = $this->getUser('manager');
         $savedUser = factory(User::class)->create([
             'password' => Hash::make(self::PSWD),
             'role_id'  => Role::where('name', '<>', 'customer')->get()->random()->id,
@@ -224,7 +217,7 @@ class UsersApiTest extends TestCase
 
     public function test_users_destroy()
     {
-        $user = $this->getUser();
+        $user = $this->getUser('manager');
         $savedUser = factory(User::class)->create([
             'role_id'  => Role::where('name', '<>', 'customer')->get()->random()->id,
         ]);
