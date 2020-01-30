@@ -5,10 +5,10 @@
 
   <main class="container">
 
-    {{-- Cabeçalhodapágina(comlogotipo) --}}
+    {{-- Page header (with big logo) --}}
     <header class="text-center">
       <h1 class="text-primary display-3 c-title">
-        <img src="${pageContext.request.contextPath}/img/reclame-ali-blue.png" class="c-logo-large" alt="Logo do Sistema" />
+        <img src="{{ asset('img/reclame-ali-blue.png') }}" class="c-logo-large" alt="Logo do Sistema" />
         Reclame Ali
       </h1>
       <span class="text-secondary c-subtitle">
@@ -16,26 +16,24 @@
       </span>
     </header>
 
-    {{-- Formulário de login --}}
-    <form action="${pageContext.request.contextPath}/entrar?action=signin" method="POST" id="form-signin" class="card c-signin-card" novalidate>
+    {{-- Signin form --}}
+    <form action="{{ route('signin') }}" method="POST" id="form-signin" class="card c-signin-card">
       <h2 class="card-header">Entrar</h2>
-      <img class="card-img-top" src="${pageContext.request.contextPath}/img/cover.jpg" alt="Capa">
+      <img class="card-img-top" src="{{ asset('img/cover.jpg') }}" alt="Capa">
       <div class="card-body">
         <p class="mb-3 h5 text-center">
           Forneça suas credenciais de acesso:
         </p>
-        <c:choose>
-          <c:when test="${authError == true}">
-            <div class="alert alert-danger border-danger c-alert" role="alert">
-              Credenciais inválidas. Tente novamente!
-            </div>
-          </c:when>
-          <c:when test="${accessDenied == true}">
-            <div class="alert alert-warning border-warning c-alert" role="alert">
-              Área restrita! Você precisa logar como ${roleRequired}
-            </div>
-          </c:when>
-        </c:choose>
+        @error('email')
+          <div class="alert alert-danger border-danger c-alert" role="alert">
+            Credenciais inválidas. Tente novamente!
+          </div>
+        @enderror
+        <c:when test="${accessDenied == true}">
+          <div class="alert alert-warning border-warning c-alert" role="alert">
+            Área restrita! Você precisa logar como ${roleRequired}
+          </div>
+        </c:when>
         <div class="form-group">
           <label for="signin-login">Endereço de email:</label>
           <div class="input-group mb-3">
@@ -44,7 +42,7 @@
                 <i class="fas fa-at"></i>
               </span>
             </div>
-            <input type="text" id="signin-login" class="form-control" name="login" autofocus required />
+            <input type="text" id="signin-login" class="form-control" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus />
             <div class="invalid-feedback ml-5">Campo obrigatório</div>
           </div>
         </div>
@@ -56,7 +54,7 @@
                 <i class="fas fa-unlock-alt"></i>
               </span>
             </div>
-            <input type="password" id="signin-password" class="form-control clsDatePicker" name="password"  required />
+            <input type="password" id="signin-password" class="form-control clsDatePicker" name="password" required autocomplete="current-password" />
             <div class="invalid-feedback ml-5">Campo obrigatório</div>
           </div>
         </div>
@@ -79,15 +77,15 @@
       </div>
     </form>
 
-    {{-- Rodapé da página --}}
+    {{-- Page footer --}}
     <footer class="text-center mt-3">
       <small style="color:#777">
-        BEIBE &copy; 2019 - Todos os Direitos Reservados
+        BEIBE &copy; 2020 - Todos os Direitos Reservados
       </small>
     </footer>
   </main>
 
-  {{-- Formulário para acesso ao portfólio --}}
+  {{-- Profile form to access portfolio --}}
   <div id="access-modal" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
       <div class="modal-content">
@@ -98,18 +96,19 @@
           </button>
         </div>
         <div class="modal-body">
-          <button class="btn btn-outline-secondary btn-block" onclick="getRole('cliente')">Cliente</button>
-          <button class="btn btn-outline-secondary btn-block" onclick="getRole('func')">Funcionário</button>
-          <button class="btn btn-outline-secondary btn-block" onclick="getRole('gerente')">Gerente</button>
+          <button class="btn btn-outline-secondary btn-block" onclick="getRole('customer')">Cliente</button>
+          <button class="btn btn-outline-secondary btn-block" onclick="getRole('attendant')">Funcionário</button>
+          <button class="btn btn-outline-secondary btn-block" onclick="getRole('manager')">Gerente</button>
+          <button class="btn btn-outline-secondary btn-block" onclick="getRole('admin')">Gerente</button>
         </div>
       </div>
     </div>
   </div>
 
-  {{-- Formulário de auto-cadastro --}}
+  {{-- Signup form (for customers only) --}}
   <div id="signup-modal" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-lg" role="document">
-      <form action="${pageContext.request.contextPath}/entrar?action=signup" method="POST" id="form-signup" class="modal-content" novalidate>
+      <form action="{{ route('signup') }}" method="POST" id="form-signup" class="modal-content" novalidate>
         <div class="modal-header">
           <h2 class="modal-title">Cadastro de Usuário</h2>
           <button type="button" class="close" data-dismiss="modal">
