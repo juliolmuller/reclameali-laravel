@@ -27,7 +27,7 @@
         </ul>
       @endisset
     </div>
-    <form action="{{ route('signout') }}" method="POST" class="form-inline">
+    <form action="{{ route('auth.signout') }}" method="POST" class="form-inline">
       @csrf
       <button type="submit" class="btn btn-sm btn-outline-danger text-white my-2 my-sm-0">
         <i class="fas fa-door-open"></i>
