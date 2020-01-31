@@ -17,7 +17,7 @@
     </header>
 
     {{-- Signin form --}}
-    <form action="{{ route('signin') }}" method="POST" id="form-signin" class="card c-signin-card">
+    <form action="{{ route('auth.signin') }}" method="POST" id="form-signin" class="card c-signin-card">
       <h2 class="card-header">Entrar</h2>
       <img class="card-img-top" src="{{ asset('img/cover.jpg') }}" alt="Capa">
       <div class="card-body">
@@ -29,11 +29,11 @@
             Credenciais inválidas. Tente novamente!
           </div>
         @enderror
-        <c:when test="${accessDenied == true}">
+        @isset(app('Illuminate\Http\Request')->forbidden)
           <div class="alert alert-warning border-warning c-alert" role="alert">
-            Área restrita! Você precisa logar como ${roleRequired}
+            Área restrita! Você precisa se autenticar.
           </div>
-        </c:when>
+        @endisset
         <div class="form-group">
           <label for="signin-login">Endereço de email:</label>
           <div class="input-group mb-3">
@@ -108,7 +108,7 @@
   {{-- Signup form (for customers only) --}}
   <div id="signup-modal" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-lg" role="document">
-      <form action="{{ route('signup') }}" method="POST" id="form-signup" class="modal-content" novalidate>
+      <form action="{{ route('users.store') }}" method="POST" id="form-signup" class="modal-content" novalidate>
         <div class="modal-header">
           <h2 class="modal-title">Cadastro de Usuário</h2>
           <button type="button" class="close" data-dismiss="modal">
