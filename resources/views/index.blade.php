@@ -17,7 +17,7 @@
     </header>
 
     {{-- Signin form --}}
-    <form action="{{ route('auth.signin') }}" method="POST" id="form-signin" class="card c-signin-card">
+    <form action="{{ route('auth.signin') }}" method="POST" id="form-signin" class="card c-signin-card" novalidate>
       <h2 class="card-header">Entrar</h2>
       <img class="card-img-top" src="{{ asset('img/cover.jpg') }}" alt="Capa">
       <div class="card-body">
@@ -34,6 +34,7 @@
             Área restrita! Você precisa se autenticar.
           </div>
         @endisset
+        <input type="hidden" name="_token" value="{{ csrf_token() }}" />
         <div class="form-group">
           <label for="signin-login">Endereço de email:</label>
           <div class="input-group mb-3">

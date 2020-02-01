@@ -18,7 +18,7 @@
   {{-- Page content --}}
   <main class="container c-main">
     <h1 class="mb-4">
-      Bem-vindo(a), <strong>{{-- $currentUser->first_name --}}</strong>
+      Bem-vind@, <strong>{{-- $currentUser->first_name --}}</strong>
     </h1>
 
     {{-- Display useful info/links to the user --}}

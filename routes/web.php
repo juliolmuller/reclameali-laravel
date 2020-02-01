@@ -1,8 +1,8 @@
 <?php
 
-Route::VIEW('/', 'index')->name('index');
+Route::get('/', 'HomeController@index')->name('index');
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'HomeController@dashboard')->name('home');
 
 Route::post('/signin', 'AuthController@signin')->name('auth.signin');
 
