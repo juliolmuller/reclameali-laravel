@@ -6,15 +6,25 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateTicketTypesTable extends Migration
 {
+    /**
+     * Run migration
+     *
+     * @return void
+     */
     public function up()
     {
         Schema::create('ticket_types', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('description')->unique();
-            $table->changesTracking();
+            $table->userstamps();
         });
     }
 
+    /**
+     * Reverse migration
+     *
+     * @return void
+     */
     public function down()
     {
         Schema::dropIfExists('ticket_types');

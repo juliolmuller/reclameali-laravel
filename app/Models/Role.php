@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Eloquent;
 use Illuminate\Database\Eloquent\Model;
+use Wildside\Userstamps\Userstamps;
 
 /**
  * Role Model
@@ -14,14 +15,20 @@ use Illuminate\Database\Eloquent\Model;
  *     name:        required | string(1-10) | unique
  *     description: nullable | string(0-255)
  *     created_at:  nullable | timestamp
+ *     created_by:  nullable | \App\Models\User::id (integer)
  *     updated_at:  nullable | timestamp
+ *     updated_by:  nullable | \App\Models\User::id (integer)
  *   Relationships:
- *     users: \App\Models\User[] (HasMany)
+ *     creator: \App\Models\User (BelongsTo)
+ *     editor:  \App\Models\User (BelongsTo)
+ *     users:   \App\Models\User[] (HasMany)
  *
  * @mixin Eloquent
  */
 class Role extends Model
 {
+    use Userstamps;
+
     /**
      * Table associated with the model
      *

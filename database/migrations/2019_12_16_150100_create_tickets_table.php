@@ -6,6 +6,11 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateTicketsTable extends Migration
 {
+    /**
+     * Run migration
+     *
+     * @return void
+     */
     public function up()
     {
         Schema::create('tickets', function (Blueprint $table) {
@@ -14,13 +19,27 @@ class CreateTicketsTable extends Migration
             $table->unsignedBigInteger('status_id')->index();
             $table->unsignedBigInteger('type_id')->index();
             $table->timestamp('closed_at')->nullable();
-            $table->changesTracking();
-            $table->foreign('product_id')->references('id')->on('products');
-            $table->foreign('status_id')->references('id')->on('ticket_status');
-            $table->foreign('type_id')->references('id')->on('ticket_types');
+            $table->userstamps(false);
+
+            $table->foreign('product_id')
+                ->references('id')
+                ->on('products');
+
+            $table->foreign('status_id')
+                ->references('id')
+                ->on('ticket_status');
+
+            $table->foreign('type_id')
+                ->references('id')
+                ->on('ticket_types');
         });
     }
 
+    /**
+     * Reverse migration
+     *
+     * @return void
+     */
     public function down()
     {
         Schema::dropIfExists('tickets');

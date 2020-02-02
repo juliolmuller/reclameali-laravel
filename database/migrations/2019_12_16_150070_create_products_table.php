@@ -6,6 +6,11 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateProductsTable extends Migration
 {
+    /**
+     * Run migration
+     *
+     * @return void
+     */
     public function up()
     {
         Schema::create('products', function (Blueprint $table) {
@@ -16,11 +21,19 @@ class CreateProductsTable extends Migration
             $table->unsignedBigInteger('category_id');
             $table->char('utc', 12)->unique()->index();
             $table->char('ean', 13)->unique()->nullable()->index();
-            $table->changesTracking();
-            $table->foreign('category_id')->references('id')->on('categories');
+            $table->userstamps();
+
+            $table->foreign('category_id')
+                ->references('id')
+                ->on('categories');
         });
     }
 
+    /**
+     * Reverse migration
+     *
+     * @return void
+     */
     public function down()
     {
         Schema::dropIfExists('products');
