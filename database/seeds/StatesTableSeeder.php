@@ -8,6 +8,11 @@ use Illuminate\Support\Facades\DB;
 
 class StatesTableSeeder extends Seeder
 {
+    /**
+     * Seed the database table
+     *
+     * @return void
+     */
     public function run()
     {
         $now = now();

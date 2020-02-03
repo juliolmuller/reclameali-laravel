@@ -6,6 +6,11 @@ use Illuminate\Database\Seeder;
 
 class CategoriesAndProductsTableSeeder extends Seeder
 {
+    /**
+     * Seed the database table
+     *
+     * @return void
+     */
     public function run()
     {
         factory(Category::class, 20)->create()->each(function ($category) {

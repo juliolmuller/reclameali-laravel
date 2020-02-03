@@ -6,6 +6,11 @@ use Illuminate\Database\Seeder;
 
 class TicketsTableSeeder extends Seeder
 {
+    /**
+     * Seed the database table
+     *
+     * @return void
+     */
     public function run()
     {
         factory(Ticket::class, 500)->create()->each(function ($ticket) {

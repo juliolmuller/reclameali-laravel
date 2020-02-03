@@ -6,6 +6,11 @@ use Illuminate\Support\Facades\DB;
 
 class TicketTypesTableSeeder extends Seeder
 {
+    /**
+     * Seed the database table
+     *
+     * @return void
+     */
     public function run()
     {
         DB::table('ticket_types')->insert([
