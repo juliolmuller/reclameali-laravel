@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Middleware\OwnDataOnlyMiddleware;
+use App\Http\Middleware\OwnDataOnly;
 use App\Http\Requests\StoreTicketRequest;
 use App\Http\Requests\StoreTicketMessageRequest;
 use App\Models\Ticket;
@@ -19,7 +19,7 @@ class TicketsApiController extends Controller
      */
     public function index(Request $request)
     {
-        if ($request->header(OwnDataOnlyMiddleware::HEADER)) {
+        if ($request->header(OwnDataOnly::HEADER)) {
             $tickets = Ticket::with(['status', 'type', 'product', 'creator', 'editor', 'destroyer'])
                 ->where('created_by', auth()->user()->id)
                 ->orderBy('created_at', 'desc')
@@ -39,7 +39,7 @@ class TicketsApiController extends Controller
      */
     public function show(Request $request, Ticket $ticket)
     {
-        if ($request->header(OwnDataOnlyMiddleware::HEADER) && auth()->user()->id !== $ticket->created_by) {
+        if ($request->header(OwnDataOnly::HEADER) && auth()->user()->id !== $ticket->created_by) {
             abort(403);
         }
         return $ticket->load(['status', 'type', 'product', 'messages.sender', 'creator', 'editor', 'destroyer']);
@@ -70,7 +70,7 @@ class TicketsApiController extends Controller
      */
     public function update(StoreTicketMessageRequest $request, Ticket $ticket)
     {
-        if ($request->header(OwnDataOnlyMiddleware::HEADER) && auth()->user()->id !== $ticket->created_by) {
+        if ($request->header(OwnDataOnly::HEADER) && auth()->user()->id !== $ticket->created_by) {
             abort(403);
         }
         $ticket->messages()->create([

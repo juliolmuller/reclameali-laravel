@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
-class OwnDataOnlyMiddleware
+class OwnDataOnly
 {
     /**
      * List of roles' names that are must have the HTTP header added

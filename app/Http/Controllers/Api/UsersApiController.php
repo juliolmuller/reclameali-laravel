@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserRequest as StoreRequest;
 use App\Http\Requests\UpdateUserDataRequest as UpdateDataRequest;
 use App\Http\Requests\UpdateUserPasswordRequest as UpdatePasswordRequest;
-use App\Http\Middleware\OwnDataOnlyMiddleware;
+use App\Http\Middleware\OwnDataOnly;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
@@ -54,7 +54,7 @@ class UsersApiController extends Controller
      */
     private function checkOwnDataOnly($request, User &$user)
     {
-        $checkHeader = $request->header(OwnDataOnlyMiddleware::HEADER);
+        $checkHeader = $request->header(OwnDataOnly::HEADER);
         if ($checkHeader) {
             $user = Auth::user();
         }
