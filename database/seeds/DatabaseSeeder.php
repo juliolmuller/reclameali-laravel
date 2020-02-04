@@ -13,6 +13,7 @@ class DatabaseSeeder extends Seeder
             StatesTableSeeder::class,
             CitiesTableSeeder::class,
             AccessRolesTableSeeder::class,
+            PermissionsTableSeeder::class,
             UsersTableSeeder::class,
             CategoriesAndProductsTableSeeder::class,
             TicketTypesTableSeeder::class,

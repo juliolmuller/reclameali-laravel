@@ -19,9 +19,10 @@ use Wildside\Userstamps\Userstamps;
  *     updated_at:  nullable | timestamp
  *     updated_by:  nullable | \App\Models\User::id (integer)
  *   Relationships:
- *     creator: \App\Models\User (BelongsTo)
- *     editor:  \App\Models\User (BelongsTo)
- *     users:   \App\Models\User[] (HasMany)
+ *     permissions: \App\Models\Permission[] (BelongsToMany)
+ *     creator:     \App\Models\User (BelongsTo)
+ *     editor:      \App\Models\User (BelongsTo)
+ *     users:       \App\Models\User[] (HasMany)
  *
  * @mixin Eloquent
  */
@@ -51,5 +52,17 @@ class Role extends Model
     public function users()
     {
         return $this->hasMany(User::class)->orderBy('email');
+    }
+
+    /**
+     * Get the permissions associated with $this role
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function permissions()
+    {
+        return $this->belongsToMany(Permission::class, 'permission_role')
+            ->orderBy('controller')
+            ->orderBy('method');
     }
 }
