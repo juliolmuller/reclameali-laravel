@@ -45,6 +45,13 @@ class Role extends Model
     protected $fillable = ['name'];
 
     /**
+     * Serializable attributes
+     *
+     * @var array
+     */
+    protected $visible = ['id', 'name'];
+
+    /**
      * Get the users associated with $this role
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany

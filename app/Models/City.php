@@ -40,6 +40,13 @@ class City extends Model
     protected $fillable = ['id', 'name', 'state_id'];
 
     /**
+     * Serializable attributes
+     *
+     * @var array
+     */
+    protected $visible = ['id', 'name'];
+
+    /**
      * Get the state associated with $this city
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
