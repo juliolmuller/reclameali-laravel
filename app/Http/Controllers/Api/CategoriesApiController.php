@@ -5,12 +5,17 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCategoryRequest as StoreRequest;
 use App\Http\Requests\UpdateCategoryRequest as UpdateRequest;
+use App\Http\Resources\Category as Resource;
 use App\Models\Category;
 
 class CategoriesApiController extends Controller
 {
     /**
-     * Extract attributes from request and save them to the model
+     * Extract attributes from request and persist to the database
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Category $category
+     * @return void
      */
     private function save($request, Category $category)
     {
@@ -21,54 +26,64 @@ class CategoriesApiController extends Controller
     /**
      * Return JSON of all categories
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Resources\Json\JsonResource
      */
     public function index()
     {
-        return Category::orderBy('name')->paginate(30);
+        return Resource::collection(Category::orderBy('name')->paginate());
     }
 
     /**
      * Return JSON of given category
      *
-     * @return \Illuminate\Http\Response
+     * @param \App\Models\Category $category
+     * @return \Illuminate\Http\Resources\Json\JsonResource
      */
     public function show(Category $category)
     {
-        return $category;
+        return Resource::make($category);
     }
 
     /**
-     * Save new category
+     * Persist new category
      *
-     * @return \Illuminate\Http\Response
+     * @param \App\Http\Requests\StoreCategoryRequest $request
+     * @return \Illuminate\Http\Resources\Json\JsonResource
      */
     public function store(StoreRequest $request)
     {
         $category = new Category();
+
         $this->save($request, $category);
-        return $category;
+
+        return Resource::make($category);
     }
 
     /**
      * Update existing category
      *
-     * @return \Illuminate\Http\Response
+     * @param \App\Http\Requests\UpdateCategoryRequest $request
+     * @param \App\Models\Category $category
+     * @return \Illuminate\Http\Resources\Json\JsonResource
      */
     public function update(UpdateRequest $request, Category $category)
     {
         $this->save($request, $category);
-        return $category;
+
+        return Resource::make($category);
     }
 
     /**
-     * Deletes given category
+     * Softdeletes given category
      *
-     * @return \Illuminate\Http\Response
+     * @param \App\Models\Category $category
+     * @return \Illuminate\Http\Resources\Json\JsonResource
+     * @throws \Exception
      */
     public function destroy(Category $category)
     {
         $category->delete();
-        return $category;
+
+        return Resource::make($category);
     }
 }
