@@ -56,6 +56,13 @@ class TicketStatus extends Model
     protected $perPage = 30;
 
     /**
+     * Relations to be eager loaded for every model
+     *
+     * @var array
+     */
+    protected $with = ['creator', 'editor', 'destroyer'];
+
+    /**
      * Get the tickets associated with $this status
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany

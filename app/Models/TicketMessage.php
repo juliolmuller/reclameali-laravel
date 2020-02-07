@@ -46,6 +46,13 @@ class TicketMessage extends Model
     protected $fillable = ['body', 'ticket_id', 'sent_by', 'sent_at'];
 
     /**
+     * Relations to be eager loaded for every model
+     *
+     * @var array
+     */
+    protected $with = ['sender'];
+
+    /**
      * Relationships to be touched when model is created/updated
      *
      * @var array

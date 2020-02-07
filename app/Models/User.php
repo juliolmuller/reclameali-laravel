@@ -67,6 +67,13 @@ class User extends Authenticatable
     protected $perPage = 30;
 
     /**
+     * Relations to be eager loaded for every model
+     *
+     * @var array
+     */
+    protected $with = ['role', 'creator', 'editor', 'destroyer'];
+
+    /**
      * The attributes that should be hidden for arrays.
      *
      * @var array

@@ -54,6 +54,13 @@ class Product extends Model
     protected $perPage = 30;
 
     /**
+     * Relations to be eager loaded for every model
+     *
+     * @var array
+     */
+    protected $with = ['category', 'creator', 'editor', 'destroyer'];
+
+    /**
      * Get the category associated with $this product
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

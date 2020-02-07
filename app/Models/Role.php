@@ -52,6 +52,13 @@ class Role extends Model
     protected $perPage = 30;
 
     /**
+     * Relations to be eager loaded for every model
+     *
+     * @var array
+     */
+    protected $with = ['creator', 'editor'];
+
+    /**
      * Serializable attributes
      *
      * @var array

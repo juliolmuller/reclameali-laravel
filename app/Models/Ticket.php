@@ -49,6 +49,13 @@ class Ticket extends Model
     protected $perPage = 30;
 
     /**
+     * Relations to be eager loaded for every model
+     *
+     * @var array
+     */
+    protected $with = ['product', 'status', 'type', 'creator', 'editor'];
+
+    /**
      * Attributes to be cast to native types
      *
      * @var array
