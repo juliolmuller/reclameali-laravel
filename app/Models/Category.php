@@ -41,6 +41,13 @@ class Category extends Model
     protected $fillable = ['name'];
 
     /**
+     * Number of categories per page (on pagination)
+     *
+     * @var int
+     */
+    protected $perPage = 30;
+
+    /**
      * Get the products associated with $this category
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany

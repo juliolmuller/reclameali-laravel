@@ -44,7 +44,14 @@ class Product extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'category_id', 'utc'];
+    protected $fillable = ['name', 'description', 'weight', 'category_id', 'utc', 'ean'];
+
+    /**
+     * Number of products per page (on pagination)
+     *
+     * @var int
+     */
+    protected $perPage = 30;
 
     /**
      * Get the category associated with $this product

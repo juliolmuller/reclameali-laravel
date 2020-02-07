@@ -57,7 +57,14 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $fillable = ['first_name', 'last_name', 'cpf', 'date_of_birth', 'email', 'password', 'role_id'];
+    protected $fillable = ['first_name', 'last_name', 'cpf', 'date_of_birth', 'email', 'phone', 'password', 'role_id'];
+
+    /**
+     * Number of users per page (on pagination)
+     *
+     * @var int
+     */
+    protected $perPage = 30;
 
     /**
      * The attributes that should be hidden for arrays.

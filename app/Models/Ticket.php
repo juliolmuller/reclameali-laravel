@@ -39,7 +39,14 @@ class Ticket extends Model
      *
      * @var array
      */
-    protected $fillable = ['created_by', 'created_at', 'closed_at', 'product_id', 'type_id', 'status_id'];
+    protected $fillable = ['product_id', 'type_id', 'status_id'];
+
+    /**
+     * Number of tickets per page (on pagination)
+     *
+     * @var int
+     */
+    protected $perPage = 30;
 
     /**
      * Attributes to be cast to native types

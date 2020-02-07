@@ -45,6 +45,13 @@ class Role extends Model
     protected $fillable = ['name'];
 
     /**
+     * Number of roles per page (on pagination)
+     *
+     * @var int
+     */
+    protected $perPage = 30;
+
+    /**
      * Serializable attributes
      *
      * @var array

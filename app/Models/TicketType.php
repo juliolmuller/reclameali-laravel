@@ -41,6 +41,13 @@ class TicketType extends Model
     protected $fillable = ['description'];
 
     /**
+     * Number of types per page (on pagination)
+     *
+     * @var int
+     */
+    protected $perPage = 30;
+
+    /**
      * Get the tickets associated with $this type
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany

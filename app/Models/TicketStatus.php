@@ -49,6 +49,13 @@ class TicketStatus extends Model
     protected $fillable = ['name', 'description'];
 
     /**
+     * Number of status per page (on pagination)
+     *
+     * @var int
+     */
+    protected $perPage = 30;
+
+    /**
      * Get the tickets associated with $this status
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
