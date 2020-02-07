@@ -20,6 +20,7 @@ class CategoriesApiController extends Controller
     private function save($request, Category $category)
     {
         $category->name = $request->name;
+
         $category->save();
     }
 

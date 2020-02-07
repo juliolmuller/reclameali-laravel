@@ -5,12 +5,17 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProductRequest as StoreRequest;
 use App\Http\Requests\UpdateProductRequest as UpdateRequest;
+use App\Http\Resources\Product as Resource;
 use App\Models\Product;
 
 class ProductsApiController extends Controller
 {
     /**
      * Extract attributes from request and save them to the model
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Product $product
+     * @return void
      */
     private function save($request, Product $product)
     {
@@ -20,60 +25,71 @@ class ProductsApiController extends Controller
         $product->name = $request->name;
         $product->utc = $request->utc;
         $product->ean = $request->ean;
+
         $product->save();
     }
 
     /**
      * Return JSON of all products
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Resources\Json\JsonResource
      */
     public function index()
     {
-        return Product::with('category')->orderBy('name')->paginate(30);
+        return Resource::collection(Product::orderBy('name')->paginate());
     }
 
     /**
      * Return JSON of given product
      *
-     * @return \Illuminate\Http\Response
+     * @param \App\Models\Product $product
+     * @return \Illuminate\Http\Resources\Json\JsonResource
      */
     public function show(Product $product)
     {
-        return $product->load('category');
+        return Resource::make($product);
     }
 
     /**
-     * Save new product
+     * Persist new product
      *
-     * @return \Illuminate\Http\Response
+     * @param \App\Http\Requests\StoreProductRequest $request
+     * @return \Illuminate\Http\Resources\Json\JsonResource
      */
     public function store(StoreRequest $request)
     {
         $product = new Product();
+
         $this->save($request, $product);
-        return $product->load('category');
+
+        return Resource::make($product);
     }
 
     /**
      * Update existing product
      *
-     * @return \Illuminate\Http\Response
+     * @param \App\Http\Requests\UpdateProductRequest $request
+     * @param \App\Models\Product $product
+     * @return \Illuminate\Http\Resources\Json\JsonResource
      */
     public function update(UpdateRequest $request, Product $product)
     {
         $this->save($request, $product);
-        return $product->load('category');
+
+        return Resource::make($product);
     }
 
     /**
-     * Deletes given product
+     * Softdeletes given product
      *
-     * @return \Illuminate\Http\Response
+     * @param \App\Models\Product $product
+     * @return \Illuminate\Http\Resources\Json\JsonResource
+     * @throws \Exception
      */
     public function destroy(Product $product)
     {
-        $product->load('category')->delete();
-        return $product;
+        $product->delete();
+
+        return Resource::make($product);
     }
 }
