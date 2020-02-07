@@ -13,28 +13,27 @@ use Znck\Eloquent\Traits\BelongsToThrough;
  *   Table:
  *     users
  *   Attributes:
- *     id:                required | integer | unique
- *     first_name:        required | string(1-30)
- *     last_name:         required | string(1-150)
- *     cpf:               required | string(11)
- *     email:             required | string(1-255)
- *     date_of_birth:     required | date
- *     password:          required | string(60)
- *     role_id:           required | \App\Models\Role::id (integer)
- *     phone:             nullable | string(0-16)
- *     email_verified_at: nullable | timestamp
- *     remember_token:    nullable | string(100)
- *     strett:            nullable | string(0-255)
- *     number:            nullable | integer
- *     complement:        nullable | string(0-20)
- *     zip_code:          nullable | string(8)
- *     city_id:           nullable | \App\Models\City::id (integer)
- *     created_at:        nullable | timestamp
- *     created_by:        nullable | \App\Models\User::id (integer)
- *     updated_at:        nullable | timestamp
- *     updated_by:        nullable | \App\Models\User::id (integer)
- *     deleted_at:        nullable | timestamp
- *     deleted_by:        nullable | \App\Models\User::id (integer)
+ *     id:             required | integer | unique
+ *     first_name:     required | string(1-30)
+ *     last_name:      required | string(1-150)
+ *     cpf:            required | string(11)
+ *     email:          required | string(1-255)
+ *     date_of_birth:  required | date
+ *     password:       required | string(60)
+ *     role_id:        required | \App\Models\Role::id (integer)
+ *     phone:          nullable | string(0-16)
+ *     remember_token: nullable | string(100)
+ *     strett:         nullable | string(0-255)
+ *     number:         nullable | integer
+ *     complement:     nullable | string(0-20)
+ *     zip_code:       nullable | string(8)
+ *     city_id:        nullable | \App\Models\City::id (integer)
+ *     created_at:     nullable | timestamp
+ *     created_by:     nullable | \App\Models\User::id (integer)
+ *     updated_at:     nullable | timestamp
+ *     updated_by:     nullable | \App\Models\User::id (integer)
+ *     deleted_at:     nullable | timestamp
+ *     deleted_by:     nullable | \App\Models\User::id (integer)
  *   Relationships:
  *     role:      \App\Models\Role (BelongsTo)
  *     city:      \App\Models\City (BelongsTo)
@@ -79,15 +78,6 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = ['password', 'remember_token'];
-
-    /**
-     * Attributes to be cast to native types
-     *
-     * @var array
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
 
     /**
      * Get the role associated with $this user
