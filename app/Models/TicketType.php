@@ -2,8 +2,7 @@
 
 namespace App\Models;
 
-use Eloquent;
-use Illuminate\Database\Eloquent\Model;
+use App\Models\Traits\DefaultRelations;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Wildside\Userstamps\Userstamps;
 
@@ -30,7 +29,8 @@ use Wildside\Userstamps\Userstamps;
  */
 class TicketType extends Model
 {
-    use SoftDeletes,
+    use DefaultRelations,
+        SoftDeletes,
         Userstamps;
 
     /**
@@ -48,11 +48,11 @@ class TicketType extends Model
     protected $perPage = 30;
 
     /**
-     * Relations to be eager loaded for every model
+     * Relations to be eager loaded on 'withDefault' and 'loadDefault' calls
      *
      * @var array
      */
-    protected $with = ['creator', 'editor', 'destroyer'];
+    protected const RELATIONS = ['creator', 'editor', 'destroyer'];
 
     /**
      * Get the tickets associated with $this type

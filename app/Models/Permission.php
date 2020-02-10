@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Eloquent;
+use App\Models\Traits\DefaultRelations;
 use Illuminate\Database\Eloquent\Model;
 use Wildside\Userstamps\Userstamps;
 
@@ -24,12 +24,13 @@ use Wildside\Userstamps\Userstamps;
  *     creator: \App\Models\User (BelongsTo)
  *     editor:  \App\Models\User (BelongsTo)
  *
- * @mixin Eloquent
+ * @mixin \Eloquent
  */
 
 class Permission extends Model
 {
-    use Userstamps;
+    use DefaultRelations,
+        Userstamps;
 
     /**
      * Get the roles associated with $this permission

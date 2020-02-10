@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Eloquent;
+use App\Models\Traits\DefaultRelations;
 use Illuminate\Database\Eloquent\Model;
 use Wildside\Userstamps\Userstamps;
 
@@ -24,11 +24,12 @@ use Wildside\Userstamps\Userstamps;
  *     editor:      \App\Models\User (BelongsTo)
  *     users:       \App\Models\User[] (HasMany)
  *
- * @mixin Eloquent
+ * @mixin \Eloquent
  */
 class Role extends Model
 {
-    use Userstamps;
+    use DefaultRelations,
+        Userstamps;
 
     /**
      * Table associated with the model
@@ -45,6 +46,13 @@ class Role extends Model
     protected $fillable = ['name'];
 
     /**
+     * Serializable attributes
+     *
+     * @var array
+     */
+    protected $visible = ['id', 'name'];
+
+    /**
      * Number of roles per page (on pagination)
      *
      * @var int
@@ -52,18 +60,11 @@ class Role extends Model
     protected $perPage = 30;
 
     /**
-     * Relations to be eager loaded for every model
+     * Relations to be eager loaded on 'withDefault' and 'loadDefault' calls
      *
      * @var array
      */
-    protected $with = ['creator', 'editor'];
-
-    /**
-     * Serializable attributes
-     *
-     * @var array
-     */
-    protected $visible = ['id', 'name'];
+    protected const RELATIONS = ['creator', 'editor'];
 
     /**
      * Get the users associated with $this role

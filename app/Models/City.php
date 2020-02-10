@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Eloquent;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -19,7 +18,7 @@ use Illuminate\Database\Eloquent\Model;
  *     state: \App\Models\State (BelongsTo)
  *     users: \App\Models\User[] (HasMany)
  *
- * @mixin Eloquent
+ * @mixin \Eloquent
  */
 class City extends Model
 {

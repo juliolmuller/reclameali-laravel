@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Eloquent;
+use App\Models\Traits\DefaultRelations;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Wildside\Userstamps\Userstamps;
@@ -26,11 +26,12 @@ use Wildside\Userstamps\Userstamps;
  *     destroyer: \App\Models\User (BelongsTo)
  *     products:  \App\Models\Product[] (HasMany)
  *
- * @mixin Eloquent
+ * @mixin \Eloquent
  */
 class Category extends Model
 {
-    use SoftDeletes,
+    use DefaultRelations,
+        SoftDeletes,
         Userstamps;
 
     /**
@@ -48,11 +49,11 @@ class Category extends Model
     protected $perPage = 30;
 
     /**
-     * Relations to be eager loaded for every model
+     * Relations to be eager loaded on 'withDefault' and 'loadDefault' calls
      *
      * @var array
      */
-    protected $with = ['creator', 'editor', 'destroyer'];
+    protected const RELATIONS = ['creator', 'editor', 'destroyer'];
 
     /**
      * Get the products associated with $this category

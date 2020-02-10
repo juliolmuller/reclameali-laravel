@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Eloquent;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -19,7 +18,7 @@ use Illuminate\Database\Eloquent\Model;
  *     cities: \App\Models\City[] (HasMany)
  *     users:  \App\Models\User[] (HasManyThrough)
  *
- * @mixin Eloquent
+ * @mixin \Eloquent
  */
 class State extends Model
 {

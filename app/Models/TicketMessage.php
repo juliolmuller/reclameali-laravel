@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Eloquent;
 use Illuminate\Database\Eloquent\Model;
 use Wildside\Userstamps\Userstamps;
 
@@ -24,7 +23,7 @@ use Wildside\Userstamps\Userstamps;
  *     creator:   \App\Models\User (BelongsTo)
  *     editor:    \App\Models\User (BelongsTo)
  *
- * @mixin Eloquent
+ * @mixin \Eloquent
  */
 class TicketMessage extends Model
 {
@@ -46,7 +45,7 @@ class TicketMessage extends Model
     protected $fillable = ['body', 'ticket_id', 'sent_by', 'sent_at'];
 
     /**
-     * Relations to be eager loaded for every model
+     * Relations to be eager loaded by default on every message
      *
      * @var array
      */

@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Eloquent;
+use App\Models\Traits\DefaultRelations;
 use Illuminate\Database\Eloquent\Model;
 use Wildside\Userstamps\Userstamps;
 
@@ -28,11 +28,21 @@ use Wildside\Userstamps\Userstamps;
  *     editor:    \App\Models\User (BelongsTo)
  *     messages:  \App\Models\TicketMessages[] (HasMany)
  *
- * @mixin Eloquent
+ * @mixin \Eloquent
  */
 class Ticket extends Model
 {
-    use Userstamps;
+    use DefaultRelations,
+        Userstamps;
+
+    /**
+     * Attributes to be cast to native types
+     *
+     * @var array
+     */
+    protected $casts = [
+        'closed_at' => 'datetime',
+    ];
 
     /**
      * Mass assignable attributes
@@ -49,20 +59,11 @@ class Ticket extends Model
     protected $perPage = 30;
 
     /**
-     * Relations to be eager loaded for every model
+     * Relations to be eager loaded on 'withDefault' and 'loadDefault' calls
      *
      * @var array
      */
-    protected $with = ['product', 'status', 'type', 'creator', 'editor'];
-
-    /**
-     * Attributes to be cast to native types
-     *
-     * @var array
-     */
-    protected $casts = [
-        'closed_at' => 'datetime',
-    ];
+    protected const RELATIONS = ['product', 'status', 'type', 'creator', 'editor'];
 
     /**
      * Get the product associated with $this ticket

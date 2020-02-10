@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Eloquent;
+use App\Models\Traits\DefaultRelations;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -44,11 +44,12 @@ use Znck\Eloquent\Traits\BelongsToThrough;
  *     destroyer: \App\Models\User (BelongsTo)
  *     tickets:   \App\Models\Ticket[] (HasMany)
  *
- * @mixin Eloquent
+ * @mixin \Eloquent
  */
 class User extends Authenticatable
 {
     use BelongsToThrough,
+        DefaultRelations,
         Notifiable,
         SoftDeletes,
         Userstamps;
@@ -61,6 +62,13 @@ class User extends Authenticatable
     protected $fillable = ['first_name', 'last_name', 'cpf', 'date_of_birth', 'email', 'phone', 'password', 'role_id'];
 
     /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = ['password', 'remember_token'];
+
+    /**
      * Number of users per page (on pagination)
      *
      * @var int
@@ -68,18 +76,11 @@ class User extends Authenticatable
     protected $perPage = 30;
 
     /**
-     * Relations to be eager loaded for every model
+     * Relations to be eager loaded on 'withDefault' and 'loadDefault' calls
      *
      * @var array
      */
-    protected $with = ['role', 'creator', 'editor', 'destroyer'];
-
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = ['password', 'remember_token'];
+    protected const RELATIONS = ['role', 'creator', 'editor', 'destroyer'];
 
     /**
      * Get the role associated with $this user

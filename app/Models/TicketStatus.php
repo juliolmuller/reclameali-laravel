@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Eloquent;
+use App\Models\Traits\DefaultRelations;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Wildside\Userstamps\Userstamps;
@@ -27,11 +27,12 @@ use Wildside\Userstamps\Userstamps;
  *     destroyer: \App\Models\User (BelongsTo)
  *     tickets:   \App\Models\Ticket[] (HasMany)
  *
- * @mixin Eloquent
+ * @mixin \Eloquent
  */
 class TicketStatus extends Model
 {
-    use SoftDeletes,
+    use DefaultRelations,
+        SoftDeletes,
         Userstamps;
 
     /**
@@ -56,11 +57,11 @@ class TicketStatus extends Model
     protected $perPage = 30;
 
     /**
-     * Relations to be eager loaded for every model
+     * Relations to be eager loaded on 'withDefault' and 'loadDefault' calls
      *
      * @var array
      */
-    protected $with = ['creator', 'editor', 'destroyer'];
+    protected const RELATIONS = ['creator', 'editor', 'destroyer'];
 
     /**
      * Get the tickets associated with $this status
