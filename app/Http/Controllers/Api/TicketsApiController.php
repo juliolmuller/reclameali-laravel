@@ -6,36 +6,39 @@ use App\Http\Controllers\Controller;
 use App\Http\Middleware\OwnDataOnly;
 use App\Http\Requests\StoreTicketRequest;
 use App\Http\Requests\StoreTicketMessageRequest;
+use App\Http\Resources\Ticket as Resource;
 use App\Models\Ticket;
 use App\Models\TicketStatus;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TicketsApiController extends Controller
 {
     /**
      * Return JSON of all tickets
      *
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Resources\Json\JsonResource
      */
     public function index(Request $request)
     {
-        if ($request->header(OwnDataOnly::HEADER)) {
-            $tickets = Ticket::with(['status', 'type', 'product', 'creator', 'editor', 'destroyer'])
-                ->where('created_by', auth()->user()->id)
-                ->orderBy('created_at', 'desc')
-                ->paginate(30);
-        } else {
-            $tickets = Ticket::with(['status', 'type', 'product', 'creator', 'editor', 'destroyer'])
-                ->orderBy('created_at', 'desc')
-                ->paginate(30);
-        }
-        return $tickets;
+        return Resource::collection(
+            Ticket::withDefault()
+                ->when($request->header(OwnDataOnly::HEADER), function (Builder $query) {
+                    return $query->where('created_by', Auth::user()->id);
+                })
+                ->orderByDesc('created_at')
+                ->paginate()
+        );
     }
 
     /**
      * Return JSON of given ticket
      *
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Ticket $ticket
+     * @return \Illuminate\Http\Resources\Json\JsonResource
      */
     public function show(Request $request, Ticket $ticket)
     {
@@ -48,47 +51,62 @@ class TicketsApiController extends Controller
     /**
      * Save new ticket
      *
-     * @return \Illuminate\Http\Response
+     * @param \App\Http\Requests\StoreTicketRequest $request
+     * @return \Illuminate\Http\Resources\Json\JsonResource
      */
     public function store(StoreTicketRequest $request)
     {
         $ticket = Ticket::create([
             'status_id'  => TicketStatus::where('name', 'OPEN')->first()->id,
-            'product_id' => $request->product,
-            'type_id'    => $request->type,
+            'product_id' => $request->input('product'),
+            'type_id'    => $request->input('type'),
         ]);
+
         $ticket->messages()->create([
-            'body' => $request->message,
+            'body' => $request->input('message'),
         ]);
-        return $ticket->load(['status', 'type', 'product', 'messages.sender', 'creator', 'editor', 'destroyer']);
+
+        $ticket->loadDefault(['messages']);
+
+        return Resource::make($ticket);
     }
 
     /**
      * Processes message receipt for given ticket
      *
-     * @return \Illuminate\Http\Response
+     * @param \App\Http\Requests\StoreTicketMessageRequest $request
+     * @param \App\Models\Ticket $ticket
+     * @return \Illuminate\Http\Resources\Json\JsonResource
      */
     public function update(StoreTicketMessageRequest $request, Ticket $ticket)
     {
-        if ($request->header(OwnDataOnly::HEADER) && auth()->user()->id !== $ticket->created_by) {
-            abort(403);
+        if ($request->header(OwnDataOnly::HEADER) && Auth::user()->id !== $ticket->created_by) {
+            abort(404);
         }
+
         $ticket->messages()->create([
-            'body' => $request->message,
+            'body' => $request->input('message'),
         ]);
-        return $ticket->load(['status', 'type', 'product', 'messages.sender', 'creator', 'editor', 'destroyer']);
+
+        $ticket->loadDefault(['messages']);
+
+        return Resource::make($ticket);
     }
 
     /**
      * Switches given ticket status to 'closed'
      *
-     * @return \Illuminate\Http\Response
+     * @param \App\Models\Ticket $ticket
+     * @return \Illuminate\Http\Resources\Json\JsonResource
      */
     public function close(Ticket $ticket)
     {
         $ticket->closed_at = now();
         $ticket->status_id = TicketStatus::where('name', 'CLOSED')->first()->id;
+
         $ticket->save();
-        return $ticket->load(['status', 'type', 'product', 'messages.sender', 'creator', 'editor', 'destroyer']);
+        $ticket->loadDefault(['messages']);
+
+        return Resource::make($ticket);
     }
 }

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserRequest as StoreRequest;
 use App\Http\Requests\UpdateUserDataRequest as UpdateDataRequest;
 use App\Http\Requests\UpdateUserPasswordRequest as UpdatePasswordRequest;
+use App\Http\Resources\User as Resource;
 use App\Http\Middleware\OwnDataOnly;
 use App\Models\Role;
 use App\Models\User;
@@ -19,121 +20,157 @@ class UsersApiController extends Controller
     /**
      * Extract user data from request
      *
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\User $user
      * @return void
      */
     private function getData($request, User $user)
     {
-        $user->role_id = $request->role ?? Role::where('name', 'customer')->first()->id;
-        $user->date_of_birth = $request->date_of_birth;
-        $user->complement = $request->complement;
-        $user->first_name = $request->first_name;
-        $user->last_name = $request->last_name;
-        $user->zip_code = $request->zip_code;
-        $user->street = $request->street;
-        $user->number = $request->number;
-        $user->city_id = $request->city;
-        $user->phone = $request->phone;
-        $user->email = $request->email;
-        $user->cpf = $request->cpf;
+        $user->role_id = $request->input('role') ?? Role::where('name', 'customer')->first()->id;
+        $user->date_of_birth = $request->input('date_of_birth');
+        $user->complement = $request->input('complement');
+        $user->first_name = $request->input('first_name');
+        $user->last_name = $request->input('last_name');
+        $user->zip_code = $request->input('zip_code');
+        $user->street = $request->input('street');
+        $user->number = $request->input('number');
+        $user->city_id = $request->input('city');
+        $user->phone = $request->input('phone');
+        $user->email = $request->input('email');
+        $user->cpf = $request->input('cpf');
     }
 
     /**
      * Extract user password from request
      *
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\User $user
      * @return void
      */
     private function getPassword($request, User $user)
     {
-        $user->password = Hash::make($request->password);
+        $user->password = Hash::make($request->input('password'));
     }
 
     /**
      * Checks user's over the data being changed, overwriting $user instance if needed
      *
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\User $user
      * @return bool
      */
     private function checkOwnDataOnly($request, User &$user)
     {
-        $checkHeader = $request->header(OwnDataOnly::HEADER);
+        $checkHeader = !!$request->header(OwnDataOnly::HEADER);
+
         if ($checkHeader) {
             $user = Auth::user();
         }
+
         return $checkHeader;
     }
 
     /**
      * Return JSON of all users
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Resources\Json\JsonResource
      */
     public function index()
     {
-        return User::whereHas('role', fn(Builder $query) => $query->where('name', '<>', 'customer'))
-            ->with(['city.state', 'role'])
-            ->orderBy('first_name')
-            ->orderBy('last_name')
-            ->paginate(30);
+        return Resource::collection(
+            User::withDefault()
+                ->whereHas('role', function (Builder $query) {
+                    return $query->where('name', '<>', 'customer');
+                })
+                ->orderBy('first_name')
+                ->orderBy('last_name')
+                ->paginate()
+        );
     }
 
     /**
      * Return JSON of given user
      *
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\User $user
+     * @return \Illuminate\Http\Resources\Json\JsonResource
      */
     public function show(Request $request, User $user)
     {
         $this->checkOwnDataOnly($request, $user);
-        return $user->load(['city.state', 'role']);
+
+        $user->loadDefault();
+
+        return Resource::make($user);
     }
 
     /**
      * Save new user
      *
-     * @return \Illuminate\Http\Response
+     * @param \App\Http\Requests\StoreUserRequest $request
+     * @return \Illuminate\Http\Resources\Json\JsonResource
      */
     public function store(StoreRequest $request)
     {
         $user = new User();
+
         $this->getData($request, $user);
         $this->getPassword($request, $user);
+
         $user->save();
-        return $user->load(['city.state', 'role']);
+        $user->loadDefault();
+
+        return Resource::make($user);
     }
 
     /**
      * Update user's data
      *
-     * @return \Illuminate\Http\Response
+     * @param \App\Http\Requests\UpdateUserDataRequest $request
+     * @param \App\Models\User $user
+     * @return \Illuminate\Http\Resources\Json\JsonResource
      */
     public function updateData(UpdateDataRequest $request, User $user)
     {
         $this->checkOwnDataOnly($request, $user);
         $this->getData($request, $user);
+
         $user->save();
-        return $user->load(['city.state', 'role']);
+        $user->loadDefault();
+
+        return Resource::make($user);
     }
 
     /**
      * Update user's password
      *
-     * @return \Illuminate\Http\Response
+     * @param \App\Http\Requests\UpdateUserPasswordRequest $request
+     * @param \App\Models\User $user
+     * @return \Illuminate\Http\Resources\Json\JsonResource
      */
     public function udpatePassword(UpdatePasswordRequest $request, User $user)
     {
         $this->checkOwnDataOnly($request, $user);
         $this->getPassword($request, $user);
+
         $user->save();
-        return $user->load(['city.state', 'role']);
+        $user->loadDefault();
+
+        return Resource::make($user);
     }
 
     /**
      * Deletes given user
      *
-     * @return \Illuminate\Http\Response
+     * @param \App\Models\User $user
+     * @return \Illuminate\Http\Resources\Json\JsonResource
+     * @throws \Exception
      */
     public function destroy(User $user)
     {
-        $user->load(['city.state', 'role'])->delete();
-        return $user;
+        $user->loadDefault();
+        $user->delete();
+
+        return Resource::make($user);
     }
 }

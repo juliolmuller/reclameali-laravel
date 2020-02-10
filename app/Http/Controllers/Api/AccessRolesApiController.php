@@ -14,14 +14,14 @@ class AccessRolesApiController extends Controller
     /**
      * Extract attributes from request and save them to the model
      *
-     * @param \Illuminate\Http\Request $request
+     * @param \Illuminate\Foundation\Http\FormRequest $request
      * @param \App\Models\Role $role
      * @return void
      */
     private function save($request, Role $role)
     {
-        $role->description = $request->description;
-        $role->name = Str::lower($request->name);
+        $role->description = $request->input('description');
+        $role->name = Str::lower($request->input('name'));
 
         $role->save();
     }
@@ -33,7 +33,11 @@ class AccessRolesApiController extends Controller
      */
     public function index()
     {
-        return Resource::collection(Role::orderBy('name')->paginate());
+        return Resource::collection(
+            Role::withDefault()
+                ->orderBy('name')
+                ->paginate()
+        );
     }
 
     /**
@@ -44,6 +48,8 @@ class AccessRolesApiController extends Controller
      */
     public function show(Role $role)
     {
+        $role->loadDefault();
+
         return Resource::make($role);
     }
 
@@ -59,6 +65,8 @@ class AccessRolesApiController extends Controller
 
         $this->save($request, $role);
 
+        $role->loadDefault();
+
         return Resource::make($role);
     }
 
@@ -73,6 +81,8 @@ class AccessRolesApiController extends Controller
     {
         $this->save($request, $role);
 
+        $role->loadDefault();
+
         return Resource::make($role);
     }
 
@@ -85,6 +95,7 @@ class AccessRolesApiController extends Controller
      */
     public function destroy(Role $role)
     {
+        $role->loadDefault();
         $role->delete();
 
         return Resource::make($role);

@@ -13,18 +13,18 @@ class ProductsApiController extends Controller
     /**
      * Extract attributes from request and save them to the model
      *
-     * @param \Illuminate\Http\Request $request
+     * @param \Illuminate\Foundation\Http\FormRequest $request
      * @param \App\Models\Product $product
      * @return void
      */
     private function save($request, Product $product)
     {
-        $product->description = $request->description;
-        $product->category_id = $request->category;
-        $product->weight = $request->weight;
-        $product->name = $request->name;
-        $product->utc = $request->utc;
-        $product->ean = $request->ean;
+        $product->description = $request->input('description');
+        $product->category_id = $request->input('category');
+        $product->weight = $request->input('weight');
+        $product->name = $request->input('name');
+        $product->utc = $request->input('utc');
+        $product->ean = $request->input('ean');
 
         $product->save();
     }
@@ -36,7 +36,11 @@ class ProductsApiController extends Controller
      */
     public function index()
     {
-        return Resource::collection(Product::orderBy('name')->paginate());
+        return Resource::collection(
+            Product::withDefault()
+                ->orderBy('name')
+                ->paginate()
+        );
     }
 
     /**
@@ -47,6 +51,8 @@ class ProductsApiController extends Controller
      */
     public function show(Product $product)
     {
+        $product->loadDefault();
+
         return Resource::make($product);
     }
 
@@ -62,6 +68,8 @@ class ProductsApiController extends Controller
 
         $this->save($request, $product);
 
+        $product->loadDefault();
+
         return Resource::make($product);
     }
 
@@ -76,6 +84,8 @@ class ProductsApiController extends Controller
     {
         $this->save($request, $product);
 
+        $product->loadDefault();
+
         return Resource::make($product);
     }
 
@@ -88,6 +98,7 @@ class ProductsApiController extends Controller
      */
     public function destroy(Product $product)
     {
+        $product->loadDefault();
         $product->delete();
 
         return Resource::make($product);

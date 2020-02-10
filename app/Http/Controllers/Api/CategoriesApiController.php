@@ -13,13 +13,13 @@ class CategoriesApiController extends Controller
     /**
      * Extract attributes from request and persist to the database
      *
-     * @param \Illuminate\Http\Request $request
+     * @param \Illuminate\Foundation\Http\FormRequest $request
      * @param \App\Models\Category $category
      * @return void
      */
     private function save($request, Category $category)
     {
-        $category->name = $request->name;
+        $category->name = $request->input('name');
 
         $category->save();
     }
@@ -31,7 +31,11 @@ class CategoriesApiController extends Controller
      */
     public function index()
     {
-        return Resource::collection(Category::orderBy('name')->paginate());
+        return Resource::collection(
+            Category::withDefault()
+                ->orderBy('name')
+                ->paginate()
+        );
     }
 
     /**
@@ -42,6 +46,8 @@ class CategoriesApiController extends Controller
      */
     public function show(Category $category)
     {
+        $category->loadDefault();
+
         return Resource::make($category);
     }
 
@@ -57,6 +63,8 @@ class CategoriesApiController extends Controller
 
         $this->save($request, $category);
 
+        $category->loadDefault();
+
         return Resource::make($category);
     }
 
@@ -71,6 +79,8 @@ class CategoriesApiController extends Controller
     {
         $this->save($request, $category);
 
+        $category->loadDefault();
+
         return Resource::make($category);
     }
 
@@ -83,6 +93,7 @@ class CategoriesApiController extends Controller
      */
     public function destroy(Category $category)
     {
+        $category->loadDefault();
         $category->delete();
 
         return Resource::make($category);

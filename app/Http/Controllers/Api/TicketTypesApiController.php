@@ -5,70 +5,97 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreTicketTypeRequest as StoreRequest;
 use App\Http\Requests\UpdateTicketTypeRequest as UpdateRequest;
+use App\Http\Resources\TicketType as Resource;
 use App\Models\TicketType as Type;
 
 class TicketTypesApiController extends Controller
 {
     /**
      * Extract attributes from request and save them to the model
+     *
+     * @param \Illuminate\Foundation\Http\FormRequest $request
+     * @param \App\Models\TicketType $type
+     * @return void
      */
     private function save($request, Type $type)
     {
-        $type->description = $request->description;
+        $type->description = $request->input('description');
+
         $type->save();
     }
 
     /**
      * Return JSON of all types
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Resources\Json\JsonResource
      */
     public function index()
     {
-        return Type::orderBy('description')->paginate(30);
+        return Resource::collection(
+            Type::withDefault()
+                ->orderBy('description')
+                ->paginate()
+        );
     }
 
     /**
      * Return JSON of given type
      *
-     * @return \Illuminate\Http\Response
+     * @param \App\Models\TicketType $type
+     * @return \Illuminate\Http\Resources\Json\JsonResource
      */
     public function show(Type $type)
     {
-        return $type;
+        $type->loadDefault();
+
+        return Resource::make($type);
     }
 
     /**
      * Save new type
      *
-     * @return \Illuminate\Http\Response
+     * @param \App\Http\Requests\StoreTicketTypeRequest $request
+     * @return \Illuminate\Http\Resources\Json\JsonResource
      */
     public function store(StoreRequest $request)
     {
         $type = new Type();
+
         $this->save($request, $type);
-        return $type;
+
+        $type->loadDefault();
+
+        return Resource::make($type);
     }
 
     /**
      * Update existing type
      *
-     * @return \Illuminate\Http\Response
+     * @param \App\Http\Requests\UpdateTicketTypeRequest $request
+     * @param \App\Models\TicketType $type
+     * @return \Illuminate\Http\Resources\Json\JsonResource
      */
     public function update(UpdateRequest $request, Type $type)
     {
         $this->save($request, $type);
-        return $type;
+
+        $type->loadDefault();
+
+        return Resource::make($type);
     }
 
     /**
      * Deletes given type
      *
-     * @return \Illuminate\Http\Response
+     * @param \App\Models\TicketType $type
+     * @return \Illuminate\Http\Resources\Json\JsonResource
+     * @throws \Exception
      */
     public function destroy(Type $type)
     {
+        $type->loadDefault();
         $type->delete();
-        return $type;
+
+        return Resource::make($type);
     }
 }
