@@ -2,7 +2,6 @@
 
 namespace Tests\Unit\FormValidation;
 
-use App\Models\User;
 use Tests\TestCase;
 
 class StoreTicketTest extends TestCase

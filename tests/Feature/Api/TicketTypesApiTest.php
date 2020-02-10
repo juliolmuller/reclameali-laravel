@@ -3,7 +3,6 @@
 namespace Tests\Feature\Api;
 
 use App\Models\TicketType as Type;
-use App\Models\User;
 use Tests\TestCase;
 
 class TicketTypesApiTest extends TestCase

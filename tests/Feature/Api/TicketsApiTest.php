@@ -5,7 +5,6 @@ namespace Tests\Feature\Api;
 use App\Models\Product;
 use App\Models\Ticket;
 use App\Models\TicketType as Type;
-use App\Models\User;
 use Tests\TestCase;
 
 class TicketsApiTest extends TestCase

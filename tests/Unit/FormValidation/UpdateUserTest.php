@@ -6,7 +6,6 @@ use App\Models\City;
 use App\Models\Role;
 use App\Models\State;
 use App\Models\User;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;

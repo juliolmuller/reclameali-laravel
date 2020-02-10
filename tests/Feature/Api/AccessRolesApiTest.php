@@ -3,7 +3,6 @@
 namespace Tests\Feature\Api;
 
 use App\Models\Role;
-use App\Models\User;
 use Tests\TestCase;
 
 class AccessRolesApiTest extends TestCase

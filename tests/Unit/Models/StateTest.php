@@ -6,8 +6,6 @@ use App\Models\City;
 use App\Models\State;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Facades\DB;
-use PDOException;
 use Tests\TestCase;
 
 class StateTest extends TestCase

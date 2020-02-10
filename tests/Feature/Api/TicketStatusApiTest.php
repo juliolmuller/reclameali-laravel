@@ -3,7 +3,6 @@
 namespace Tests\Feature\Api;
 
 use App\Models\TicketStatus as Status;
-use App\Models\User;
 use Tests\TestCase;
 
 class TicketStatusApiTest extends TestCase

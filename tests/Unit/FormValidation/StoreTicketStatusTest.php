@@ -3,7 +3,6 @@
 namespace Tests\Unit\FormValidation;
 
 use App\Models\TicketStatus as Status;
-use App\Models\User;
 use Tests\TestCase;
 
 class StoreTicketStatusTest extends TestCase

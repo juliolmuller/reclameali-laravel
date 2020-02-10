@@ -3,7 +3,6 @@
 namespace Tests\Unit\FormValidation;
 
 use App\Models\Role;
-use App\Models\User;
 use Tests\TestCase;
 
 class UpdateRoleTest extends TestCase

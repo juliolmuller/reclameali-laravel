@@ -5,8 +5,6 @@ namespace Tests\Unit\Models;
 use App\Models\City;
 use App\Models\State;
 use App\Models\User;
-use Illuminate\Support\Facades\DB;
-use PDOException;
 use Tests\TestCase;
 
 class CityTest extends TestCase

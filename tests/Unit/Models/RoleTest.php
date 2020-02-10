@@ -4,8 +4,6 @@ namespace Tests\Unit\Models;
 
 use App\Models\Role;
 use App\Models\User;
-use Illuminate\Support\Facades\DB;
-use PDOException;
 use Tests\TestCase;
 
 class RoleTest extends TestCase

@@ -4,7 +4,6 @@ namespace Tests\Unit\Models;
 
 use App\Models\City;
 use App\Models\Role;
-use App\Models\State;
 use App\Models\Ticket;
 use App\Models\User;
 use PDOException;

@@ -5,7 +5,6 @@ namespace Tests\Unit\FormValidation;
 use App\Models\City;
 use App\Models\State;
 use App\Models\User;
-use Illuminate\Database\Eloquent\Builder;
 use Tests\TestCase;
 
 class StoreUserTest extends TestCase

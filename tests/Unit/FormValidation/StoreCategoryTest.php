@@ -3,7 +3,6 @@
 namespace Tests\Unit\FormValidation;
 
 use App\Models\Category;
-use App\Models\User;
 use Tests\TestCase;
 
 class StoreCategoryTest extends TestCase

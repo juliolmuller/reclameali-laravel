@@ -3,7 +3,6 @@
 namespace Tests\Unit\FormValidation;
 
 use App\Models\TicketType as Type;
-use App\Models\User;
 use Tests\TestCase;
 
 class StoreTicketTypeTest extends TestCase
