@@ -42,10 +42,13 @@ class TicketsApiController extends Controller
      */
     public function show(Request $request, Ticket $ticket)
     {
-        if ($request->header(OwnDataOnly::HEADER) && auth()->user()->id !== $ticket->created_by) {
+        if ($request->header(OwnDataOnly::HEADER) && Auth::user()->id !== $ticket->created_by) {
             abort(403);
         }
-        return $ticket->load(['status', 'type', 'product', 'messages.sender', 'creator', 'editor', 'destroyer']);
+
+        $ticket->loadDefault(['messages']);
+
+        return Resource::make($ticket);
     }
 
     /**
