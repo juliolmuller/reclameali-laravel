@@ -93,8 +93,8 @@ class CategoriesApiController extends Controller
      */
     public function destroy(Category $category)
     {
-        $category->loadDefault();
         $category->delete();
+        $category->loadDefault();
 
         return Resource::make($category);
     }

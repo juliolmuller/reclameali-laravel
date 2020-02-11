@@ -98,8 +98,8 @@ class ProductsApiController extends Controller
      */
     public function destroy(Product $product)
     {
-        $product->loadDefault();
         $product->delete();
+        $product->loadDefault();
 
         return Resource::make($product);
     }

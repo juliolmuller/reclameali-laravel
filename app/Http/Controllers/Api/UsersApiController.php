@@ -168,8 +168,8 @@ class UsersApiController extends Controller
      */
     public function destroy(User $user)
     {
-        $user->loadDefault();
         $user->delete();
+        $user->loadDefault();
 
         return Resource::make($user);
     }

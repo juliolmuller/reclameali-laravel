@@ -95,8 +95,8 @@ class AccessRolesApiController extends Controller
      */
     public function destroy(Role $role)
     {
-        $role->loadDefault();
         $role->delete();
+        $role->loadDefault();
 
         return Resource::make($role);
     }

@@ -95,8 +95,8 @@ class TicketStatusApiController extends Controller
      */
     public function destroy(Status $status)
     {
-        $status->loadDefault();
         $status->delete();
+        $status->loadDefault();
 
         return Resource::make($status);
     }

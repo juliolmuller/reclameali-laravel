@@ -93,8 +93,8 @@ class TicketTypesApiController extends Controller
      */
     public function destroy(Type $type)
     {
-        $type->loadDefault();
         $type->delete();
+        $type->loadDefault();
 
         return Resource::make($type);
     }
