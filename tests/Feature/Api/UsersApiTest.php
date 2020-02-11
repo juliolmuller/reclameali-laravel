@@ -33,14 +33,18 @@ class UsersApiTest extends TestCase
             'data' => [
                 [
                     'id'            => $user->id,
-                    'first_name'    => $user->first_name,
+                    'name'          => $user->first_name,
                     'last_name'     => $user->last_name,
                     'cpf'           => $user->cpf,
                     'email'         => $user->email,
                     'date_of_birth' => $user->date_of_birth,
-                    'street'        => $user->street,
-                    'city_id'       => $user->city_id,
-                    'role_id'       => $user->role_id,
+                    'role'          => [
+                        'id' => $user->role_id,
+                    ],
+                    'address'       => [
+                        'street' => $user->street,
+                        'number' => $user->number,
+                    ],
                 ],
             ],
         ]);
@@ -54,14 +58,18 @@ class UsersApiTest extends TestCase
         $response->assertStatus(200);
         $response->assertJson([
             'id'            => $user->id,
-            'first_name'    => $user->first_name,
+            'name'          => $user->first_name,
             'last_name'     => $user->last_name,
             'cpf'           => $user->cpf,
             'email'         => $user->email,
             'date_of_birth' => $user->date_of_birth,
-            'street'        => $user->street,
-            'city_id'       => $user->city_id,
-            'role_id'       => $user->role_id,
+            'role'          => [
+                'id' => $user->role_id,
+            ],
+            'address'       => [
+                'street' => $user->street,
+                'number' => $user->number,
+            ],
         ]);
     }
 
@@ -73,14 +81,18 @@ class UsersApiTest extends TestCase
         $response->assertStatus(200);
         $response->assertJson([
             'id'            => $user->id,
-            'first_name'    => $user->first_name,
+            'name'          => $user->first_name,
             'last_name'     => $user->last_name,
             'cpf'           => $user->cpf,
             'email'         => $user->email,
             'date_of_birth' => $user->date_of_birth,
-            'street'        => $user->street,
-            'city_id'       => $user->city_id,
-            'role_id'       => Role::where('name', 'customer')->first()->id,
+            'role'          => [
+                'id' => Role::where('name', 'customer')->first()->id,
+            ],
+            'address'       => [
+                'street' => $user->street,
+                'number' => $user->number,
+            ],
         ]);
         $otherUser = User::all()->random();
         $url = route('users.show', $otherUser->id);
@@ -88,14 +100,18 @@ class UsersApiTest extends TestCase
         $response->assertStatus(200);
         $response->assertJson([
             'id'            => $user->id,
-            'first_name'    => $user->first_name,
+            'name'          => $user->first_name,
             'last_name'     => $user->last_name,
             'cpf'           => $user->cpf,
             'email'         => $user->email,
             'date_of_birth' => $user->date_of_birth,
-            'street'        => $user->street,
-            'city_id'       => $user->city_id,
-            'role_id'       => Role::where('name', 'customer')->first()->id,
+            'role'          => [
+                'id' => Role::where('name', 'customer')->first()->id,
+            ],
+            'address'       => [
+                'street' => $user->street,
+                'number' => $user->number,
+            ],
         ]);
     }
 
@@ -120,6 +136,10 @@ class UsersApiTest extends TestCase
         unset($newUser['password']);
         unset($newUser['password_confirmation']);
         $this->assertDatabaseHas('users', $newUser);
+        $newUser['role'] = ['id' => $newUser['role_id']];
+        $newUser['name'] = $newUser['first_name'];
+        unset($newUser['role_id']);
+        unset($newUser['first_name']);
         $response->assertJson($newUser);
     }
 
@@ -143,6 +163,10 @@ class UsersApiTest extends TestCase
         $userData['role_id'] = $userData['role'];
         unset($userData['role']);
         $this->assertDatabaseHas('users', $userData);
+        $userData['role'] = ['id' => $userData['role_id']];
+        $userData['name'] = $userData['first_name'];
+        unset($userData['role_id']);
+        unset($userData['first_name']);
         $response->assertJson($userData);
     }
 
@@ -165,13 +189,19 @@ class UsersApiTest extends TestCase
         $url = route('users.update-data', $otherUserId);
         $response = $this->actingAs($user)->putJson($url, $userData);
         $response->assertStatus(200);
-        $response->assertJson($userData);
         $this->assertDatabaseHas('users', $userData);
+        $userData['name'] = $userData['first_name'];
+        unset($userData['first_name']);
+        $response->assertJson($userData);
+        $userData['first_name'] = $userData['name'];
+        unset($userData['name']);
         $url = route('users.update-data', $user->id);
         $response = $this->actingAs($user)->putJson($url, $userData);
         $response->assertStatus(200);
-        $response->assertJson($userData);
         $this->assertDatabaseHas('users', $userData);
+        $userData['name'] = $userData['first_name'];
+        unset($userData['first_name']);
+        $response->assertJson($userData);
     }
 
     public function test_users_updatePassword()

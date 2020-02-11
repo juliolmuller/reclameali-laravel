@@ -17,7 +17,7 @@ class TicketsApiTest extends TestCase
 
     public function test_tickets_index()
     {
-        $ticket = Ticket::orderBy('created_at', 'desc')->first();
+        $ticket = Ticket::orderByDesc('created_at')->first();
         $url = route('tickets.index');
         $response = $this->actingAs($this->getUser('attendant'))->getJson($url);
         $response->assertStatus(200);
@@ -26,10 +26,10 @@ class TicketsApiTest extends TestCase
                 'data' => [
                     [
                         'id'         => $ticket->id,
-                        'product_id' => $ticket->product_id,
-                        'status_id'  => $ticket->status_id,
-                        'type_id'    => $ticket->type_id,
-                        'created_by' => $ticket->created_by,
+                        'product'    => ['id' => $ticket->product_id],
+                        'status'     => ['id' => $ticket->status_id],
+                        'type'       => ['id' => $ticket->type_id],
+                        'created_by' => ['id' => $ticket->created_by],
                     ],
                 ],
             ]);
@@ -49,10 +49,10 @@ class TicketsApiTest extends TestCase
             'data' => [
                 [
                     'id'         => $ticket->id,
-                    'product_id' => $ticket->product_id,
-                    'status_id'  => $ticket->status_id,
-                    'type_id'    => $ticket->type_id,
-                    'created_by' => $ticket->created_by,
+                    'product'    => ['id' => $ticket->product_id],
+                    'status'     => ['id' => $ticket->status_id],
+                    'type'       => ['id' => $ticket->type_id],
+                    'created_by' => ['id' => $ticket->created_by],
                 ],
             ],
         ]);
@@ -66,10 +66,10 @@ class TicketsApiTest extends TestCase
         $response->assertStatus(200);
         $response->assertJson([
             'id'         => $ticket->id,
-            'product_id' => $ticket->product_id,
-            'status_id'  => $ticket->status_id,
-            'type_id'    => $ticket->type_id,
-            'created_by' => $ticket->created_by,
+            'product'    => ['id' => $ticket->product_id],
+            'status'     => ['id' => $ticket->status_id],
+            'type'       => ['id' => $ticket->type_id],
+            'created_by' => ['id' => $ticket->created_by],
         ]);
     }
 
@@ -88,10 +88,10 @@ class TicketsApiTest extends TestCase
         $response->assertStatus(200);
         $response->assertJson([
             'id'         => $ticket->id,
-            'product_id' => $ticket->product_id,
-            'status_id'  => $ticket->status_id,
-            'type_id'    => $ticket->type_id,
-            'created_by' => $ticket->created_by,
+            'product'    => ['id' => $ticket->product_id],
+            'status'     => ['id' => $ticket->status_id],
+            'type'       => ['id' => $ticket->type_id],
+            'created_by' => ['id' => $ticket->created_by],
         ]);
     }
 
@@ -107,20 +107,24 @@ class TicketsApiTest extends TestCase
         $url = route('tickets.store');
         $response = $this->actingAs($user)->postJson($url, $ticket);
         $response->assertStatus(201);
-        $ticket = [
-            'product_id' => $ticket['product'],
-            'status_id'  => self::OPEN,
-            'type_id'    => $ticket['type'],
-            'created_by' => $ticket['user'],
+        $response->assertJson([
+            'product'    => ['id' => $ticket['product']],
+            'status'     => ['id' => self::OPEN],
+            'type'       => ['id' => $ticket['type']],
+            'created_by' => ['id' => $ticket['user']],
             'messages'   => [
                 [
                     'body' => $ticket['message'],
                 ],
             ],
-        ];
-        $response->assertJson($ticket);
+        ]);
         unset($ticket['messages']);
-        $this->assertDatabaseHas('tickets', $ticket);
+        $this->assertDatabaseHas('tickets', [
+            'product_id' => $ticket['product'],
+            'status_id'  => self::OPEN,
+            'type_id'    => $ticket['type'],
+            'created_by' => $ticket['user'],
+        ]);
     }
 
     public function test_tickets_update()
@@ -136,7 +140,9 @@ class TicketsApiTest extends TestCase
             'messages' => [
                 [
                     'body'    => $message,
-                    'sent_by' => $user->id,
+                    'sent_by' => [
+                        'id' => $user->id,
+                    ],
                 ],
             ],
         ]);
@@ -156,7 +162,7 @@ class TicketsApiTest extends TestCase
         $ticket = Ticket::where('created_by', '<>', $user->id)->get()->random();
         $url = route('tickets.update', $ticket->id);
         $response = $this->actingAs($user)->putJson($url, compact('message'));
-        $response->assertStatus(403);
+        $response->assertStatus(404);
         $ticket = $user->tickets[0];
         $url = route('tickets.update', $ticket->id);
         $response = $this->actingAs($user)->putJson($url, compact('message'));
@@ -164,7 +170,9 @@ class TicketsApiTest extends TestCase
         $this->assertDatabaseHas('ticket_messages', [
             'ticket_id' => $ticket->id,
             'body'      => $message,
-            'sent_by'   => $user->id,
+            'sent_by'   => [
+                'id' => $user->id,
+            ],
         ]);
     }
 
@@ -176,10 +184,10 @@ class TicketsApiTest extends TestCase
         $response = $this->actingAs($user)->patchJson($url, []);
         $response->assertStatus(200);
         $response->assertJson([
-            'product_id' => $ticket->product_id,
-            'status_id'  => self::CLOSED,
-            'type_id'    => $ticket->type_id,
-            'created_by' => $ticket->created_by,
+            'product'    => ['id' => $ticket->product_id],
+            'status'     => ['id' => self::CLOSED],
+            'type'       => ['id' => $ticket->type_id],
+            'created_by' => ['id' => $ticket->created_by],
         ]);
     }
 }

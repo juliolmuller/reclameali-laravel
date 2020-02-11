@@ -42,7 +42,9 @@ class CategoriesApiTest extends TestCase
         $user = $this->getUser('attendant');
         $category = [
             'name'       => 'Testing New Category',
-            'created_by' => $user->id,
+            'created_by' => [
+                'id' => $user->id,
+            ],
         ];
         $url = route('categories.store');
         $response = $this->actingAs($user)->postJson($url, $category);
@@ -57,7 +59,9 @@ class CategoriesApiTest extends TestCase
         $category = [
             'id'         => factory(Category::class)->create()->id,
             'name'       => 'Testing Update Category',
-            'updated_by' => $user->id,
+            'updated_by' => [
+                'id' => $user->id,
+            ],
         ];
         $url = route('categories.update', $category['id']);
         $response = $this->actingAs($user)->putJson($url, $category);
@@ -71,7 +75,9 @@ class CategoriesApiTest extends TestCase
         $user = $this->getUser('attendant');
         $category = [
             'id'         => factory(Category::class)->create()->id,
-            'deleted_by' => $user->id,
+            'deleted_by' => [
+                'id' => $user->id,
+            ],
         ];
         $url = route('categories.destroy', $category['id']);
         $response = $this->actingAs($user)->deleteJson($url);

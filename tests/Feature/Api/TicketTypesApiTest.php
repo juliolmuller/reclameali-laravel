@@ -42,7 +42,9 @@ class TicketTypesApiTest extends TestCase
         $user = $this->getUser('manager');
         $type = [
             'description' => 'Testing New Type',
-            'created_by'  => $user->id,
+            'created_by'  => [
+                'id' => $user->id,
+            ],
         ];
         $url = route('ticket-types.store');
         $response = $this->actingAs($user)->postJson($url, $type);
@@ -57,7 +59,9 @@ class TicketTypesApiTest extends TestCase
         $type = [
             'id'          => factory(Type::class)->create()->id,
             'description' => 'Testing Update Type',
-            'updated_by'  => $user->id,
+            'updated_by'  => [
+                'id' => $user->id,
+            ],
         ];
         $url = route('ticket-types.update', $type['id']);
         $response = $this->actingAs($user)->putJson($url, $type);
@@ -71,7 +75,9 @@ class TicketTypesApiTest extends TestCase
         $user = $this->getUser('manager');
         $type = [
             'id'         => factory(Type::class)->create()->id,
-            'deleted_by' => $user->id,
+            'deleted_by' => [
+                'id' => $user->id,
+            ],
         ];
         $url = route('ticket-types.destroy', $type['id']);
         $response = $this->actingAs($user)->deleteJson($url);

@@ -44,7 +44,9 @@ class TicketStatusApiTest extends TestCase
         $user = $this->getUser('manager');
         $status = [
             'name'       => 'TESTING_NEW_STATUS',
-            'created_by' => $user->id,
+            'created_by' => [
+                'id' => $user->id,
+            ],
         ];
         $url = route('ticket-status.store');
         $response = $this->actingAs($user)->postJson($url, $status);
@@ -59,7 +61,9 @@ class TicketStatusApiTest extends TestCase
         $status = [
             'id'         => factory(Status::class)->create()->id,
             'name'       => 'TESTING_UPDATE_STATUS',
-            'updated_by' => $user->id,
+            'updated_by' => [
+                'id' => $user->id,
+            ],
         ];
         $url = route('ticket-status.update', $status['id']);
         $response = $this->actingAs($user)->putJson($url, $status);
@@ -73,7 +77,9 @@ class TicketStatusApiTest extends TestCase
         $user = $this->getUser('manager');
         $status = [
             'id'         => factory(Status::class)->create()->id,
-            'deleted_by' => $user->id,
+            'deleted_by' => [
+                'id' => $user->id,
+            ],
         ];
         $url = route('ticket-status.destroy', $status['id']);
         $response = $this->actingAs($user)->deleteJson($url);

@@ -44,16 +44,18 @@ class ProductsApiTest extends TestCase
         $user = $this->getUser('attendant');
         $product = [
             'name'        => 'Testing New Product',
-            'category_id' => $categoryId,
             'category'    => $categoryId,
             'utc'         => '000000000000',
-            'created_by' => $user->id,
+            'created_by'  => [
+                'id' => $user->id,
+            ],
         ];
         $url = route('products.store');
         $response = $this->actingAs($user)->postJson($url, $product);
         $response->assertStatus(201);
         $product['category'] = ['id' => $categoryId];
         $response->assertJson($product);
+        $product['category_id'] = $categoryId;
         unset($product['category']);
         $this->assertDatabaseHas('products', $product);
     }
@@ -65,16 +67,18 @@ class ProductsApiTest extends TestCase
         $product = [
             'id'          => factory(Product::class)->create()->id,
             'name'        => 'Testing New Product',
-            'category_id' => $categoryId,
             'category'    => $categoryId,
             'utc'         => '000000000000',
-            'updated_by' => $user->id,
+            'updated_by' => [
+                'id' => $user->id,
+            ],
         ];
         $url = route('products.update', $product['id']);
         $response = $this->actingAs($user)->putJson($url, $product);
         $response->assertStatus(200);
         $product['category'] = ['id' => $categoryId];
         $response->assertJson($product);
+        $product['category_id'] = $categoryId;
         unset($product['category']);
         $this->assertDatabaseHas('products', $product);
     }
@@ -84,7 +88,9 @@ class ProductsApiTest extends TestCase
         $user = $this->getUser('attendant');
         $product = [
             'id'         => factory(Product::class)->create()->id,
-            'deleted_by' => $user->id,
+            'deleted_by' => [
+                'id' => $user->id,
+            ],
         ];
         $id = factory(Product::class)->create()->id;
         $url = route('products.destroy', $product['id']);
