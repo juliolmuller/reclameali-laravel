@@ -61,6 +61,7 @@ class UpdateUserTest extends TestCase
         $user['first_name'] = self::FIRST_NAME;
         $response = $this->actingAs($manager)->putJson($url, $user);
         $response->assertStatus(200);
+        $user['updated_by'] = $manager->id;
         $this->unset($user, 'role', 'city');
         $this->assertDatabaseHas('users', $user);
     }
@@ -76,6 +77,7 @@ class UpdateUserTest extends TestCase
         $user['last_name'] = self::LAST_NAME;
         $response = $this->actingAs($manager)->putJson($url, $user);
         $response->assertStatus(200);
+        $user['updated_by'] = $manager->id;
         $this->unset($user, 'role', 'city');
         $this->assertDatabaseHas('users', $user);
     }
@@ -91,6 +93,7 @@ class UpdateUserTest extends TestCase
         $user['cpf'] = self::CPF;
         $response = $this->actingAs($manager)->putJson($url, $user);
         $response->assertStatus(200);
+        $user['updated_by'] = $manager->id;
         $this->unset($user, 'role', 'city');
         $this->assertDatabaseHas('users', $user);
     }
@@ -106,6 +109,7 @@ class UpdateUserTest extends TestCase
         $user['email'] = self::EMAIL;
         $response = $this->actingAs($manager)->putJson($url, $user);
         $response->assertStatus(200);
+        $user['updated_by'] = $manager->id;
         $this->unset($user, 'role', 'city');
         $this->assertDatabaseHas('users', $user);
     }
@@ -121,6 +125,7 @@ class UpdateUserTest extends TestCase
         $user['date_of_birth'] = self::DATE_BIRTH;
         $response = $this->actingAs($manager)->putJson($url, $user);
         $response->assertStatus(200);
+        $user['updated_by'] = $manager->id;
         $this->unset($user, 'role', 'city');
         $this->assertDatabaseHas('users', $user);
     }
@@ -184,6 +189,7 @@ class UpdateUserTest extends TestCase
         $user['cpf'] = self::CPF;
         $response = $this->actingAs($manager)->putJson($url, $user);
         $response->assertStatus(200);
+        $user['updated_by'] = $manager->id;
         $this->unset($user, 'role', 'city');
         $this->assertDatabaseHas('users', $user);
     }
@@ -199,6 +205,7 @@ class UpdateUserTest extends TestCase
         $user['phone'] = self::PHONE;
         $response = $this->actingAs($manager)->putJson($url, $user);
         $response->assertStatus(200);
+        $user['updated_by'] = $manager->id;
         $this->unset($user, 'role', 'city');
         $this->assertDatabaseHas('users', $user);
     }
@@ -214,6 +221,7 @@ class UpdateUserTest extends TestCase
         $user['number'] = self::NUMBER;
         $response = $this->actingAs($manager)->putJson($url, $user);
         $response->assertStatus(200);
+        $user['updated_by'] = $manager->id;
         $this->unset($user, 'role', 'city');
         $this->assertDatabaseHas('users', $user);
     }
@@ -229,6 +237,7 @@ class UpdateUserTest extends TestCase
         $user['zip_code'] = self::ZIP_CODE;
         $response = $this->actingAs($manager)->putJson($url, $user);
         $response->assertStatus(200);
+        $user['updated_by'] = $manager->id;
         $this->unset($user, 'role', 'city');
         $this->assertDatabaseHas('users', $user);
     }
@@ -244,6 +253,7 @@ class UpdateUserTest extends TestCase
         $user['zip_code'] = self::ZIP_CODE;
         $response = $this->actingAs($manager)->putJson($url, $user);
         $response->assertStatus(200);
+        $user['updated_by'] = $manager->id;
         $this->unset($user, 'role', 'city');
         $this->assertDatabaseHas('users', $user);
     }
@@ -259,6 +269,7 @@ class UpdateUserTest extends TestCase
         $user['first_name'] = self::FIRST_NAME;
         $response = $this->actingAs($manager)->putJson($url, $user);
         $response->assertStatus(200);
+        $user['updated_by'] = $manager->id;
         $this->unset($user, 'role', 'city');
         $this->assertDatabaseHas('users', $user);
     }
@@ -274,6 +285,7 @@ class UpdateUserTest extends TestCase
         $user['last_name'] = self::LAST_NAME;
         $response = $this->actingAs($manager)->putJson($url, $user);
         $response->assertStatus(200);
+        $user['updated_by'] = $manager->id;
         $this->unset($user, 'role', 'city');
         $this->assertDatabaseHas('users', $user);
     }
@@ -289,6 +301,7 @@ class UpdateUserTest extends TestCase
         $user['phone'] = self::PHONE;
         $response = $this->actingAs($manager)->putJson($url, $user);
         $response->assertStatus(200);
+        $user['updated_by'] = $manager->id;
         $this->unset($user, 'role', 'city');
         $this->assertDatabaseHas('users', $user);
     }
@@ -320,6 +333,7 @@ class UpdateUserTest extends TestCase
         $user['date_of_birth'] = self::DATE_BIRTH;
         $response = $this->actingAs($manager)->putJson($url, $user);
         $response->assertStatus(200);
+        $user['updated_by'] = $manager->id;
         $this->unset($user, 'role', 'city');
         $this->assertDatabaseHas('users', $user);
     }
@@ -335,6 +349,7 @@ class UpdateUserTest extends TestCase
         $user['number'] = self::NUMBER;
         $response = $this->actingAs($manager)->putJson($url, $user);
         $response->assertStatus(200);
+        $user['updated_by'] = $manager->id;
         $this->unset($user, 'role', 'city');
         $this->assertDatabaseHas('users', $user);
     }
@@ -350,6 +365,7 @@ class UpdateUserTest extends TestCase
         $user['first_name'] = self::FIRST_NAME;
         $response = $this->actingAs($manager)->putJson($url, $user);
         $response->assertStatus(200);
+        $user['updated_by'] = $manager->id;
         $this->unset($user, 'role', 'city');
         $this->assertDatabaseHas('users', $user);
     }
@@ -365,6 +381,7 @@ class UpdateUserTest extends TestCase
         $user['last_name'] = self::LAST_NAME;
         $response = $this->actingAs($manager)->putJson($url, $user);
         $response->assertStatus(200);
+        $user['updated_by'] = $manager->id;
         $this->unset($user, 'role', 'city');
         $this->assertDatabaseHas('users', $user);
     }
@@ -380,6 +397,7 @@ class UpdateUserTest extends TestCase
         $user['phone'] = self::PHONE;
         $response = $this->actingAs($manager)->putJson($url, $user);
         $response->assertStatus(200);
+        $user['updated_by'] = $manager->id;
         $this->unset($user, 'role', 'city');
         $this->assertDatabaseHas('users', $user);
     }
@@ -395,6 +413,7 @@ class UpdateUserTest extends TestCase
         $user['street'] = self::STREET;
         $response = $this->actingAs($manager)->putJson($url, $user);
         $response->assertStatus(200);
+        $user['updated_by'] = $manager->id;
         $this->unset($user, 'role', 'city');
         $this->assertDatabaseHas('users', $user);
     }
@@ -410,6 +429,7 @@ class UpdateUserTest extends TestCase
         $user['complement'] = self::COMPLEMENT;
         $response = $this->actingAs($manager)->putJson($url, $user);
         $response->assertStatus(200);
+        $user['updated_by'] = $manager->id;
         $this->unset($user, 'role', 'city');
         $this->assertDatabaseHas('users', $user);
     }
@@ -425,6 +445,7 @@ class UpdateUserTest extends TestCase
         $user['cpf'] = self::CPF;
         $response = $this->actingAs($manager)->putJson($url, $user);
         $response->assertStatus(200);
+        $user['updated_by'] = $manager->id;
         $this->unset($user, 'role', 'city');
         $this->assertDatabaseHas('users', $user);
     }
@@ -440,6 +461,7 @@ class UpdateUserTest extends TestCase
         $user['email'] = self::EMAIL;
         $response = $this->actingAs($manager)->putJson($url, $user);
         $response->assertStatus(200);
+        $user['updated_by'] = $manager->id;
         $this->unset($user, 'role', 'city');
         $this->assertDatabaseHas('users', $user);
     }
@@ -471,6 +493,7 @@ class UpdateUserTest extends TestCase
         $user['city_id'] = $user['city'];
         $response = $this->actingAs($manager)->putJson($url, $user);
         $response->assertStatus(200);
+        $user['updated_by'] = $manager->id;
         $this->unset($user, 'role', 'city');
         $this->assertDatabaseHas('users', $user);
     }
@@ -487,6 +510,7 @@ class UpdateUserTest extends TestCase
         $user['role_id'] = $user['role'];
         $response = $this->actingAs($manager)->putJson($url, $user);
         $response->assertStatus(200);
+        $user['updated_by'] = $manager->id;
         $this->unset($user, 'role', 'city');
         $this->assertDatabaseHas('users', $user);
     }
@@ -502,6 +526,7 @@ class UpdateUserTest extends TestCase
         $user['first_name'] = self::FIRST_NAME;
         $response = $this->actingAs($manager)->putJson($url, $user);
         $response->assertStatus(200);
+        $user['updated_by'] = $manager->id;
         $this->unset($user, 'role', 'city');
         $this->assertDatabaseHas('users', $user);
     }
@@ -517,6 +542,7 @@ class UpdateUserTest extends TestCase
         $user['last_name'] = self::LAST_NAME;
         $response = $this->actingAs($manager)->putJson($url, $user);
         $response->assertStatus(200);
+        $user['updated_by'] = $manager->id;
         $this->unset($user, 'role', 'city');
         $this->assertDatabaseHas('users', $user);
     }
@@ -532,6 +558,7 @@ class UpdateUserTest extends TestCase
         $user['cpf'] = self::CPF;
         $response = $this->actingAs($manager)->putJson($url, $user);
         $response->assertStatus(200);
+        $user['updated_by'] = $manager->id;
         $this->unset($user, 'role', 'city');
         $this->assertDatabaseHas('users', $user);
     }
@@ -547,6 +574,7 @@ class UpdateUserTest extends TestCase
         $user['email'] = self::EMAIL;
         $response = $this->actingAs($manager)->putJson($url, $user);
         $response->assertStatus(200);
+        $user['updated_by'] = $manager->id;
         $this->unset($user, 'role', 'city');
         $this->assertDatabaseHas('users', $user);
     }
