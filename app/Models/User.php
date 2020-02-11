@@ -80,7 +80,7 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected const RELATIONS = ['role', 'creator', 'editor', 'destroyer'];
+    protected const RELATIONS = ['role', 'city', 'state', 'creator', 'editor', 'destroyer'];
 
     /**
      * Get the role associated with $this user
