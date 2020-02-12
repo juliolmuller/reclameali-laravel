@@ -8,23 +8,26 @@ use Wildside\Userstamps\Userstamps;
 
 /**
  * Role Model
- *   Table:
- *     access_roles
- *   Attributes:
- *     id:          required | integer | unique
- *     name:        required | string(1-10) | unique
- *     description: nullable | string(0-255)
- *     created_at:  nullable | timestamp
- *     created_by:  nullable | \App\Models\User::id (integer)
- *     updated_at:  nullable | timestamp
- *     updated_by:  nullable | \App\Models\User::id (integer)
- *   Relationships:
- *     permissions: \App\Models\Permission[] (BelongsToMany)
- *     creator:     \App\Models\User (BelongsTo)
- *     editor:      \App\Models\User (BelongsTo)
- *     users:       \App\Models\User[] (HasMany)
  *
  * @mixin \Eloquent
+ *
+ * Database table:
+ * @table access_roles
+ *
+ * Database columns:
+ * @property integer id                            required | unique
+ * @property string name                           required | length: 1 to 10 | unique
+ * @property string description                    nullable | length: 0 to 255
+ * @property \Illuminate\Support\Carbon created_at nullable
+ * @property integer created_by                    nullable | \App\Models\User::id
+ * @property \Illuminate\Support\Carbon updated_at nullable
+ * @property integer updated_by                    nullable | \App\Models\User::id
+ *
+ * Database relations:
+ * @property \App\Models\User creator              BelongsTo (many-to-one)
+ * @property \App\Models\User editor               BelongsTo (many-to-one)
+ * @property \App\Models\Permission[] permissions  BelongsToMany (many-to-many)
+ * @property \App\Models\User[] users              HasMany (one-to-many)
  */
 class Role extends Model
 {

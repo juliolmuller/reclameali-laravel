@@ -8,27 +8,30 @@ use Wildside\Userstamps\Userstamps;
 
 /**
  * Ticket Model
- *   Table:
- *     tickets
- *   Attributes:
- *     id:         required | integer | unique
- *     product_id: required | \App\Models\Product::id (integer)
- *     status_id:  required | \App\Models\TicketStatus::id (integer)
- *     type_id:    required | \App\Models\TicketType::id (integer)
- *     closed_at:  nullable | timestamp
- *     created_at: nullable | timestamp
- *     created_by: nullable | \App\Models\User::id (integer)
- *     updated_at: nullable | timestamp
- *     updated_by: nullable | \App\Models\User::id (integer)
- *   Relationships:
- *     product:   \App\Models\Product (BelongsTo)
- *     status:    \App\Models\TicketStatus (BelongsTo)
- *     type:      \App\Models\TicketType (BelongsTo)
- *     creator:   \App\Models\User (BelongsTo)
- *     editor:    \App\Models\User (BelongsTo)
- *     messages:  \App\Models\TicketMessages[] (HasMany)
  *
  * @mixin \Eloquent
+ *
+ * Database table:
+ * @table tickets
+ *
+ * Database columns:
+ * @property integer id                            required | unique
+ * @property integer product_id                   required | \App\Models\Product::id
+ * @property integer status_id                    required | \App\Models\TicketStatus::id
+ * @property integer type_id                      required | \App\Models\TicketType::id
+ * @property \Illuminate\Support\Carbon closed_at  nullable
+ * @property \Illuminate\Support\Carbon created_at nullable
+ * @property integer created_by                    nullable | \App\Models\User::id
+ * @property \Illuminate\Support\Carbon updated_at nullable
+ * @property integer updated_by                    nullable | \App\Models\User::id
+ *
+ * Database relations:
+ * @property \App\Models\Product product           BelongsTo (many-to-one)
+ * @property \App\Models\TicketStatus status       BelongsTo (many-to-one)
+ * @property \App\Models\TicketType type           BelongsTo (many-to-one)
+ * @property \App\Models\User creator              BelongsTo (many-to-one)
+ * @property \App\Models\User editor               BelongsTo (many-to-one)
+ * @property \App\Models\TicketMessages[] messages HasMany (one-to-many)
  */
 class Ticket extends Model
 {

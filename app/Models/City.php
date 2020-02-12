@@ -6,19 +6,22 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * City Model
- *   Table:
- *     cities
- *   Attributes:
- *     id:         required | integer | unique
- *     name:       required | string(0-80)
- *     state_id:   required | \App\Models\State::id (integer)
- *     created_at: nullable | timestamp
- *     updated_at: nullable | timestamp
- *   Relationships:
- *     state: \App\Models\State (BelongsTo)
- *     users: \App\Models\User[] (HasMany)
  *
  * @mixin \Eloquent
+ *
+ * Database table:
+ * @table cities
+ *
+ * Database columns:
+ * @property integer id                            required | unique
+ * @property string name                           required | length: 0 to 80
+ * @property integer state_id                      required | \App\Models\State::id
+ * @property \Illuminate\Support\Carbon created_at nullable
+ * @property \Illuminate\Support\Carbon updated_at nullable
+ *
+ * Database relations:
+ * @property \App\Models\State state               BelongsTo (many-to-one)
+ * @property \App\Models\User[] users              HasMany (one-to-many)
  */
 class City extends Model
 {

@@ -11,40 +11,43 @@ use Znck\Eloquent\Traits\BelongsToThrough;
 
 /**
  * User Model
- *   Table:
- *     users
- *   Attributes:
- *     id:             required | integer | unique
- *     first_name:     required | string(1-30)
- *     last_name:      required | string(1-150)
- *     cpf:            required | string(11)
- *     email:          required | string(1-255)
- *     date_of_birth:  required | date
- *     password:       required | string(60)
- *     role_id:        required | \App\Models\Role::id (integer)
- *     phone:          nullable | string(0-16)
- *     remember_token: nullable | string(100)
- *     strett:         nullable | string(0-255)
- *     number:         nullable | integer
- *     complement:     nullable | string(0-20)
- *     zip_code:       nullable | string(8)
- *     city_id:        nullable | \App\Models\City::id (integer)
- *     created_at:     nullable | timestamp
- *     created_by:     nullable | \App\Models\User::id (integer)
- *     updated_at:     nullable | timestamp
- *     updated_by:     nullable | \App\Models\User::id (integer)
- *     deleted_at:     nullable | timestamp
- *     deleted_by:     nullable | \App\Models\User::id (integer)
- *   Relationships:
- *     role:      \App\Models\Role (BelongsTo)
- *     city:      \App\Models\City (BelongsTo)
- *     state:     \App\Models\State (BelongsToThrough)
- *     creator:   \App\Models\User (BelongsTo)
- *     editor:    \App\Models\User (BelongsTo)
- *     destroyer: \App\Models\User (BelongsTo)
- *     tickets:   \App\Models\Ticket[] (HasMany)
  *
  * @mixin \Eloquent
+ *
+ * Database table:
+ * @table users
+ *
+ * Database columns:
+ * @property integer id                              required | unique
+ * @property string first_name                       required | length: 1 to 30
+ * @property string last_name                        required | length: 1 to 150
+ * @property string cpf                              required | length: 11
+ * @property string email                            required | length: 1 to 255
+ * @property string phone                            nullable | length: 0 to 16
+ * @property \Illuminate\Support\Carbo date_of_birth required
+ * @property string street                           nullable | length: 0 to 255
+ * @property integer number                          nullable | unsigned
+ * @property string complement                       nullable | length: 0 to 20
+ * @property string zip_code                         nullable | length: 8
+ * @property integer city_id                         nullable | \App\Models\City::id
+ * @property integer role_id                         required | \App\Models\Role::id
+ * @property string password                         required | length: 60
+ * @property string remember_token                   required | length: 100
+ * @property \Illuminate\Support\Carbon created_at   nullable
+ * @property integer created_by                      nullable | \App\Models\User::id
+ * @property \Illuminate\Support\Carbon updated_at   nullable
+ * @property integer updated_by                      nullable | \App\Models\User::id
+ * @property \Illuminate\Support\Carbon deleted_at   nullable
+ * @property integer deleted_by                      nullable | \App\Models\User::id
+ *
+ * Database relations:
+ * @property \App\Models\Role role                   BelongsTo (many-to-one)
+ * @property \App\Models\City city                   BelongsTo (many-to-one)
+ * @property \App\Models\State state                 BelongsToThrough (many-to-one)
+ * @property \App\Models\User creator                BelongsTo (many-to-one)
+ * @property \App\Models\User editor                 BelongsTo (many-to-one)
+ * @property \App\Models\User destroyer              BelongsTo (many-to-one)
+ * @property \App\Models\Ticket[] tickets            HasMany (one-to-many)
  */
 class User extends Authenticatable
 {

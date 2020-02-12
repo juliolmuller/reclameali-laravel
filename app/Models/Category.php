@@ -9,24 +9,27 @@ use Wildside\Userstamps\Userstamps;
 
 /**
  * Category Model
- *   Table:
- *     categories
- *   Attributes:
- *     id:         required | integer | unique
- *     name:       required | string(3-50) | unique
- *     created_at: nullable | timestamp
- *     created_by: nullable | \App\Models\User::id (integer)
- *     updated_at: nullable | timestamp
- *     updated_by: nullable | \App\Models\User::id (integer)
- *     deleted_at: nullable | timestamp
- *     deleted_by: nullable | \App\Models\User::id (integer)
- *   Relationships:
- *     creator:   \App\Models\User (BelongsTo)
- *     editor:    \App\Models\User (BelongsTo)
- *     destroyer: \App\Models\User (BelongsTo)
- *     products:  \App\Models\Product[] (HasMany)
  *
  * @mixin \Eloquent
+ *
+ * Database table:
+ * @table categories
+ *
+ * Database columns:
+ * @property integer id                            required | unique
+ * @property string name                           required | length: 3 to 50 | unique
+ * @property \Illuminate\Support\Carbon created_at nullable
+ * @property integer created_by                    nullable | \App\Models\User::id
+ * @property \Illuminate\Support\Carbon updated_at nullable
+ * @property integer updated_by                    nullable | \App\Models\User::id
+ * @property \Illuminate\Support\Carbon deleted_at nullable
+ * @property integer deleted_by                    nullable | \App\Models\User::id
+ *
+ * Database relations:
+ * @property \App\Models\User creator              BelongsTo (many-to-one)
+ * @property \App\Models\User editor               BelongsTo (many-to-one)
+ * @property \App\Models\User destroyer            BelongsTo (many-to-one)
+ * @property \App\Models\Product[] products        HasMany (one-to-many)
  */
 class Category extends Model
 {

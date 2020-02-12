@@ -9,25 +9,28 @@ use Wildside\Userstamps\Userstamps;
 
 /**
  * Ticket Status Model
- *   Table:
- *     ticket_status
- *   Attributes:
- *     id:          required | integer | unique
- *     name:        required | string(1-30) | unique
- *     description: nullable | string(0-255)
- *     created_at:  nullable | timestamp
- *     created_by:  nullable | \App\Models\User::id (integer)
- *     updated_at:  nullable | timestamp
- *     updated_by:  nullable | \App\Models\User::id (integer)
- *     deleted_at:  nullable | timestamp
- *     deleted_by:  nullable | \App\Models\User::id (integer)
- *   Relationships:
- *     creator:   \App\Models\User (BelongsTo)
- *     editor:    \App\Models\User (BelongsTo)
- *     destroyer: \App\Models\User (BelongsTo)
- *     tickets:   \App\Models\Ticket[] (HasMany)
  *
  * @mixin \Eloquent
+ *
+ * Database table:
+ * @table ticket_status
+ *
+ * Database columns:
+ * @property integer id                            required | unique
+ * @property string name                           required | length: 1 to 30 | unique
+ * @property string description                    nullable | length: 0 to 255
+ * @property \Illuminate\Support\Carbon created_at nullable
+ * @property integer created_by                    nullable | \App\Models\User::id
+ * @property \Illuminate\Support\Carbon updated_at nullable
+ * @property integer updated_by                    nullable | \App\Models\User::id
+ * @property \Illuminate\Support\Carbon deleted_at nullable
+ * @property integer deleted_by                    nullable | \App\Models\User::id
+ *
+ * Database relations:
+ * @property \App\Models\User creator              BelongsTo (many-to-one)
+ * @property \App\Models\User editor               BelongsTo (many-to-one)
+ * @property \App\Models\User destroyer            BelongsTo (many-to-one)
+ * @property \App\Models\Ticket[] tickets          HasMany (one-to-many)
  */
 class TicketStatus extends Model
 {

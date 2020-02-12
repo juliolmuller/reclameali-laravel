@@ -6,19 +6,22 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * State Model
- *   Table:
- *     states
- *   Attributes:
- *     id:          required | integer | unique
- *     name:        required | string(0-19)
- *     abreviation: required | string(2)
- *     created_at:  nullable | timestamp
- *     updated_at:  nullable | timestamp
- *   Relationships:
- *     cities: \App\Models\City[] (HasMany)
- *     users:  \App\Models\User[] (HasManyThrough)
  *
  * @mixin \Eloquent
+ *
+ * Database table:
+ * @table states
+ *
+ * Database columns:
+ * @property integer id                            required | unique
+ * @property string name                           required | length: 0 to 19
+ * @property string abreviation                    required | length: 2
+ * @property \Illuminate\Support\Carbon created_at nullable
+ * @property \Illuminate\Support\Carbon updated_at nullable
+ *
+ * Database relations:
+ * @property \App\Models\City[] cities             HasMany (one-to-many)
+ * @property \App\Models\User[] users              HasManyThrough (one-to-many)
  */
 class State extends Model
 {

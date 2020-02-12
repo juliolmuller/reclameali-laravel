@@ -7,23 +7,26 @@ use Wildside\Userstamps\Userstamps;
 
 /**
  * Ticket Message Model
- *   Table:
- *     ticket_messages
- *   Attributes:
- *     id:         required | integer | unique
- *     body:       required | string(1-255) | unique
- *     ticket_id:  required | \App\Models\Ticket::id (integer)
- *     sent_at:    nullable | timestamp
- *     sent_by:    nullable | \App\Models\User::id (integer)
- *     updated_at: nullable | timestamp
- *     updated_by: nullable | \App\Models\User::id (integer)
- *   Relationships:
- *     ticket:    \App\Models\Ticket (BelongsTo)
- *     sender:    \App\Models\User (BelongsTo)
- *     creator:   \App\Models\User (BelongsTo)
- *     editor:    \App\Models\User (BelongsTo)
  *
  * @mixin \Eloquent
+ *
+ * Database table:
+ * @table ticket_messages
+ *
+ * Database columns:
+ * @property integer id                            required | unique
+ * @property string body                           required | length: 1 to 255
+ * @property integer ticket_id                     required | \App\Models\Ticket::id
+ * @property \Illuminate\Support\Carbon sent_at    nullable
+ * @property integer sent_by                       nullable | \App\Models\User::id
+ * @property \Illuminate\Support\Carbon updated_at nullable
+ * @property integer updated_by                    nullable | \App\Models\User::id
+ *
+ * Database relations:
+ * @property \App\Models\Ticket ticket             BelongsTo (many-to-one)
+ * @property \App\Models\User sender               BelongsTo (many-to-one)
+ * @property \App\Models\User creator              BelongsTo (many-to-one)
+ * @property \App\Models\User editor               BelongsTo (many-to-one)
  */
 class TicketMessage extends Model
 {
