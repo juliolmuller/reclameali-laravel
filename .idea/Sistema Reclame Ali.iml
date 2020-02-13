@@ -23,7 +23,6 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/fideloper/proxy" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/filp/whoops" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/fzaninotto/faker" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/gdebrauwer/laravel-hateoas" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/guzzlehttp/guzzle" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/guzzlehttp/promises" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/guzzlehttp/psr7" />
@@ -36,7 +35,6 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/laravel/tinker" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/laravel/ui" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/league/commonmark" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/league/commonmark-ext-table" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/league/flysystem" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/mbezhanov/faker-provider-collection" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/mockery/mockery" />
@@ -82,7 +80,6 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/sebastian/version" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/seld/jsonlint" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/seld/phar-utils" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/spatie/once" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/staudenmeir/belongs-to-through" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/swiftmailer/swiftmailer" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/console" />
