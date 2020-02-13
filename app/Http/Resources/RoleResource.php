@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class TicketStatus extends JsonResource
+class RoleResource extends JsonResource
 {
     /**
      * Transform the resource into an array
@@ -17,13 +17,13 @@ class TicketStatus extends JsonResource
         return [
             'id'          => $this->id,
             'name'        => $this->name,
-            'description' => $this->description,
+            'description' => $this->description ?? null,
+            'users'       => UserResource::collection($this->whenLoaded('users')),
+            'permissions' => $this->whenLoaded('permissions'),
             'created_at'  => $this->created_at,
-            'created_by'  => User::make($this->whenLoaded('creator')),
+            'created_by'  => UserResource::make($this->whenLoaded('creator')),
             'updated_at'  => $this->updated_at,
-            'updated_by'  => User::make($this->whenLoaded('editor')),
-            'deleted_at'  => $this->deleted_at,
-            'deleted_by'  => User::make($this->whenLoaded('destroyer')),
+            'updated_by'  => UserResource::make($this->whenLoaded('editor')),
         ];
     }
 }

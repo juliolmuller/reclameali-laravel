@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Middleware\OwnDataOnly;
 use App\Http\Requests\StoreTicketRequest;
 use App\Http\Requests\StoreTicketMessageRequest;
-use App\Http\Resources\Ticket as Resource;
+use App\Http\Resources\TicketResource as Resource;
 use App\Models\Ticket;
 use App\Models\TicketStatus;
 use Illuminate\Database\Eloquent\Builder;

@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCategoryRequest as StoreRequest;
 use App\Http\Requests\UpdateCategoryRequest as UpdateRequest;
-use App\Http\Resources\Category as Resource;
+use App\Http\Resources\CategoryResource as Resource;
 use App\Models\Category;
 
 class CategoriesApiController extends Controller

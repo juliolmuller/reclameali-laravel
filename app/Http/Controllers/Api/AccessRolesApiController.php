@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreRoleRequest as StoreRequest;
 use App\Http\Requests\UpdateRoleRequest as UpdateRequest;
-use App\Http\Resources\Role as Resource;
+use App\Http\Resources\RoleResource as Resource;
 use App\Models\Role;
 use Illuminate\Support\Str;
 

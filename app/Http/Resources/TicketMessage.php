@@ -18,7 +18,7 @@ class TicketMessage extends JsonResource
             'id'      => $this->id,
             'body'    => $this->body,
             'sent_at' => $this->sent_at,
-            'sent_by' => User::make($this->whenLoaded('sender')),
+            'sent_by' => UserResource::make($this->whenLoaded('sender')),
         ];
     }
 }

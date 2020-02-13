@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserRequest as StoreRequest;
 use App\Http\Requests\UpdateUserDataRequest as UpdateDataRequest;
 use App\Http\Requests\UpdateUserPasswordRequest as UpdatePasswordRequest;
-use App\Http\Resources\User as Resource;
+use App\Http\Resources\UserResource as Resource;
 use App\Http\Middleware\OwnDataOnly;
 use App\Models\Role;
 use App\Models\User;

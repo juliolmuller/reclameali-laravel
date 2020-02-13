@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreTicketTypeRequest as StoreRequest;
 use App\Http\Requests\UpdateTicketTypeRequest as UpdateRequest;
-use App\Http\Resources\TicketType as Resource;
+use App\Http\Resources\TicketTypeResource as Resource;
 use App\Models\TicketType as Type;
 
 class TicketTypesApiController extends Controller

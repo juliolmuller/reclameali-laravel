@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreTicketStatusRequest as StoreRequest;
 use App\Http\Requests\UpdateTicketStatusRequest as UpdateRequest;
-use App\Http\Resources\TicketStatus as Resource;
+use App\Http\Resources\TicketStatusResource as Resource;
 use App\Models\TicketStatus as Status;
 use Illuminate\Support\Str;
 

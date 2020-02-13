@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class User extends JsonResource
+class UserResource extends JsonResource
 {
     /**
      * Transform the resource into an array
@@ -33,11 +33,11 @@ class User extends JsonResource
             ],
             'role'          => $this->whenLoaded('role'),
             'created_at'    => $this->created_at,
-            'created_by'    => User::make($this->whenLoaded('creator')),
+            'created_by'    => UserResource::make($this->whenLoaded('creator')),
             'updated_at'    => $this->updated_at,
-            'updated_by'    => User::make($this->whenLoaded('editor')),
+            'updated_by'    => UserResource::make($this->whenLoaded('editor')),
             'deleted_at'    => $this->deleted_at,
-            'deleted_by'    => User::make($this->whenLoaded('destroyer')),
+            'deleted_by'    => UserResource::make($this->whenLoaded('destroyer')),
         ];
     }
 }

@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProductRequest as StoreRequest;
 use App\Http\Requests\UpdateProductRequest as UpdateRequest;
-use App\Http\Resources\Product as Resource;
+use App\Http\Resources\ProductResource as Resource;
 use App\Models\Product;
 
 class ProductsApiController extends Controller
