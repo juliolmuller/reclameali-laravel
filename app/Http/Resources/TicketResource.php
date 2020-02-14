@@ -19,7 +19,7 @@ class TicketResource extends JsonResource
             'product'     => UserResource::make($this->whenLoaded('product')),
             'status'      => UserResource::make($this->whenLoaded('status')),
             'type'        => UserResource::make($this->whenLoaded('type')),
-            'messages'    => TicketMessage::collection($this->whenLoaded('messages')),
+            'messages'    => TicketMessageResource::collection($this->whenLoaded('messages')),
             'created_at'  => $this->created_at,
             'created_by'  => UserResource::make($this->whenLoaded('creator')),
             'closed_at'   => $this->closed_at,

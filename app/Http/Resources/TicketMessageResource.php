@@ -4,7 +4,10 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class TicketMessage extends JsonResource
+/**
+ * @mixin \App\Models\TicketMessage
+ */
+class TicketMessageResource extends JsonResource
 {
     /**
      * Transform the resource into an array
