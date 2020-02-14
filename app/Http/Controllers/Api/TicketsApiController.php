@@ -60,7 +60,7 @@ class TicketsApiController extends Controller
     public function store(StoreTicketRequest $request)
     {
         $ticket = Ticket::create([
-            'status_id'  => TicketStatus::where('name', 'OPEN')->first()->id,
+            'status_id'  => 1, // Status = 'ABERTO' ('OPEN')
             'product_id' => $request->input('product'),
             'type_id'    => $request->input('type'),
         ]);
@@ -105,7 +105,7 @@ class TicketsApiController extends Controller
     public function close(Ticket $ticket)
     {
         $ticket->closed_at = now();
-        $ticket->status_id = TicketStatus::where('name', 'CLOSED')->first()->id;
+        $ticket->status_id = 2; // Status = 'FECHADO' ('CLOSED')
 
         $ticket->save();
         $ticket->loadDefault(['messages']);

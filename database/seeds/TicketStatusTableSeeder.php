@@ -13,8 +13,8 @@ class TicketStatusTableSeeder extends Seeder
     public function run()
     {
         DB::table('ticket_status')->insert([
-            ['name' => 'OPEN',   'description' => 'Aberto'],
-            ['name' => 'CLOSED', 'description' => 'Fechado'],
+            ['name' => 'ABERTO'],
+            ['name' => 'FECHADO'],
         ]);
     }
 }

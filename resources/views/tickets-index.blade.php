@@ -93,10 +93,10 @@
               </td>
               <td class="text-center">
                 <c:choose>
-                  <c:when test="${ticket.status == 'OPEN'}">
+                  <c:when test="${ticket.status == 'ABERTO'}">
                     <span class="badge badge-sm badge-warning c-status">Aberto</span>
                   </c:when>
-                  <c:when test="${ticket.status == 'CLOSED'}">
+                  <c:when test="${ticket.status == 'FECHADO'}">
                     <span class="badge badge-sm badge-success c-status">Fechado</span>
                   </c:when>
                 </c:choose>

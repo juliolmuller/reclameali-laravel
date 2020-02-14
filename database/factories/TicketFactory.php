@@ -10,7 +10,7 @@ use Faker\Generator as Faker;
 $factory->define(Ticket::class, function (Faker $faker) {
     $status = Status::all()->random();
     $openingDate = $faker->dateTimeBetween('-1 year', '-' . (6 * 50) . ' hours');
-    $closingDate = $status->name === 'CLOSED' ? $openingDate->modify("+" . (6 * 50) . ' hours') : null;
+    $closingDate = $status->name === 'FECHADO' ? $openingDate->modify("+" . (6 * 50) . ' hours') : null;
     return [
         'product_id' => Product::all()->random(),
         'type_id'    => Type::all()->random(),
