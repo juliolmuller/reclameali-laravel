@@ -55,7 +55,7 @@ class UpdateUserTest extends TestCase
         $manager = $this->getUser('manager');
         $user = $this->createUser();
         $this->unset($user, 'first_name');
-        $url = route('api.users.update-data', $user['id']);
+        $url = route('api.users.update_data', $user['id']);
         $response = $this->actingAs($manager)->putJson($url, $user);
         $response->assertStatus(422);
         $user['first_name'] = self::FIRST_NAME;
@@ -71,7 +71,7 @@ class UpdateUserTest extends TestCase
         $manager = $this->getUser('manager');
         $user = $this->createUser();
         $this->unset($user, 'last_name');
-        $url = route('api.users.update-data', $user['id']);
+        $url = route('api.users.update_data', $user['id']);
         $response = $this->actingAs($manager)->putJson($url, $user);
         $response->assertStatus(422);
         $user['last_name'] = self::LAST_NAME;
@@ -87,7 +87,7 @@ class UpdateUserTest extends TestCase
         $manager = $this->getUser('manager');
         $user = $this->createUser();
         $this->unset($user, 'cpf');
-        $url = route('api.users.update-data', $user['id']);
+        $url = route('api.users.update_data', $user['id']);
         $response = $this->actingAs($manager)->putJson($url, $user);
         $response->assertStatus(422);
         $user['cpf'] = self::CPF;
@@ -103,7 +103,7 @@ class UpdateUserTest extends TestCase
         $manager = $this->getUser('manager');
         $user = $this->createUser();
         $this->unset($user, 'email');
-        $url = route('api.users.update-data', $user['id']);
+        $url = route('api.users.update_data', $user['id']);
         $response = $this->actingAs($manager)->putJson($url, $user);
         $response->assertStatus(422);
         $user['email'] = self::EMAIL;
@@ -119,7 +119,7 @@ class UpdateUserTest extends TestCase
         $manager = $this->getUser('manager');
         $user = $this->createUser();
         $this->unset($user, 'date_of_birth');
-        $url = route('api.users.update-data', $user['id']);
+        $url = route('api.users.update_data', $user['id']);
         $response = $this->actingAs($manager)->putJson($url, $user);
         $response->assertStatus(422);
         $user['date_of_birth'] = self::DATE_BIRTH;
@@ -136,7 +136,7 @@ class UpdateUserTest extends TestCase
         $user = $this->createUser(['password' => Hash::make(self::PSWD)]);
         $user['password'] = self::PSWD;
         $user['password_confirmation'] = self::PSWD;
-        $url = route('api.users.update-password', $user['id']);
+        $url = route('api.users.update_password', $user['id']);
         $response = $this->actingAs($manager)->patchJson($url, $user);
         $response->assertStatus(422);
         $user['old_password'] = self::PSWD;
@@ -152,7 +152,7 @@ class UpdateUserTest extends TestCase
         $user = $this->createUser(['password' => Hash::make(self::PSWD)]);
         $user['old_password'] = self::PSWD;
         $user['password_confirmation'] = self::PSWD;
-        $url = route('api.users.update-password', $user['id']);
+        $url = route('api.users.update_password', $user['id']);
         $response = $this->actingAs($manager)->patchJson($url, $user);
         $response->assertStatus(422);
         $user['password'] = self::PSWD;
@@ -168,7 +168,7 @@ class UpdateUserTest extends TestCase
         $user = $this->createUser(['password' => Hash::make(self::PSWD)]);
         $user['old_password'] = self::PSWD;
         $user['password'] = self::PSWD;
-        $url = route('api.users.update-password', $user['id']);
+        $url = route('api.users.update_password', $user['id']);
         $response = $this->actingAs($manager)->patchJson($url, $user);
         $response->assertStatus(422);
         $user['password_confirmation'] = self::PSWD;
@@ -183,7 +183,7 @@ class UpdateUserTest extends TestCase
         $manager = $this->getUser('manager');
         $user = $this->createUser();
         $user['cpf'] = 'A1234567890';
-        $url = route('api.users.update-data', $user['id']);
+        $url = route('api.users.update_data', $user['id']);
         $response = $this->actingAs($manager)->putJson($url, $user);
         $response->assertStatus(422);
         $user['cpf'] = self::CPF;
@@ -199,7 +199,7 @@ class UpdateUserTest extends TestCase
         $manager = $this->getUser('manager');
         $user = $this->createUser();
         $user['phone'] = '4198518773A';
-        $url = route('api.users.update-data', $user['id']);
+        $url = route('api.users.update_data', $user['id']);
         $response = $this->actingAs($manager)->putJson($url, $user);
         $response->assertStatus(422);
         $user['phone'] = self::PHONE;
@@ -215,7 +215,7 @@ class UpdateUserTest extends TestCase
         $manager = $this->getUser('manager');
         $user = $this->createUser();
         $user['number'] = 'A';
-        $url = route('api.users.update-data', $user['id']);
+        $url = route('api.users.update_data', $user['id']);
         $response = $this->actingAs($manager)->putJson($url, $user);
         $response->assertStatus(422);
         $user['number'] = self::NUMBER;
@@ -231,7 +231,7 @@ class UpdateUserTest extends TestCase
         $manager = $this->getUser('manager');
         $user = $this->createUser();
         $user['zip_code'] = '80123A00';
-        $url = route('api.users.update-data', $user['id']);
+        $url = route('api.users.update_data', $user['id']);
         $response = $this->actingAs($manager)->putJson($url, $user);
         $response->assertStatus(422);
         $user['zip_code'] = self::ZIP_CODE;
@@ -247,7 +247,7 @@ class UpdateUserTest extends TestCase
         $manager = $this->getUser('manager');
         $user = $this->createUser();
         $user['zip_code'] = '801231000'; // size must be 8 length
-        $url = route('api.users.update-data', $user['id']);
+        $url = route('api.users.update_data', $user['id']);
         $response = $this->actingAs($manager)->putJson($url, $user);
         $response->assertStatus(422);
         $user['zip_code'] = self::ZIP_CODE;
@@ -263,7 +263,7 @@ class UpdateUserTest extends TestCase
         $manager = $this->getUser('manager');
         $user = $this->createUser();
         $user['first_name'] = ''; // min is 1 character
-        $url = route('api.users.update-data', $user['id']);
+        $url = route('api.users.update_data', $user['id']);
         $response = $this->actingAs($manager)->putJson($url, $user);
         $response->assertStatus(422);
         $user['first_name'] = self::FIRST_NAME;
@@ -279,7 +279,7 @@ class UpdateUserTest extends TestCase
         $manager = $this->getUser('manager');
         $user = $this->createUser();
         $user['last_name'] = ''; // min is 1 character
-        $url = route('api.users.update-data', $user['id']);
+        $url = route('api.users.update_data', $user['id']);
         $response = $this->actingAs($manager)->putJson($url, $user);
         $response->assertStatus(422);
         $user['last_name'] = self::LAST_NAME;
@@ -295,7 +295,7 @@ class UpdateUserTest extends TestCase
         $manager = $this->getUser('manager');
         $user = $this->createUser();
         $user['phone'] = '123456789'; // min is 10 digits
-        $url = route('api.users.update-data', $user['id']);
+        $url = route('api.users.update_data', $user['id']);
         $response = $this->actingAs($manager)->putJson($url, $user);
         $response->assertStatus(422);
         $user['phone'] = self::PHONE;
@@ -312,7 +312,7 @@ class UpdateUserTest extends TestCase
         $user = $this->createUser(['password' => Hash::make(self::PSWD)]);
         $user['old_password'] = self::PSWD;
         $user['password'] = $user['password_confirmation'] = '1234567'; // min is 8 characters
-        $url = route('api.users.update-password', $user['id']);
+        $url = route('api.users.update_password', $user['id']);
         $response = $this->actingAs($manager)->patchJson($url, $user);
         $response->assertStatus(422);
         $user['password'] = $user['password_confirmation'] = self::PSWD;
@@ -327,7 +327,7 @@ class UpdateUserTest extends TestCase
         $manager = $this->getUser('manager');
         $user = $this->createUser();
         $user['date_of_birth'] = now()->subYears(18)->addDay();
-        $url = route('api.users.update-data', $user['id']);
+        $url = route('api.users.update_data', $user['id']);
         $response = $this->actingAs($manager)->putJson($url, $user);
         $response->assertStatus(422);
         $user['date_of_birth'] = self::DATE_BIRTH;
@@ -343,7 +343,7 @@ class UpdateUserTest extends TestCase
         $manager = $this->getUser('manager');
         $user = $this->createUser();
         $user['number'] = -1; // min is value 0
-        $url = route('api.users.update-data', $user['id']);
+        $url = route('api.users.update_data', $user['id']);
         $response = $this->actingAs($manager)->putJson($url, $user);
         $response->assertStatus(422);
         $user['number'] = self::NUMBER;
@@ -359,7 +359,7 @@ class UpdateUserTest extends TestCase
         $manager = $this->getUser('manager');
         $user = $this->createUser();
         $user['first_name'] = str_repeat('T', 31); // max is 30 characters
-        $url = route('api.users.update-data', $user['id']);
+        $url = route('api.users.update_data', $user['id']);
         $response = $this->actingAs($manager)->putJson($url, $user);
         $response->assertStatus(422);
         $user['first_name'] = self::FIRST_NAME;
@@ -375,7 +375,7 @@ class UpdateUserTest extends TestCase
         $manager = $this->getUser('manager');
         $user = $this->createUser();
         $user['last_name'] = str_repeat('T', 151); // max is 150 characters
-        $url = route('api.users.update-data', $user['id']);
+        $url = route('api.users.update_data', $user['id']);
         $response = $this->actingAs($manager)->putJson($url, $user);
         $response->assertStatus(422);
         $user['last_name'] = self::LAST_NAME;
@@ -391,7 +391,7 @@ class UpdateUserTest extends TestCase
         $manager = $this->getUser('manager');
         $user = $this->createUser();
         $user['phone'] = '123456789000'; // max is 11 digits
-        $url = route('api.users.update-data', $user['id']);
+        $url = route('api.users.update_data', $user['id']);
         $response = $this->actingAs($manager)->putJson($url, $user);
         $response->assertStatus(422);
         $user['phone'] = self::PHONE;
@@ -407,7 +407,7 @@ class UpdateUserTest extends TestCase
         $manager = $this->getUser('manager');
         $user = $this->createUser();
         $user['street'] = str_repeat('T', 256); // max is 255 characters
-        $url = route('api.users.update-data', $user['id']);
+        $url = route('api.users.update_data', $user['id']);
         $response = $this->actingAs($manager)->putJson($url, $user);
         $response->assertStatus(422);
         $user['street'] = self::STREET;
@@ -423,7 +423,7 @@ class UpdateUserTest extends TestCase
         $manager = $this->getUser('manager');
         $user = $this->createUser();
         $user['complement'] = str_repeat('T', 21); // max is 20 characters
-        $url = route('api.users.update-data', $user['id']);
+        $url = route('api.users.update_data', $user['id']);
         $response = $this->actingAs($manager)->putJson($url, $user);
         $response->assertStatus(422);
         $user['complement'] = self::COMPLEMENT;
@@ -439,7 +439,7 @@ class UpdateUserTest extends TestCase
         $manager = $this->getUser('manager');
         $user = $this->createUser();
         $user['cpf'] = User::where('id', '<>', $user['id'])->get()->random()->cpf;
-        $url = route('api.users.update-data', $user['id']);
+        $url = route('api.users.update_data', $user['id']);
         $response = $this->actingAs($manager)->putJson($url, $user);
         $response->assertStatus(422);
         $user['cpf'] = self::CPF;
@@ -455,7 +455,7 @@ class UpdateUserTest extends TestCase
         $manager = $this->getUser('manager');
         $user = $this->createUser();
         $user['email'] = User::where('id', '<>', $user['id'])->get()->random()->email;
-        $url = route('api.users.update-data', $user['id']);
+        $url = route('api.users.update_data', $user['id']);
         $response = $this->actingAs($manager)->putJson($url, $user);
         $response->assertStatus(422);
         $user['email'] = self::EMAIL;
@@ -471,7 +471,7 @@ class UpdateUserTest extends TestCase
         $manager = $this->getUser('manager');
         $user = $this->createUser();
         $user['state'] = 0;
-        $url = route('api.users.update-data', $user['id']);
+        $url = route('api.users.update_data', $user['id']);
         $response = $this->actingAs($manager)->putJson($url, $user);
         $response->assertStatus(422);
         $user['state'] = State::get()->random()->id;
@@ -486,7 +486,7 @@ class UpdateUserTest extends TestCase
         $manager = $this->getUser('manager');
         $user = $this->createUser();
         $user['city'] = 0;
-        $url = route('api.users.update-data', $user['id']);
+        $url = route('api.users.update_data', $user['id']);
         $response = $this->actingAs($manager)->putJson($url, $user);
         $response->assertStatus(422);
         $user['city'] = City::get()->random()->id;
@@ -503,7 +503,7 @@ class UpdateUserTest extends TestCase
         $manager = $this->getUser('manager');
         $user = $this->createUser();
         $user['role'] = 0;
-        $url = route('api.users.update-data', $user['id']);
+        $url = route('api.users.update_data', $user['id']);
         $response = $this->actingAs($manager)->putJson($url, $user);
         $response->assertStatus(422);
         $user['role'] = ROle::get()->random()->id;
@@ -520,7 +520,7 @@ class UpdateUserTest extends TestCase
         $manager = $this->getUser('manager');
         $user = $this->createUser();
         $user['first_name'] = 'Josnei 22';
-        $url = route('api.users.update-data', $user['id']);
+        $url = route('api.users.update_data', $user['id']);
         $response = $this->actingAs($manager)->putJson($url, $user);
         $response->assertStatus(422);
         $user['first_name'] = self::FIRST_NAME;
@@ -536,7 +536,7 @@ class UpdateUserTest extends TestCase
         $manager = $this->getUser('manager');
         $user = $this->createUser();
         $user['last_name'] = 'Silva 22';
-        $url = route('api.users.update-data', $user['id']);
+        $url = route('api.users.update_data', $user['id']);
         $response = $this->actingAs($manager)->putJson($url, $user);
         $response->assertStatus(422);
         $user['last_name'] = self::LAST_NAME;
@@ -552,7 +552,7 @@ class UpdateUserTest extends TestCase
         $manager = $this->getUser('manager');
         $user = $this->createUser();
         $user['cpf'] = '90094905052';
-        $url = route('api.users.update-data', $user['id']);
+        $url = route('api.users.update_data', $user['id']);
         $response = $this->actingAs($manager)->putJson($url, $user);
         $response->assertStatus(422);
         $user['cpf'] = self::CPF;
@@ -568,7 +568,7 @@ class UpdateUserTest extends TestCase
         $manager = $this->getUser('manager');
         $user = $this->createUser();
         $user['email'] = 'josnei.silva_email.com';
-        $url = route('api.users.update-data', $user['id']);
+        $url = route('api.users.update_data', $user['id']);
         $response = $this->actingAs($manager)->putJson($url, $user);
         $response->assertStatus(422);
         $user['email'] = self::EMAIL;
@@ -585,7 +585,7 @@ class UpdateUserTest extends TestCase
         $user = $this->createUser(['password' => Hash::make(self::PSWD)]);
         $user['old_password'] = self::PSWD . 'abc';
         $user['password'] = $user['password_confirmation'] = self::PSWD;
-        $url = route('api.users.update-password', $user['id']);
+        $url = route('api.users.update_password', $user['id']);
         $response = $this->actingAs($manager)->patchJson($url, $user);
         $response->assertStatus(422);
         $user['old_password'] = self::PSWD;

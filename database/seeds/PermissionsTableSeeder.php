@@ -130,9 +130,9 @@ class PermissionsTableSeeder extends Seeder
 | GET|HEAD | api/tickets/{ticket}        | api.tickets.show          | App\Http\Controllers\Api\TicketsApiController@show           | api        |
 | POST     | api/users                   | api.users.store           | App\Http\Controllers\Api\UsersApiController@store            | api        |
 | GET|HEAD | api/users                   | api.users.index           | App\Http\Controllers\Api\UsersApiController@index            | api        |
-| PUT      | api/users/{user}            | api.users.update-data     | App\Http\Controllers\Api\UsersApiController@updateData       | api        |
+| PUT      | api/users/{user}            | api.users.update_data     | App\Http\Controllers\Api\UsersApiController@updateData       | api        |
 | DELETE   | api/users/{user}            | api.users.destroy         | App\Http\Controllers\Api\UsersApiController@destroy          | api        |
-| PATCH    | api/users/{user}            | api.users.update-password | App\Http\Controllers\Api\UsersApiController@udpatePassword   | api        |
+| PATCH    | api/users/{user}            | api.users.update_password | App\Http\Controllers\Api\UsersApiController@udpatePassword   | api        |
 | GET|HEAD | api/users/{user}            | api.users.show            | App\Http\Controllers\Api\UsersApiController@show             | api        |
 | GET|HEAD | home                        | home                      | App\Http\Controllers\HomeController@dashboard                | web,auth   |
 | POST     | signin                      | auth.signin               | App\Http\Controllers\AuthController@signin                   | web,guest  |

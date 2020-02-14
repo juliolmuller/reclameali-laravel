@@ -34,8 +34,8 @@ Route::group(['prefix' => '/users', 'as' => 'api.users.'], function () {
     Route::get('/', 'Api\UsersApiController@index')->name('index');
     Route::post('/', 'Api\UsersApiController@store')->name('store');
     Route::get('/{user}', 'Api\UsersApiController@show')->name('show');
-    Route::put('/{user}', 'Api\UsersApiController@updateData')->name('update-data');
-    Route::patch('/{user}', 'Api\UsersApiController@udpatePassword')->name('update-password');
+    Route::put('/{user}', 'Api\UsersApiController@updateData')->name('update_data');
+    Route::patch('/{user}', 'Api\UsersApiController@udpatePassword')->name('update_password');
     Route::delete('/{user}', 'Api\UsersApiController@destroy')->name('destroy');
 });
 

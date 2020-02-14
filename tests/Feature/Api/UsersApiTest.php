@@ -157,7 +157,7 @@ class UsersApiTest extends TestCase
             'date_of_birth'         => self::DATE_BIRTH,
             'role'                  => Role::where('name', '<>', 'customer')->get()->random()->id,
         ];
-        $url = route('api.users.update-data', $savedUser->id);
+        $url = route('api.users.update_data', $savedUser->id);
         $response = $this->actingAs($user)->putJson($url, $userData);
         $response->assertStatus(200);
         $userData['role_id'] = $userData['role'];
@@ -186,7 +186,7 @@ class UsersApiTest extends TestCase
             'email'         => self::EMAIL,
             'date_of_birth' => self::DATE_BIRTH,
         ];
-        $url = route('api.users.update-data', $otherUserId);
+        $url = route('api.users.update_data', $otherUserId);
         $response = $this->actingAs($user)->putJson($url, $userData);
         $response->assertStatus(200);
         $this->assertDatabaseHas('users', $userData);
@@ -195,7 +195,7 @@ class UsersApiTest extends TestCase
         $response->assertJson($userData);
         $userData['first_name'] = $userData['name'];
         unset($userData['name']);
-        $url = route('api.users.update-data', $user->id);
+        $url = route('api.users.update_data', $user->id);
         $response = $this->actingAs($user)->putJson($url, $userData);
         $response->assertStatus(200);
         $this->assertDatabaseHas('users', $userData);
@@ -216,7 +216,7 @@ class UsersApiTest extends TestCase
             'password'              => self::PSWD,
             'password_confirmation' => self::PSWD,
         ];
-        $url = route('api.users.update-data', $savedUser->id);
+        $url = route('api.users.update_data', $savedUser->id);
         $response = $this->actingAs($user)->patchJson($url, $userData);
         $response->assertStatus(200);
         $response->assertJson(['id' => $savedUser->id]);
@@ -236,10 +236,10 @@ class UsersApiTest extends TestCase
             'password'              => self::PSWD,
             'password_confirmation' => self::PSWD,
         ];
-        $url = route('api.users.update-data', $otherUserId);
+        $url = route('api.users.update_data', $otherUserId);
         $response = $this->actingAs($user)->patchJson($url, $userData);
         $response->assertStatus(422);
-        $url = route('api.users.update-data', $user->id);
+        $url = route('api.users.update_data', $user->id);
         $response = $this->actingAs($user)->patchJson($url, $userData);
         $response->assertStatus(200);
         $response->assertJson(['id' => $user->id]);
