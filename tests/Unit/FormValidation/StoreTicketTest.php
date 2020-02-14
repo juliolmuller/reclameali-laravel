@@ -18,7 +18,7 @@ class StoreTicketTest extends TestCase
     public function test_required_validation()
     {
         $user = $this->getUser('customer');
-        $url = route('tickets.store');
+        $url = route('api.tickets.store');
         $response = $this->actingAs($user)->postJson($url);
         $response->assertStatus(422);
         $response = $this->actingAs($user)->postJson($url, [
@@ -36,7 +36,7 @@ class StoreTicketTest extends TestCase
             'product' => self::PRODUCT,
             'type'    => self::TYPE,
         ];
-        $url = route('tickets.store');
+        $url = route('api.tickets.store');
         $response = $this->actingAs($user)->postJson($url, $ticket);
         $response->assertStatus(422);
         $ticket['message'] = self::MESSAGE;
@@ -51,7 +51,7 @@ class StoreTicketTest extends TestCase
             'message' => self::MESSAGE,
             'type'    => self::TYPE,
         ];
-        $url = route('tickets.store');
+        $url = route('api.tickets.store');
         $response = $this->actingAs($user)->postJson($url, $ticket);
         $response->assertStatus(422);
         $ticket['product'] = self::PRODUCT;
@@ -66,7 +66,7 @@ class StoreTicketTest extends TestCase
             'message' => self::MESSAGE,
             'product' => self::PRODUCT,
         ];
-        $url = route('tickets.store');
+        $url = route('api.tickets.store');
         $response = $this->actingAs($user)->postJson($url, $ticket);
         $response->assertStatus(422);
         $ticket['type'] = self::TYPE;
@@ -82,7 +82,7 @@ class StoreTicketTest extends TestCase
             'product' => self::PRODUCT,
             'type'    => self::TYPE,
         ];
-        $url = route('tickets.store');
+        $url = route('api.tickets.store');
         $response = $this->actingAs($user)->postJson($url, $ticket);
         $response->assertStatus(422);
         $ticket['message'] = self::MESSAGE;
@@ -98,7 +98,7 @@ class StoreTicketTest extends TestCase
             'product' => self::PRODUCT,
             'type'    => self::TYPE,
         ];
-        $url = route('tickets.store');
+        $url = route('api.tickets.store');
         $response = $this->actingAs($user)->postJson($url, $ticket);
         $response->assertStatus(422);
         $ticket['message'] = self::MESSAGE;
@@ -114,7 +114,7 @@ class StoreTicketTest extends TestCase
             'product' => 999999999,
             'type'    => self::TYPE,
         ];
-        $url = route('tickets.store');
+        $url = route('api.tickets.store');
         $response = $this->actingAs($user)->postJson($url, $ticket);
         $response->assertStatus(422);
         $ticket['product'] = self::PRODUCT;
@@ -130,7 +130,7 @@ class StoreTicketTest extends TestCase
             'product' => self::PRODUCT,
             'type'    => 999999999,
         ];
-        $url = route('tickets.store');
+        $url = route('api.tickets.store');
         $response = $this->actingAs($user)->postJson($url, $ticket);
         $response->assertStatus(422);
         $ticket['type'] = self::TYPE;

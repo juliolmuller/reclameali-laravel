@@ -10,7 +10,7 @@ class AccessRolesApiTest extends TestCase
     public function test_roles_index()
     {
         $role = Role::orderBy('name')->first();
-        $url = route('roles.index');
+        $url = route('api.roles.index');
         $response = $this->actingAs($this->getUser('admin'))->getJson($url);
         $response->assertStatus(200);
         if ($role) {
@@ -29,7 +29,7 @@ class AccessRolesApiTest extends TestCase
     public function test_roles_show()
     {
         $role = Role::all()->random();
-        $url = route('roles.show', $role->id);
+        $url = route('api.roles.show', $role->id);
         $response = $this->actingAs($this->getUser('admin'))->getJson($url);
         $response->assertStatus(200);
         $response->assertJson([
@@ -42,7 +42,7 @@ class AccessRolesApiTest extends TestCase
     public function test_roles_store()
     {
         $name = 'newrole';
-        $url = route('roles.store');
+        $url = route('api.roles.store');
         $response = $this->actingAs($this->getUser('admin'))->postJson($url, compact('name'));
         $response->assertStatus(201);
         $response->assertJson(compact('name'));
@@ -55,7 +55,7 @@ class AccessRolesApiTest extends TestCase
         $role->save();
         $id = $role->id;
         $name = 'updaterole';
-        $url = route('roles.update', $id);
+        $url = route('api.roles.update', $id);
         $response = $this->actingAs($this->getUser('admin'))->putJson($url, compact('name'));
         $response->assertStatus(200);
         $response->assertJson(compact('id', 'name'));
@@ -67,7 +67,7 @@ class AccessRolesApiTest extends TestCase
         $role = new Role(['name' => 'DeleteRole']);
         $role->save();
         $id = $role->id;
-        $url = route('roles.destroy', $id);
+        $url = route('api.roles.destroy', $id);
         $response = $this->actingAs($this->getUser('admin'))->deleteJson($url);
         $response->assertStatus(200);
         $this->assertDeleted('access_roles', compact('id'));

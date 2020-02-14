@@ -109,7 +109,7 @@
   {{-- Signup form (for customers only) --}}
   <div id="signup-modal" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-lg" role="document">
-      <form action="{{ route('users.store') }}" method="POST" id="form-signup" class="modal-content" novalidate>
+      <form action="{{ route('api.users.store') }}" method="POST" id="form-signup" class="modal-content" novalidate>
         <div class="modal-header">
           <h2 class="modal-title">Cadastro de Usuário</h2>
           <button type="button" class="close" data-dismiss="modal">

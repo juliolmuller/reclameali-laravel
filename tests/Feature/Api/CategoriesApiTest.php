@@ -10,7 +10,7 @@ class CategoriesApiTest extends TestCase
     public function test_categories_index()
     {
         $category = Category::orderBy('name')->first();
-        $url = route('categories.index');
+        $url = route('api.categories.index');
         $response = $this->actingAs($this->getUser('attendant'))->getJson($url);
         $response->assertStatus(200);
         if ($category) {
@@ -28,7 +28,7 @@ class CategoriesApiTest extends TestCase
     public function test_categories_show()
     {
         $category = Category::all()->random();
-        $url = route('categories.show', $category->id);
+        $url = route('api.categories.show', $category->id);
         $response = $this->actingAs($this->getUser('attendant'))->getJson($url);
         $response->assertStatus(200);
         $response->assertJson([
@@ -46,7 +46,7 @@ class CategoriesApiTest extends TestCase
                 'id' => $user->id,
             ],
         ];
-        $url = route('categories.store');
+        $url = route('api.categories.store');
         $response = $this->actingAs($user)->postJson($url, $category);
         $response->assertStatus(201);
         $response->assertJson($category);
@@ -63,7 +63,7 @@ class CategoriesApiTest extends TestCase
                 'id' => $user->id,
             ],
         ];
-        $url = route('categories.update', $category['id']);
+        $url = route('api.categories.update', $category['id']);
         $response = $this->actingAs($user)->putJson($url, $category);
         $response->assertStatus(200);
         $response->assertJson($category);
@@ -79,7 +79,7 @@ class CategoriesApiTest extends TestCase
                 'id' => $user->id,
             ],
         ];
-        $url = route('categories.destroy', $category['id']);
+        $url = route('api.categories.destroy', $category['id']);
         $response = $this->actingAs($user)->deleteJson($url);
         $response->assertStatus(200);
         $response->assertJson($category);

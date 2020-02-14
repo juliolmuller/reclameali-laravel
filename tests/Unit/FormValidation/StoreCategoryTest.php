@@ -15,7 +15,7 @@ class StoreCategoryTest extends TestCase
     public function test_required_name_validation()
     {
         $category = [];
-        $url = route('categories.store');
+        $url = route('api.categories.store');
         $response = $this->actingAs($this->getUser('attendant'))->postJson($url, $category);
         $response->assertStatus(422);
         $category['name'] = self::NAME;
@@ -27,7 +27,7 @@ class StoreCategoryTest extends TestCase
     public function test_min_length_name_validation()
     {
         $category = ['name' => 'TT']; // min is 3 characters
-        $url = route('categories.store');
+        $url = route('api.categories.store');
         $response = $this->actingAs($this->getUser('attendant'))->postJson($url, $category);
         $response->assertStatus(422);
         $category['name'] = self::NAME;
@@ -39,7 +39,7 @@ class StoreCategoryTest extends TestCase
     public function test_max_length_name_validation()
     {
         $category = ['name' => str_repeat('T', 51)]; // max is 50 characters
-        $url = route('categories.store');
+        $url = route('api.categories.store');
         $response = $this->actingAs($this->getUser('attendant'))->postJson($url, $category);
         $response->assertStatus(422);
         $category['name'] = self::NAME;
@@ -52,7 +52,7 @@ class StoreCategoryTest extends TestCase
     {
         $name = factory(Category::class)->create()->name;
         $category = ['name' => $name];
-        $url = route('categories.store');
+        $url = route('api.categories.store');
         $response = $this->actingAs($this->getUser('attendant'))->postJson($url, $category);
         $response->assertStatus(422);
         $category['name'] = self::NAME;

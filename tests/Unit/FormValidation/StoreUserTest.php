@@ -27,7 +27,7 @@ class StoreUserTest extends TestCase
     public function test_required_validation()
     {
         $user = $this->getUser('manager');
-        $url = route('users.store');
+        $url = route('api.users.store');
         $response = $this->actingAs($user)->postJson($url);
         $response->assertStatus(422);
         $newUser = [
@@ -61,7 +61,7 @@ class StoreUserTest extends TestCase
             'password'              => self::PSWD,
             'password_confirmation' => self::PSWD,
         ];
-        $url = route('users.store');
+        $url = route('api.users.store');
         $response = $this->actingAs($user)->postJson($url, $newUser);
         $response->assertStatus(422);
         $newUser['first_name'] = self::FIRST_NAME;
@@ -86,7 +86,7 @@ class StoreUserTest extends TestCase
             'password'              => self::PSWD,
             'password_confirmation' => self::PSWD,
         ];
-        $url = route('users.store');
+        $url = route('api.users.store');
         $response = $this->actingAs($user)->postJson($url, $newUser);
         $response->assertStatus(422);
         $newUser['last_name'] = self::LAST_NAME;
@@ -111,7 +111,7 @@ class StoreUserTest extends TestCase
             'password'              => self::PSWD,
             'password_confirmation' => self::PSWD,
         ];
-        $url = route('users.store');
+        $url = route('api.users.store');
         $response = $this->actingAs($user)->postJson($url, $newUser);
         $response->assertStatus(422);
         $newUser['cpf'] = self::CPF;
@@ -136,7 +136,7 @@ class StoreUserTest extends TestCase
             'password'              => self::PSWD,
             'password_confirmation' => self::PSWD,
         ];
-        $url = route('users.store');
+        $url = route('api.users.store');
         $response = $this->actingAs($user)->postJson($url, $newUser);
         $response->assertStatus(422);
         $newUser['email'] = self::EMAIL;
@@ -161,7 +161,7 @@ class StoreUserTest extends TestCase
             'password'              => self::PSWD,
             'password_confirmation' => self::PSWD,
         ];
-        $url = route('users.store');
+        $url = route('api.users.store');
         $response = $this->actingAs($user)->postJson($url, $newUser);
         $response->assertStatus(422);
         $newUser['date_of_birth'] = self::DATE_BIRTH;
@@ -186,7 +186,7 @@ class StoreUserTest extends TestCase
             'role'                  => $this->getUser('manager')->role_id,
             'password_confirmation' => self::PSWD,
         ];
-        $url = route('users.store');
+        $url = route('api.users.store');
         $response = $this->actingAs($user)->postJson($url, $newUser);
         $response->assertStatus(422);
         $newUser['password'] = self::PSWD;
@@ -211,7 +211,7 @@ class StoreUserTest extends TestCase
             'role'          => $this->getUser('manager')->role_id,
             'password'      => self::PSWD,
         ];
-        $url = route('users.store');
+        $url = route('api.users.store');
         $response = $this->actingAs($user)->postJson($url, $newUser);
         $response->assertStatus(422);
         $newUser['password_confirmation'] = self::PSWD;
@@ -237,7 +237,7 @@ class StoreUserTest extends TestCase
             'password'              => self::PSWD,
             'password_confirmation' => self::PSWD,
         ];
-        $url = route('users.store');
+        $url = route('api.users.store');
         $response = $this->actingAs($user)->postJson($url, $newUser);
         $response->assertStatus(422);
         $newUser['cpf'] = self::CPF;
@@ -264,7 +264,7 @@ class StoreUserTest extends TestCase
             'password'              => self::PSWD,
             'password_confirmation' => self::PSWD,
         ];
-        $url = route('users.store');
+        $url = route('api.users.store');
         $response = $this->actingAs($user)->postJson($url, $newUser);
         $response->assertStatus(422);
         $newUser['phone'] = self::PHONE;
@@ -291,7 +291,7 @@ class StoreUserTest extends TestCase
             'password'              => self::PSWD,
             'password_confirmation' => self::PSWD,
         ];
-        $url = route('users.store');
+        $url = route('api.users.store');
         $response = $this->actingAs($user)->postJson($url, $newUser);
         $response->assertStatus(422);
         $newUser['number'] = self::NUMBER;
@@ -318,7 +318,7 @@ class StoreUserTest extends TestCase
             'password'              => self::PSWD,
             'password_confirmation' => self::PSWD,
         ];
-        $url = route('users.store');
+        $url = route('api.users.store');
         $response = $this->actingAs($user)->postJson($url, $newUser);
         $response->assertStatus(422);
         $newUser['zip_code'] = self::ZIP_CODE;
@@ -345,11 +345,11 @@ class StoreUserTest extends TestCase
             'password_confirmation' => self::PSWD,
         ];
         $newUser['zip_code'] = '801231000'; // size must be 8 length
-        $url = route('users.store');
+        $url = route('api.users.store');
         $response = $this->actingAs($user)->postJson($url, $newUser);
         $response->assertStatus(422);
         $newUser['zip_code'] = '8012310'; // size must be 8 length
-        $url = route('users.store');
+        $url = route('api.users.store');
         $response = $this->actingAs($user)->postJson($url, $newUser);
         $response->assertStatus(422);
         $newUser['zip_code'] = self::ZIP_CODE;
@@ -375,7 +375,7 @@ class StoreUserTest extends TestCase
             'password'              => self::PSWD,
             'password_confirmation' => self::PSWD,
         ];
-        $url = route('users.store');
+        $url = route('api.users.store');
         $response = $this->actingAs($user)->postJson($url, $newUser);
         $response->assertStatus(422);
         $newUser['first_name'] = self::FIRST_NAME;
@@ -401,7 +401,7 @@ class StoreUserTest extends TestCase
             'password'              => self::PSWD,
             'password_confirmation' => self::PSWD,
         ];
-        $url = route('users.store');
+        $url = route('api.users.store');
         $response = $this->actingAs($user)->postJson($url, $newUser);
         $response->assertStatus(422);
         $newUser['last_name'] = self::LAST_NAME;
@@ -428,7 +428,7 @@ class StoreUserTest extends TestCase
             'password'              => self::PSWD,
             'password_confirmation' => self::PSWD,
         ];
-        $url = route('users.store');
+        $url = route('api.users.store');
         $response = $this->actingAs($user)->postJson($url, $newUser);
         $response->assertStatus(422);
         $newUser['phone'] = '1234567890';
@@ -454,7 +454,7 @@ class StoreUserTest extends TestCase
             'password'              => 'PASSNOW', // min is 8 characters
             'password_confirmation' => 'PASSNOW', // min is 8 characters
         ];
-        $url = route('users.store');
+        $url = route('api.users.store');
         $response = $this->actingAs($user)->postJson($url, $newUser);
         $response->assertStatus(422);
         $newUser['password'] = self::PSWD;
@@ -481,7 +481,7 @@ class StoreUserTest extends TestCase
             'password'              => self::PSWD,
             'password_confirmation' => self::PSWD,
         ];
-        $url = route('users.store');
+        $url = route('api.users.store');
         $response = $this->actingAs($user)->postJson($url, $newUser);
         $response->assertStatus(422);
         $newUser['date_of_birth'] = self::DATE_BIRTH;
@@ -508,7 +508,7 @@ class StoreUserTest extends TestCase
             'password'              => self::PSWD,
             'password_confirmation' => self::PSWD,
         ];
-        $url = route('users.store');
+        $url = route('api.users.store');
         $response = $this->actingAs($user)->postJson($url, $newUser);
         $response->assertStatus(422);
         $newUser['number'] = 0;
@@ -534,7 +534,7 @@ class StoreUserTest extends TestCase
             'password'              => self::PSWD,
             'password_confirmation' => self::PSWD,
         ];
-        $url = route('users.store');
+        $url = route('api.users.store');
         $response = $this->actingAs($user)->postJson($url, $newUser);
         $response->assertStatus(422);
         $newUser['first_name'] = self::FIRST_NAME;
@@ -560,7 +560,7 @@ class StoreUserTest extends TestCase
             'password'              => self::PSWD,
             'password_confirmation' => self::PSWD,
         ];
-        $url = route('users.store');
+        $url = route('api.users.store');
         $response = $this->actingAs($user)->postJson($url, $newUser);
         $response->assertStatus(422);
         $newUser['last_name'] = self::LAST_NAME;
@@ -587,7 +587,7 @@ class StoreUserTest extends TestCase
             'password'              => self::PSWD,
             'password_confirmation' => self::PSWD,
         ];
-        $url = route('users.store');
+        $url = route('api.users.store');
         $response = $this->actingAs($user)->postJson($url, $newUser);
         $response->assertStatus(422);
         $newUser['phone'] = '12345678900';
@@ -614,7 +614,7 @@ class StoreUserTest extends TestCase
             'password'              => self::PSWD,
             'password_confirmation' => self::PSWD,
         ];
-        $url = route('users.store');
+        $url = route('api.users.store');
         $response = $this->actingAs($user)->postJson($url, $newUser);
         $response->assertStatus(422);
         $newUser['street'] = self::STREET;
@@ -641,7 +641,7 @@ class StoreUserTest extends TestCase
             'password'              => self::PSWD,
             'password_confirmation' => self::PSWD,
         ];
-        $url = route('users.store');
+        $url = route('api.users.store');
         $response = $this->actingAs($user)->postJson($url, $newUser);
         $response->assertStatus(422);
         $newUser['complement'] = self::COMPLEMENT;
@@ -667,7 +667,7 @@ class StoreUserTest extends TestCase
             'password'              => self::PSWD,
             'password_confirmation' => self::PSWD,
         ];
-        $url = route('users.store');
+        $url = route('api.users.store');
         $response = $this->actingAs($user)->postJson($url, $newUser);
         $response->assertStatus(422);
         $newUser['cpf'] = self::CPF;
@@ -693,7 +693,7 @@ class StoreUserTest extends TestCase
             'password'              => self::PSWD,
             'password_confirmation' => self::PSWD,
         ];
-        $url = route('users.store');
+        $url = route('api.users.store');
         $response = $this->actingAs($user)->postJson($url, $newUser);
         $response->assertStatus(422);
         $newUser['email'] = self::EMAIL;
@@ -720,7 +720,7 @@ class StoreUserTest extends TestCase
             'password'              => self::PSWD,
             'password_confirmation' => self::PSWD,
         ];
-        $url = route('users.store');
+        $url = route('api.users.store');
         $response = $this->actingAs($user)->postJson($url, $newUser);
         $response->assertStatus(422);
         $newUser['state'] = State::get()->random()->id;
@@ -748,7 +748,7 @@ class StoreUserTest extends TestCase
             'password'              => self::PSWD,
             'password_confirmation' => self::PSWD,
         ];
-        $url = route('users.store');
+        $url = route('api.users.store');
         $response = $this->actingAs($user)->postJson($url, $newUser);
         $response->assertStatus(422);
         $newUser['city'] = City::get()->random()->id;
@@ -775,7 +775,7 @@ class StoreUserTest extends TestCase
             'password'              => self::PSWD,
             'password_confirmation' => self::PSWD,
         ];
-        $url = route('users.store');
+        $url = route('api.users.store');
         $response = $this->actingAs($user)->postJson($url, $newUser);
         $response->assertStatus(422);
         $newUser['role'] = $this->getUser('manager')->role_id;
@@ -801,7 +801,7 @@ class StoreUserTest extends TestCase
             'password'              => self::PSWD,
             'password_confirmation' => self::PSWD,
         ];
-        $url = route('users.store');
+        $url = route('api.users.store');
         $response = $this->actingAs($user)->postJson($url, $newUser);
         $response->assertStatus(422);
         $newUser['first_name'] = self::FIRST_NAME;
@@ -827,7 +827,7 @@ class StoreUserTest extends TestCase
             'password'              => self::PSWD,
             'password_confirmation' => self::PSWD,
         ];
-        $url = route('users.store');
+        $url = route('api.users.store');
         $response = $this->actingAs($user)->postJson($url, $newUser);
         $response->assertStatus(422);
         $newUser['last_name'] = self::LAST_NAME;
@@ -853,7 +853,7 @@ class StoreUserTest extends TestCase
             'password'              => self::PSWD,
             'password_confirmation' => self::PSWD,
         ];
-        $url = route('users.store');
+        $url = route('api.users.store');
         $response = $this->actingAs($user)->postJson($url, $newUser);
         $response->assertStatus(422);
         $newUser['cpf'] = self::CPF;
@@ -879,7 +879,7 @@ class StoreUserTest extends TestCase
             'password'              => self::PSWD,
             'password_confirmation' => self::PSWD,
         ];
-        $url = route('users.store');
+        $url = route('api.users.store');
         $response = $this->actingAs($user)->postJson($url, $newUser);
         $response->assertStatus(422);
         $newUser['email'] = self::EMAIL;

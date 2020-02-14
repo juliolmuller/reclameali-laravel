@@ -16,7 +16,7 @@ class StoreProductTest extends TestCase
 
     public function test_required_validation()
     {
-        $url = route('products.store');
+        $url = route('api.products.store');
         $response = $this->actingAs($this->getUser('attendant'))->postJson($url);
         $response->assertStatus(422);
         $product = [
@@ -39,7 +39,7 @@ class StoreProductTest extends TestCase
             'category'    => self::CATEGORY,
             'utc'         => self::UTC,
         ];
-        $url = route('products.store');
+        $url = route('api.products.store');
         $response = $this->actingAs($this->getUser('attendant'))->postJson($url, $product);
         $response->assertStatus(422);
         $product['name'] = self::NAME;
@@ -56,7 +56,7 @@ class StoreProductTest extends TestCase
             'category_id' => self::CATEGORY,
             'utc'         => self::UTC,
         ];
-        $url = route('products.store');
+        $url = route('api.products.store');
         $response = $this->actingAs($this->getUser('attendant'))->postJson($url, $product);
         $response->assertStatus(422);
         $product['category'] = self::CATEGORY;
@@ -73,7 +73,7 @@ class StoreProductTest extends TestCase
             'category_id' => self::CATEGORY,
             'category'    => self::CATEGORY,
         ];
-        $url = route('products.store');
+        $url = route('api.products.store');
         $response = $this->actingAs($this->getUser('attendant'))->postJson($url, $product);
         $response->assertStatus(422);
         $product['utc'] = self::UTC;
@@ -91,7 +91,7 @@ class StoreProductTest extends TestCase
             'category'    => self::CATEGORY,
             'utc'         => self::UTC,
         ];
-        $url = route('products.store');
+        $url = route('api.products.store');
         $response = $this->actingAs($this->getUser('attendant'))->postJson($url, $product);
         $response->assertStatus(422);
         $product['name'] = self::NAME;
@@ -109,7 +109,7 @@ class StoreProductTest extends TestCase
             'category'    => self::CATEGORY,
             'utc'         => self::UTC,
         ];
-        $url = route('products.store');
+        $url = route('api.products.store');
         $response = $this->actingAs($this->getUser('attendant'))->postJson($url, $product);
         $response->assertStatus(422);
         $product['name'] = self::NAME;
@@ -128,7 +128,7 @@ class StoreProductTest extends TestCase
             'category'    => self::CATEGORY,
             'utc'         => self::UTC,
         ];
-        $url = route('products.store');
+        $url = route('api.products.store');
         $response = $this->actingAs($this->getUser('attendant'))->postJson($url, $product);
         $response->assertStatus(422);
         $product['name'] = self::NAME;
@@ -147,7 +147,7 @@ class StoreProductTest extends TestCase
             'category'    => self::CATEGORY,
             'utc'         => self::UTC,
         ];
-        $url = route('products.store');
+        $url = route('api.products.store');
         $response = $this->actingAs($this->getUser('attendant'))->postJson($url, $product);
         $response->assertStatus(422);
         $product['description'] = self::NAME;
@@ -166,7 +166,7 @@ class StoreProductTest extends TestCase
             'category'    => self::CATEGORY,
             'utc'         => self::UTC,
         ];
-        $url = route('products.store');
+        $url = route('api.products.store');
         $response = $this->actingAs($this->getUser('attendant'))->postJson($url, $product);
         $response->assertStatus(422);
         $product['weight'] = 0;
@@ -184,7 +184,7 @@ class StoreProductTest extends TestCase
             'category'    => 999999,
             'utc'         => self::UTC,
         ];
-        $url = route('products.store');
+        $url = route('api.products.store');
         $response = $this->actingAs($this->getUser('attendant'))->postJson($url, $product);
         $response->assertStatus(422);
         $product['category'] = self::CATEGORY;
@@ -202,7 +202,7 @@ class StoreProductTest extends TestCase
             'category'    => self::CATEGORY,
             'utc'         => str_repeat('A', 12),
         ];
-        $url = route('products.store');
+        $url = route('api.products.store');
         $response = $this->actingAs($this->getUser('attendant'))->postJson($url, $product);
         $response->assertStatus(422);
         $product['utc'] = self::UTC;
@@ -220,7 +220,7 @@ class StoreProductTest extends TestCase
             'category'    => self::CATEGORY,
             'utc'         => str_repeat('0', 11), // min is 12 characters
         ];
-        $url = route('products.store');
+        $url = route('api.products.store');
         $response = $this->actingAs($this->getUser('attendant'))->postJson($url, $product);
         $response->assertStatus(422);
         $product['utc'] = self::UTC;
@@ -238,7 +238,7 @@ class StoreProductTest extends TestCase
             'category'    => self::CATEGORY,
             'utc'         => str_repeat('0', 13), // max is 12 characters
         ];
-        $url = route('products.store');
+        $url = route('api.products.store');
         $response = $this->actingAs($this->getUser('attendant'))->postJson($url, $product);
         $response->assertStatus(422);
         $product['utc'] = self::UTC;
@@ -257,7 +257,7 @@ class StoreProductTest extends TestCase
             'category'    => self::CATEGORY,
             'utc'         => $utc,
         ];
-        $url = route('products.store');
+        $url = route('api.products.store');
         $response = $this->actingAs($this->getUser('attendant'))->postJson($url, $product);
         $response->assertStatus(422);
         $product['utc'] = self::UTC;
@@ -276,7 +276,7 @@ class StoreProductTest extends TestCase
             'utc'         => self::UTC,
             'ean'         => str_repeat('A', 13),
         ];
-        $url = route('products.store');
+        $url = route('api.products.store');
         $response = $this->actingAs($this->getUser('attendant'))->postJson($url, $product);
         $response->assertStatus(422);
         $product['ean'] = str_repeat('0', 13);
@@ -295,7 +295,7 @@ class StoreProductTest extends TestCase
             'utc'         => self::UTC,
             'ean'         => str_repeat('0', 12), // min is 13 characters
         ];
-        $url = route('products.store');
+        $url = route('api.products.store');
         $response = $this->actingAs($this->getUser('attendant'))->postJson($url, $product);
         $response->assertStatus(422);
         $product['ean'] = str_repeat('0', 13);
@@ -314,7 +314,7 @@ class StoreProductTest extends TestCase
             'utc'         => self::UTC,
             'ean'         => str_repeat('0', 14), // max is 13 characters
         ];
-        $url = route('products.store');
+        $url = route('api.products.store');
         $response = $this->actingAs($this->getUser('attendant'))->postJson($url, $product);
         $response->assertStatus(422);
         $product['ean'] = str_repeat('0', 13);
@@ -336,7 +336,7 @@ class StoreProductTest extends TestCase
             'utc'         => self::UTC,
             'ean'         => $ean,
         ];
-        $url = route('products.store');
+        $url = route('api.products.store');
         $response = $this->actingAs($this->getUser('attendant'))->postJson($url, $product);
         $response->assertStatus(422);
         $product['ean'] = str_repeat('0', 13);

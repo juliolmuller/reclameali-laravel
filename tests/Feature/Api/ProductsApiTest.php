@@ -11,7 +11,7 @@ class ProductsApiTest extends TestCase
     public function test_products_index()
     {
         $product = Product::orderBy('name')->first();
-        $url = route('products.index');
+        $url = route('api.products.index');
         $response = $this->actingAs($this->getUser('attendant'))->getJson($url);
         $response->assertStatus(200);
         if ($product) {
@@ -29,7 +29,7 @@ class ProductsApiTest extends TestCase
     public function test_products_show()
     {
         $product = Product::all()->random();
-        $url = route('products.show', $product->id);
+        $url = route('api.products.show', $product->id);
         $response = $this->actingAs($this->getUser('attendant'))->getJson($url);
         $response->assertStatus(200);
         $response->assertJson([
@@ -50,7 +50,7 @@ class ProductsApiTest extends TestCase
                 'id' => $user->id,
             ],
         ];
-        $url = route('products.store');
+        $url = route('api.products.store');
         $response = $this->actingAs($user)->postJson($url, $product);
         $response->assertStatus(201);
         $product['category'] = ['id' => $categoryId];
@@ -73,7 +73,7 @@ class ProductsApiTest extends TestCase
                 'id' => $user->id,
             ],
         ];
-        $url = route('products.update', $product['id']);
+        $url = route('api.products.update', $product['id']);
         $response = $this->actingAs($user)->putJson($url, $product);
         $response->assertStatus(200);
         $product['category'] = ['id' => $categoryId];
@@ -93,7 +93,7 @@ class ProductsApiTest extends TestCase
             ],
         ];
         $id = factory(Product::class)->create()->id;
-        $url = route('products.destroy', $product['id']);
+        $url = route('api.products.destroy', $product['id']);
         $response = $this->actingAs($user)->deleteJson($url);
         $response->assertStatus(200);
         $response->assertJson($product);

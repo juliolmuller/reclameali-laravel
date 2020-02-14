@@ -26,7 +26,7 @@ class UsersApiTest extends TestCase
             ->with(['city.state', 'role'])
             ->orderBy('first_name')
             ->first();
-        $url = route('users.index');
+        $url = route('api.users.index');
         $response = $this->actingAs($this->getUser('manager'))->getJson($url);
         $response->assertStatus(200);
         $response->assertJson([
@@ -53,7 +53,7 @@ class UsersApiTest extends TestCase
     public function test_users_show()
     {
         $user = User::all()->random();
-        $url = route('users.show', $user->id);
+        $url = route('api.users.show', $user->id);
         $response = $this->actingAs($this->getUser('manager'))->getJson($url);
         $response->assertStatus(200);
         $response->assertJson([
@@ -76,7 +76,7 @@ class UsersApiTest extends TestCase
     public function test_users_show_for_customer()
     {
         $user = $this->getUser('customer');
-        $url = route('users.show', $user->id);
+        $url = route('api.users.show', $user->id);
         $response = $this->actingAs($user)->getJson($url);
         $response->assertStatus(200);
         $response->assertJson([
@@ -95,7 +95,7 @@ class UsersApiTest extends TestCase
             ],
         ]);
         $otherUser = User::all()->random();
-        $url = route('users.show', $otherUser->id);
+        $url = route('api.users.show', $otherUser->id);
         $response = $this->actingAs($user)->getJson($url);
         $response->assertStatus(200);
         $response->assertJson([
@@ -128,7 +128,7 @@ class UsersApiTest extends TestCase
             'password'              => self::PSWD,
             'password_confirmation' => self::PSWD,
         ];
-        $url = route('users.store');
+        $url = route('api.users.store');
         $response = $this->actingAs($user)->postJson($url, $newUser);
         $response->assertStatus(201);
         $newUser['role_id'] = $newUser['role'];
@@ -157,7 +157,7 @@ class UsersApiTest extends TestCase
             'date_of_birth'         => self::DATE_BIRTH,
             'role'                  => Role::where('name', '<>', 'customer')->get()->random()->id,
         ];
-        $url = route('users.update-data', $savedUser->id);
+        $url = route('api.users.update-data', $savedUser->id);
         $response = $this->actingAs($user)->putJson($url, $userData);
         $response->assertStatus(200);
         $userData['role_id'] = $userData['role'];
@@ -186,7 +186,7 @@ class UsersApiTest extends TestCase
             'email'         => self::EMAIL,
             'date_of_birth' => self::DATE_BIRTH,
         ];
-        $url = route('users.update-data', $otherUserId);
+        $url = route('api.users.update-data', $otherUserId);
         $response = $this->actingAs($user)->putJson($url, $userData);
         $response->assertStatus(200);
         $this->assertDatabaseHas('users', $userData);
@@ -195,7 +195,7 @@ class UsersApiTest extends TestCase
         $response->assertJson($userData);
         $userData['first_name'] = $userData['name'];
         unset($userData['name']);
-        $url = route('users.update-data', $user->id);
+        $url = route('api.users.update-data', $user->id);
         $response = $this->actingAs($user)->putJson($url, $userData);
         $response->assertStatus(200);
         $this->assertDatabaseHas('users', $userData);
@@ -216,7 +216,7 @@ class UsersApiTest extends TestCase
             'password'              => self::PSWD,
             'password_confirmation' => self::PSWD,
         ];
-        $url = route('users.update-data', $savedUser->id);
+        $url = route('api.users.update-data', $savedUser->id);
         $response = $this->actingAs($user)->patchJson($url, $userData);
         $response->assertStatus(200);
         $response->assertJson(['id' => $savedUser->id]);
@@ -236,10 +236,10 @@ class UsersApiTest extends TestCase
             'password'              => self::PSWD,
             'password_confirmation' => self::PSWD,
         ];
-        $url = route('users.update-data', $otherUserId);
+        $url = route('api.users.update-data', $otherUserId);
         $response = $this->actingAs($user)->patchJson($url, $userData);
         $response->assertStatus(422);
-        $url = route('users.update-data', $user->id);
+        $url = route('api.users.update-data', $user->id);
         $response = $this->actingAs($user)->patchJson($url, $userData);
         $response->assertStatus(200);
         $response->assertJson(['id' => $user->id]);
@@ -251,7 +251,7 @@ class UsersApiTest extends TestCase
         $savedUser = factory(User::class)->create([
             'role_id'  => Role::where('name', '<>', 'customer')->get()->random()->id,
         ]);
-        $url = route('users.destroy', $savedUser->id);
+        $url = route('api.users.destroy', $savedUser->id);
         $response = $this->actingAs($user)->deleteJson($url);
         $response->assertStatus(200);
         $response->assertJson(['id' => $savedUser->id]);

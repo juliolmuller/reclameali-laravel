@@ -15,7 +15,7 @@ class StoreTicketStatusTest extends TestCase
     public function test_required_name_validation()
     {
         $status = [];
-        $url = route('ticket-status.store');
+        $url = route('api.ticket_status.store');
         $response = $this->actingAs($this->getUser('manager'))->postJson($url, $status);
         $response->assertStatus(422);
         $status['name'] = self::NAME;
@@ -27,7 +27,7 @@ class StoreTicketStatusTest extends TestCase
     public function test_min_length_name_validation()
     {
         $status = ['name' => '']; // min is 1 characters
-        $url = route('ticket-status.store');
+        $url = route('api.ticket_status.store');
         $response = $this->actingAs($this->getUser('manager'))->postJson($url, $status);
         $response->assertStatus(422);
         $status['name'] = self::NAME;
@@ -39,7 +39,7 @@ class StoreTicketStatusTest extends TestCase
     public function test_max_length_name_validation()
     {
         $status = ['name' => str_repeat('A', 31)]; // max is 30 characters
-        $url = route('ticket-status.store');
+        $url = route('api.ticket_status.store');
         $response = $this->actingAs($this->getUser('manager'))->postJson($url, $status);
         $response->assertStatus(422);
         $status['name'] = self::NAME;
@@ -52,7 +52,7 @@ class StoreTicketStatusTest extends TestCase
     {
         $name = factory(Status::class)->create()->name;
         $status = ['name' => $name];
-        $url = route('ticket-status.store');
+        $url = route('api.ticket_status.store');
         $response = $this->actingAs($this->getUser('manager'))->postJson($url, $status);
         $response->assertStatus(422);
         $status['name'] = self::NAME;
@@ -67,7 +67,7 @@ class StoreTicketStatusTest extends TestCase
             'name'        => self::NAME,
             'description' => str_repeat('T', 256), // max is 255 characters
         ];
-        $url = route('ticket-status.store');
+        $url = route('api.ticket_status.store');
         $response = $this->actingAs($this->getUser('manager'))->postJson($url, $status);
         $response->assertStatus(422);
         $status['description'] = str_repeat('T', 255);

@@ -10,7 +10,7 @@ class TicketTypesApiTest extends TestCase
     public function test_type_index()
     {
         $type = Type::orderBy('description')->first();
-        $url = route('ticket-types.index');
+        $url = route('api.ticket_types.index');
         $response = $this->actingAs($this->getUser('manager'))->getJson($url);
         $response->assertStatus(200);
         if ($type) {
@@ -28,7 +28,7 @@ class TicketTypesApiTest extends TestCase
     public function test_type_show()
     {
         $type = Type::all()->random();
-        $url = route('ticket-types.show', $type->id);
+        $url = route('api.ticket_types.show', $type->id);
         $response = $this->actingAs($this->getUser('manager'))->getJson($url);
         $response->assertStatus(200);
         $response->assertJson([
@@ -46,7 +46,7 @@ class TicketTypesApiTest extends TestCase
                 'id' => $user->id,
             ],
         ];
-        $url = route('ticket-types.store');
+        $url = route('api.ticket_types.store');
         $response = $this->actingAs($user)->postJson($url, $type);
         $response->assertStatus(201);
         $response->assertJson($type);
@@ -63,7 +63,7 @@ class TicketTypesApiTest extends TestCase
                 'id' => $user->id,
             ],
         ];
-        $url = route('ticket-types.update', $type['id']);
+        $url = route('api.ticket_types.update', $type['id']);
         $response = $this->actingAs($user)->putJson($url, $type);
         $response->assertStatus(200);
         $response->assertJson($type);
@@ -79,7 +79,7 @@ class TicketTypesApiTest extends TestCase
                 'id' => $user->id,
             ],
         ];
-        $url = route('ticket-types.destroy', $type['id']);
+        $url = route('api.ticket_types.destroy', $type['id']);
         $response = $this->actingAs($user)->deleteJson($url);
         $response->assertStatus(200);
         $response->assertJson($type);

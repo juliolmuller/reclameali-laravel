@@ -15,7 +15,7 @@ class StoreTicketTypeTest extends TestCase
     public function test_required_description_validation()
     {
         $type = [];
-        $url = route('ticket-types.store');
+        $url = route('api.ticket_types.store');
         $response = $this->actingAs($this->getUser('manager'))->postJson($url, $type);
         $response->assertStatus(422);
         $type['description'] = self::DESCRIPTION;
@@ -27,7 +27,7 @@ class StoreTicketTypeTest extends TestCase
     public function test_min_length_description_validation()
     {
         $type = ['description' => '']; // min is 1 characters
-        $url = route('ticket-types.store');
+        $url = route('api.ticket_types.store');
         $response = $this->actingAs($this->getUser('manager'))->postJson($url, $type);
         $response->assertStatus(422);
         $type['description'] = self::DESCRIPTION;
@@ -39,7 +39,7 @@ class StoreTicketTypeTest extends TestCase
     public function test_max_length_description_validation()
     {
         $type = ['description' => str_repeat('A', 256)]; // max is 255 characters
-        $url = route('ticket-types.store');
+        $url = route('api.ticket_types.store');
         $response = $this->actingAs($this->getUser('manager'))->postJson($url, $type);
         $response->assertStatus(422);
         $type['description'] = str_repeat('A', 255);
@@ -52,7 +52,7 @@ class StoreTicketTypeTest extends TestCase
     {
         $description = factory(Type::class)->create()->description;
         $type = ['description' => $description];
-        $url = route('ticket-types.store');
+        $url = route('api.ticket_types.store');
         $response = $this->actingAs($this->getUser('manager'))->postJson($url, $type);
         $response->assertStatus(422);
         $type['description'] = self::DESCRIPTION;

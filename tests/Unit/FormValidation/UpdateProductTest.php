@@ -17,7 +17,7 @@ class UpdateProductTest extends TestCase
     public function test_required_validation()
     {
         $id = factory(Product::class)->create()->id;
-        $url = route('products.update', $id);
+        $url = route('api.products.update', $id);
         $response = $this->actingAs($this->getUser('attendant'))->putJson($url);
         $response->assertStatus(422);
         $product = [
@@ -41,7 +41,7 @@ class UpdateProductTest extends TestCase
             'utc'         => self::UTC,
         ];
         $id = factory(Product::class)->create()->id;
-        $url = route('products.update', $id);
+        $url = route('api.products.update', $id);
         $response = $this->actingAs($this->getUser('attendant'))->putJson($url, $product);
         $response->assertStatus(422);
         $product['name'] = self::NAME;
@@ -59,7 +59,7 @@ class UpdateProductTest extends TestCase
             'utc'         => self::UTC,
         ];
         $id = factory(Product::class)->create()->id;
-        $url = route('products.update', $id);
+        $url = route('api.products.update', $id);
         $response = $this->actingAs($this->getUser('attendant'))->putJson($url, $product);
         $response->assertStatus(422);
         $product['category'] = self::CATEGORY;
@@ -77,7 +77,7 @@ class UpdateProductTest extends TestCase
             'category'    => self::CATEGORY,
         ];
         $id = factory(Product::class)->create()->id;
-        $url = route('products.update', $id);
+        $url = route('api.products.update', $id);
         $response = $this->actingAs($this->getUser('attendant'))->putJson($url, $product);
         $response->assertStatus(422);
         $product['utc'] = self::UTC;
@@ -96,7 +96,7 @@ class UpdateProductTest extends TestCase
             'utc'         => self::UTC,
         ];
         $id = factory(Product::class)->create()->id;
-        $url = route('products.update', $id);
+        $url = route('api.products.update', $id);
         $response = $this->actingAs($this->getUser('attendant'))->putJson($url, $product);
         $response->assertStatus(422);
         $product['name'] = self::NAME;
@@ -115,7 +115,7 @@ class UpdateProductTest extends TestCase
             'utc'         => self::UTC,
         ];
         $id = factory(Product::class)->create()->id;
-        $url = route('products.update', $id);
+        $url = route('api.products.update', $id);
         $response = $this->actingAs($this->getUser('attendant'))->putJson($url, $product);
         $response->assertStatus(422);
         $product['name'] = self::NAME;
@@ -135,7 +135,7 @@ class UpdateProductTest extends TestCase
             'utc'         => self::UTC,
         ];
         $id = factory(Product::class)->create()->id;
-        $url = route('products.update', $id);
+        $url = route('api.products.update', $id);
         $response = $this->actingAs($this->getUser('attendant'))->putJson($url, $product);
         $response->assertStatus(422);
         $product['name'] = self::NAME;
@@ -155,7 +155,7 @@ class UpdateProductTest extends TestCase
             'utc'         => self::UTC,
         ];
         $id = factory(Product::class)->create()->id;
-        $url = route('products.update', $id);
+        $url = route('api.products.update', $id);
         $response = $this->actingAs($this->getUser('attendant'))->putJson($url, $product);
         $response->assertStatus(422);
         $product['description'] = self::NAME;
@@ -175,7 +175,7 @@ class UpdateProductTest extends TestCase
             'utc'         => self::UTC,
         ];
         $id = factory(Product::class)->create()->id;
-        $url = route('products.update', $id);
+        $url = route('api.products.update', $id);
         $response = $this->actingAs($this->getUser('attendant'))->putJson($url, $product);
         $response->assertStatus(422);
         $product['weight'] = 0;
@@ -194,7 +194,7 @@ class UpdateProductTest extends TestCase
             'utc'         => self::UTC,
         ];
         $id = factory(Product::class)->create()->id;
-        $url = route('products.update', $id);
+        $url = route('api.products.update', $id);
         $response = $this->actingAs($this->getUser('attendant'))->putJson($url, $product);
         $response->assertStatus(422);
         $product['category'] = self::CATEGORY;
@@ -213,7 +213,7 @@ class UpdateProductTest extends TestCase
             'utc'         => str_repeat('A', 12),
         ];
         $id = factory(Product::class)->create()->id;
-        $url = route('products.update', $id);
+        $url = route('api.products.update', $id);
         $response = $this->actingAs($this->getUser('attendant'))->putJson($url, $product);
         $response->assertStatus(422);
         $product['utc'] = self::UTC;
@@ -232,7 +232,7 @@ class UpdateProductTest extends TestCase
             'utc'         => str_repeat('0', 11), // min is 12 characters
         ];
         $id = factory(Product::class)->create()->id;
-        $url = route('products.update', $id);
+        $url = route('api.products.update', $id);
         $response = $this->actingAs($this->getUser('attendant'))->putJson($url, $product);
         $response->assertStatus(422);
         $product['utc'] = self::UTC;
@@ -251,7 +251,7 @@ class UpdateProductTest extends TestCase
             'utc'         => str_repeat('0', 13), // max is 12 characters
         ];
         $id = factory(Product::class)->create()->id;
-        $url = route('products.update', $id);
+        $url = route('api.products.update', $id);
         $response = $this->actingAs($this->getUser('attendant'))->putJson($url, $product);
         $response->assertStatus(422);
         $product['utc'] = self::UTC;
@@ -271,7 +271,7 @@ class UpdateProductTest extends TestCase
             'utc'         => $utc,
         ];
         $id = factory(Product::class)->create()->id;
-        $url = route('products.update', $id);
+        $url = route('api.products.update', $id);
         $response = $this->actingAs($this->getUser('attendant'))->putJson($url, $product);
         $response->assertStatus(422);
         $product['utc'] = self::UTC;
@@ -291,7 +291,7 @@ class UpdateProductTest extends TestCase
             'ean'         => str_repeat('A', 13),
         ];
         $id = factory(Product::class)->create()->id;
-        $url = route('products.update', $id);
+        $url = route('api.products.update', $id);
         $response = $this->actingAs($this->getUser('attendant'))->putJson($url, $product);
         $response->assertStatus(422);
         $product['ean'] = str_repeat('0', 13);
@@ -311,7 +311,7 @@ class UpdateProductTest extends TestCase
             'ean'         => str_repeat('0', 12), // min is 13 characters
         ];
         $id = factory(Product::class)->create()->id;
-        $url = route('products.update', $id);
+        $url = route('api.products.update', $id);
         $response = $this->actingAs($this->getUser('attendant'))->putJson($url, $product);
         $response->assertStatus(422);
         $product['ean'] = str_repeat('0', 13);
@@ -331,7 +331,7 @@ class UpdateProductTest extends TestCase
             'ean'         => str_repeat('0', 14), // max is 13 characters
         ];
         $id = factory(Product::class)->create()->id;
-        $url = route('products.update', $id);
+        $url = route('api.products.update', $id);
         $response = $this->actingAs($this->getUser('attendant'))->putJson($url, $product);
         $response->assertStatus(422);
         $product['ean'] = str_repeat('0', 13);
@@ -354,7 +354,7 @@ class UpdateProductTest extends TestCase
             'ean'         => $ean,
         ];
         $id = factory(Product::class)->create()->id;
-        $url = route('products.update', $id);
+        $url = route('api.products.update', $id);
         $response = $this->actingAs($this->getUser('attendant'))->putJson($url, $product);
         $response->assertStatus(422);
         $product['ean'] = str_repeat('0', 13);

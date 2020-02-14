@@ -18,7 +18,7 @@ class TicketsApiTest extends TestCase
     public function test_tickets_index()
     {
         $ticket = Ticket::orderByDesc('created_at')->first();
-        $url = route('tickets.index');
+        $url = route('api.tickets.index');
         $response = $this->actingAs($this->getUser('attendant'))->getJson($url);
         $response->assertStatus(200);
         if ($ticket) {
@@ -42,7 +42,7 @@ class TicketsApiTest extends TestCase
             $user = $this->getUser('customer');
         } while (!$user->tickets->count());
         $ticket = $user->tickets[0];
-        $url = route('tickets.index');
+        $url = route('api.tickets.index');
         $response = $this->actingAs($user)->getJson($url);
         $response->assertStatus(200);
         $response->assertJson([
@@ -61,7 +61,7 @@ class TicketsApiTest extends TestCase
     public function test_tickets_show()
     {
         $ticket = Ticket::all()->random();
-        $url = route('tickets.show', $ticket->id);
+        $url = route('api.tickets.show', $ticket->id);
         $response = $this->actingAs($this->getUser('attendant'))->getJson($url);
         $response->assertStatus(200);
         $response->assertJson([
@@ -79,11 +79,11 @@ class TicketsApiTest extends TestCase
             $user = $this->getUser('customer');
         } while (!$user->tickets->count());
         $ticket = Ticket::where('created_by', '<>', $user->id)->get()->random();
-        $url = route('tickets.show', $ticket->id);
+        $url = route('api.tickets.show', $ticket->id);
         $response = $this->actingAs($user)->getJson($url);
         $response->assertStatus(403);
         $ticket = $user->tickets[0];
-        $url = route('tickets.show', $ticket->id);
+        $url = route('api.tickets.show', $ticket->id);
         $response = $this->actingAs($user)->getJson($url);
         $response->assertStatus(200);
         $response->assertJson([
@@ -104,7 +104,7 @@ class TicketsApiTest extends TestCase
             'user'    => $user->id,
             'message' => 'Testing new message'
         ];
-        $url = route('tickets.store');
+        $url = route('api.tickets.store');
         $response = $this->actingAs($user)->postJson($url, $ticket);
         $response->assertStatus(201);
         $response->assertJson([
@@ -132,7 +132,7 @@ class TicketsApiTest extends TestCase
         $user = $this->getUser('attendant');
         $ticket = factory(Ticket::class)->create(['status_id' => self::OPEN, 'created_by' => $user->id]);
         $message = 'Testing new message';
-        $url = route('tickets.update', $ticket->id);
+        $url = route('api.tickets.update', $ticket->id);
         $response = $this->actingAs($user)->putJson($url, compact('message'));
         $response->assertStatus(200);
         $response->assertJson([
@@ -160,11 +160,11 @@ class TicketsApiTest extends TestCase
         } while (!$user->tickets->count());
         $message = 'Testing new message';
         $ticket = Ticket::where('created_by', '<>', $user->id)->get()->random();
-        $url = route('tickets.update', $ticket->id);
+        $url = route('api.tickets.update', $ticket->id);
         $response = $this->actingAs($user)->putJson($url, compact('message'));
         $response->assertStatus(404);
         $ticket = $user->tickets[0];
-        $url = route('tickets.update', $ticket->id);
+        $url = route('api.tickets.update', $ticket->id);
         $response = $this->actingAs($user)->putJson($url, compact('message'));
         $response->assertStatus(200);
         $this->assertDatabaseHas('ticket_messages', [
@@ -180,7 +180,7 @@ class TicketsApiTest extends TestCase
     {
         $ticket = factory(Ticket::class)->create();
         $user = $this->getUser('attendant');
-        $url = route('tickets.close', $ticket->id);
+        $url = route('api.tickets.close', $ticket->id);
         $response = $this->actingAs($user)->patchJson($url, []);
         $response->assertStatus(200);
         $response->assertJson([

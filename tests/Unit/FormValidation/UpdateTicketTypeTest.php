@@ -16,7 +16,7 @@ class UpdateTicketTypeTest extends TestCase
     {
         $type = [];
         $id = factory(Type::class)->create()->id;
-        $url = route('ticket-types.update', $id);
+        $url = route('api.ticket_types.update', $id);
         $response = $this->actingAs($this->getUser('manager'))->putJson($url, $type);
         $response->assertStatus(422);
         $type['description'] = self::DESCRIPTION;
@@ -29,7 +29,7 @@ class UpdateTicketTypeTest extends TestCase
     {
         $type = ['description' => '']; // min is 1 characters
         $id = factory(Type::class)->create()->id;
-        $url = route('ticket-types.update', $id);
+        $url = route('api.ticket_types.update', $id);
         $response = $this->actingAs($this->getUser('manager'))->putJson($url, $type);
         $response->assertStatus(422);
         $type['description'] = self::DESCRIPTION;
@@ -42,7 +42,7 @@ class UpdateTicketTypeTest extends TestCase
     {
         $type = ['description' => str_repeat('A', 256)]; // max is 255 characters
         $id = factory(Type::class)->create()->id;
-        $url = route('ticket-types.update', $id);
+        $url = route('api.ticket_types.update', $id);
         $response = $this->actingAs($this->getUser('manager'))->putJson($url, $type);
         $response->assertStatus(422);
         $type['description'] = str_repeat('A', 255);
@@ -56,7 +56,7 @@ class UpdateTicketTypeTest extends TestCase
         $description = factory(Type::class)->create()->description;
         $type = ['description' => $description];
         $id = factory(Type::class)->create()->id;
-        $url = route('ticket-types.update', $id);
+        $url = route('api.ticket_types.update', $id);
         $response = $this->actingAs($this->getUser('manager'))->putJson($url, $type);
         $response->assertStatus(422);
         $type['description'] = self::DESCRIPTION;

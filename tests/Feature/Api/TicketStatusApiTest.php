@@ -10,7 +10,7 @@ class TicketStatusApiTest extends TestCase
     public function test_status_index()
     {
         $status = Status::orderBy('name')->first();
-        $url = route('ticket-status.index');
+        $url = route('api.ticket_status.index');
         $response = $this->actingAs($this->getUser('manager'))->getJson($url);
         $response->assertStatus(200);
         if ($status) {
@@ -29,7 +29,7 @@ class TicketStatusApiTest extends TestCase
     public function test_status_show()
     {
         $status = Status::all()->random();
-        $url = route('ticket-status.show', $status->id);
+        $url = route('api.ticket_status.show', $status->id);
         $response = $this->actingAs($this->getUser('manager'))->getJson($url);
         $response->assertStatus(200);
         $response->assertJson([
@@ -48,7 +48,7 @@ class TicketStatusApiTest extends TestCase
                 'id' => $user->id,
             ],
         ];
-        $url = route('ticket-status.store');
+        $url = route('api.ticket_status.store');
         $response = $this->actingAs($user)->postJson($url, $status);
         $response->assertStatus(201);
         $response->assertJson($status);
@@ -65,7 +65,7 @@ class TicketStatusApiTest extends TestCase
                 'id' => $user->id,
             ],
         ];
-        $url = route('ticket-status.update', $status['id']);
+        $url = route('api.ticket_status.update', $status['id']);
         $response = $this->actingAs($user)->putJson($url, $status);
         $response->assertStatus(200);
         $response->assertJson($status);
@@ -81,7 +81,7 @@ class TicketStatusApiTest extends TestCase
                 'id' => $user->id,
             ],
         ];
-        $url = route('ticket-status.destroy', $status['id']);
+        $url = route('api.ticket_status.destroy', $status['id']);
         $response = $this->actingAs($user)->deleteJson($url);
         $response->assertStatus(200);
         $response->assertJson($status);

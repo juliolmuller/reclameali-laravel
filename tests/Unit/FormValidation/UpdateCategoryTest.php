@@ -16,7 +16,7 @@ class UpdateCategoryTest extends TestCase
     {
         $category = [];
         $id = factory(Category::class)->create()->id;
-        $url = route('categories.update', $id);
+        $url = route('api.categories.update', $id);
         $response = $this->actingAs($this->getUser('attendant'))->putJson($url, $category);
         $response->assertStatus(422);
         $category['name'] = self::NAME;
@@ -29,7 +29,7 @@ class UpdateCategoryTest extends TestCase
     {
         $category = ['name' => 'TT']; // min is 3 characters
         $id = factory(Category::class)->create()->id;
-        $url = route('categories.update', $id);
+        $url = route('api.categories.update', $id);
         $response = $this->actingAs($this->getUser('attendant'))->putJson($url, $category);
         $response->assertStatus(422);
         $category['name'] = self::NAME;
@@ -42,7 +42,7 @@ class UpdateCategoryTest extends TestCase
     {
         $category = ['name' => str_repeat('T', 51)]; // max is 50 characters
         $id = factory(Category::class)->create()->id;
-        $url = route('categories.update', $id);
+        $url = route('api.categories.update', $id);
         $response = $this->actingAs($this->getUser('attendant'))->putJson($url, $category);
         $response->assertStatus(422);
         $category['name'] = self::NAME;
@@ -56,7 +56,7 @@ class UpdateCategoryTest extends TestCase
         $name = factory(Category::class)->create()->name;
         $category = ['name' => $name];
         $id = factory(Category::class)->create()->id;
-        $url = route('categories.update', $id);
+        $url = route('api.categories.update', $id);
         $response = $this->actingAs($this->getUser('attendant'))->putJson($url, $category);
         $response->assertStatus(422);
         $category['name'] = self::NAME;

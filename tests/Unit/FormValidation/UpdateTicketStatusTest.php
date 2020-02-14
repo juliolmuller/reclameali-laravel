@@ -16,7 +16,7 @@ class UpdateTicketStatusTest extends TestCase
     {
         $status = [];
         $id = factory(Status::class)->create()->id;
-        $url = route('ticket-status.update', $id);
+        $url = route('api.ticket_status.update', $id);
         $response = $this->actingAs($this->getUser('manager'))->putJson($url, $status);
         $response->assertStatus(422);
         $status['name'] = self::NAME;
@@ -29,7 +29,7 @@ class UpdateTicketStatusTest extends TestCase
     {
         $status = ['name' => '']; // min is 1 characters
         $id = factory(Status::class)->create()->id;
-        $url = route('ticket-status.update', $id);
+        $url = route('api.ticket_status.update', $id);
         $response = $this->actingAs($this->getUser('manager'))->putJson($url, $status);
         $response->assertStatus(422);
         $status['name'] = self::NAME;
@@ -42,7 +42,7 @@ class UpdateTicketStatusTest extends TestCase
     {
         $status = ['name' => str_repeat('A', 31)]; // max is 30 characters
         $id = factory(Status::class)->create()->id;
-        $url = route('ticket-status.update', $id);
+        $url = route('api.ticket_status.update', $id);
         $response = $this->actingAs($this->getUser('manager'))->putJson($url, $status);
         $response->assertStatus(422);
         $status['name'] = self::NAME;
@@ -56,7 +56,7 @@ class UpdateTicketStatusTest extends TestCase
         $name = factory(Status::class)->create()->name;
         $status = ['name' => $name];
         $id = factory(Status::class)->create()->id;
-        $url = route('ticket-status.update', $id);
+        $url = route('api.ticket_status.update', $id);
         $response = $this->actingAs($this->getUser('manager'))->putJson($url, $status);
         $response->assertStatus(422);
         $status['name'] = self::NAME;
@@ -72,7 +72,7 @@ class UpdateTicketStatusTest extends TestCase
             'description' => str_repeat('A', 256), // max is 255 characters
         ];
         $id = factory(Status::class)->create()->id;
-        $url = route('ticket-status.update', $id);
+        $url = route('api.ticket_status.update', $id);
         $response = $this->actingAs($this->getUser('manager'))->putJson($url, $status);
         $response->assertStatus(422);
         $status['description'] = str_repeat('A', 255);

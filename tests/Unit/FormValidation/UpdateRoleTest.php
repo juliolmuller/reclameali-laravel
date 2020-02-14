@@ -17,7 +17,7 @@ class UpdateRoleTest extends TestCase
         $model = new Role(['name' => 'fakename']);
         $model->save();
         $role = ['id'   => $model->id];
-        $url = route('roles.update', $role['id']);
+        $url = route('api.roles.update', $role['id']);
         $response = $this->actingAs($this->getUser('admin'))->putJson($url, $role);
         $response->assertStatus(422);
         $role['name'] = self::NAME;
@@ -34,7 +34,7 @@ class UpdateRoleTest extends TestCase
             'id'   => $model->id,
             'name' => 'fake name',
         ];
-        $url = route('roles.update', $role['id']);
+        $url = route('api.roles.update', $role['id']);
         $response = $this->actingAs($this->getUser('admin'))->putJson($url, $role);
         $response->assertStatus(422);
         $role['name'] = self::NAME;
@@ -51,7 +51,7 @@ class UpdateRoleTest extends TestCase
             'id'   => $model->id,
             'name' => '', // min is 1 characters
         ];
-        $url = route('roles.update', $role['id']);
+        $url = route('api.roles.update', $role['id']);
         $response = $this->actingAs($this->getUser('admin'))->putJson($url, $role);
         $response->assertStatus(422);
         $role['name'] = self::NAME;
@@ -68,7 +68,7 @@ class UpdateRoleTest extends TestCase
             'id'   => $model->id,
             'name' => str_repeat('T', 11), // max is 10 characters
         ];
-        $url = route('roles.update', $role['id']);
+        $url = route('api.roles.update', $role['id']);
         $response = $this->actingAs($this->getUser('admin'))->putJson($url, $role);
         $response->assertStatus(422);
         $role['name'] = self::NAME;
@@ -86,7 +86,7 @@ class UpdateRoleTest extends TestCase
             'id'   => $model->id,
             'name' => $name,
         ];
-        $url = route('roles.update', $role['id']);
+        $url = route('api.roles.update', $role['id']);
         $response = $this->actingAs($this->getUser('admin'))->putJson($url, $role);
         $response->assertStatus(422);
         $role['name'] = self::NAME . '2';
@@ -104,7 +104,7 @@ class UpdateRoleTest extends TestCase
             'name' => self::NAME,
             'description' => str_repeat('T', 256), // max is 255 characters
         ];
-        $url = route('roles.update', $role['id']);
+        $url = route('api.roles.update', $role['id']);
         $response = $this->actingAs($this->getUser('admin'))->putJson($url, $role);
         $response->assertStatus(422);
         $role['description'] = str_repeat('T', 255);

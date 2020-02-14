@@ -16,7 +16,7 @@ class StoreTicketMessageTest extends TestCase
         do {
             $user = $this->getUser('customer');
         } while (!$user->tickets->count());
-        $url = route('tickets.update', $user->tickets[0]->id);
+        $url = route('api.tickets.update', $user->tickets[0]->id);
         $response = $this->actingAs($user)->putJson($url, []);
         $response->assertStatus(422);
         $response = $this->actingAs($user)->putJson($url, ['message' => self::MESSAGE]);
@@ -28,7 +28,7 @@ class StoreTicketMessageTest extends TestCase
         do {
             $user = $this->getUser('customer');
         } while (!$user->tickets->count());
-        $url = route('tickets.update', $user->tickets[0]->id);
+        $url = route('api.tickets.update', $user->tickets[0]->id);
         $response = $this->actingAs($user)->putJson($url, ['message' => '']);
         $response->assertStatus(422);
         $response = $this->actingAs($user)->putJson($url, ['message' => self::MESSAGE]);
@@ -40,7 +40,7 @@ class StoreTicketMessageTest extends TestCase
         do {
             $user = $this->getUser('customer');
         } while (!$user->tickets->count());
-        $url = route('tickets.update', $user->tickets[0]->id);
+        $url = route('api.tickets.update', $user->tickets[0]->id);
         $response = $this->actingAs($user)->putJson($url, ['message' => str_repeat('T', 256)]);
         $response->assertStatus(422);
         $response = $this->actingAs($user)->putJson($url, ['message' => self::MESSAGE]);
