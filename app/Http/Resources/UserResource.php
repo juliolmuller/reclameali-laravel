@@ -4,6 +4,9 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
+/**
+ * @mixin \App\Models\User
+ */
 class UserResource extends JsonResource
 {
     /**
@@ -38,6 +41,24 @@ class UserResource extends JsonResource
             'updated_by'    => UserResource::make($this->whenLoaded('editor')),
             'deleted_at'    => $this->deleted_at,
             'deleted_by'    => UserResource::make($this->whenLoaded('destroyer')),
+            'links'         => [
+                'show' => [
+                    'method' => 'GET',
+                    'url'    => route('api.users.show', $this),
+                ],
+                'update' => [
+                    'method' => 'PUT',
+                    'url'    => route('api.users.update_data', $this),
+                ],
+                'security' => [
+                    'method' => 'PATCH',
+                    'url'    => route('api.users.update_password', $this),
+                ],
+                'delete' => [
+                    'method' => 'DELETE',
+                    'url'    => route('api.users.destroy', $this),
+                ],
+            ],
         ];
     }
 }

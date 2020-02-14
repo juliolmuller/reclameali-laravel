@@ -4,6 +4,9 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
+/**
+ * @mixin \App\Models\Product
+ */
 class ProductResource extends JsonResource
 {
     /**
@@ -28,6 +31,20 @@ class ProductResource extends JsonResource
             'updated_by'  => UserResource::make($this->whenLoaded('editor')),
             'deleted_at'  => $this->deleted_at,
             'deleted_by'  => UserResource::make($this->whenLoaded('destroyer')),
+            'links'       => [
+                'show' => [
+                    'method' => 'GET',
+                    'url'    => route('api.products.show', $this),
+                ],
+                'update' => [
+                    'method' => 'PUT',
+                    'url'    => route('api.products.update', $this),
+                ],
+                'delete' => [
+                    'method' => 'DELETE',
+                    'url'    => route('api.products.destroy', $this),
+                ],
+            ],
         ];
     }
 }

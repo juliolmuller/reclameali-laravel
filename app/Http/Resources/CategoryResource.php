@@ -27,6 +27,20 @@ class CategoryResource extends JsonResource
             'updated_by' => UserResource::make($this->whenLoaded('editor')),
             'deleted_at' => $this->deleted_at,
             'deleted_by' => UserResource::make($this->whenLoaded('destroyer')),
+            'links'      => [
+                'show' => [
+                    'method' => 'GET',
+                    'url'    => route('api.categories.show', $this),
+                ],
+                'update' => [
+                    'method' => 'PUT',
+                    'url'    => route('api.categories.update', $this),
+                ],
+                'delete' => [
+                    'method' => 'DELETE',
+                    'url'    => route('api.categories.destroy', $this),
+                ],
+            ],
         ];
     }
 }

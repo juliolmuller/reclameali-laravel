@@ -4,6 +4,9 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
+/**
+ * @mixin \App\Models\Ticket
+ */
 class TicketResource extends JsonResource
 {
     /**
@@ -26,6 +29,20 @@ class TicketResource extends JsonResource
             'closed_by'   => $this->when(!!$this->closed_at, UserResource::make($this->whenLoaded('editor'))),
             'updated_at'  => $this->updated_at,
             'updated_by'  => UserResource::make($this->whenLoaded('editor')),
+            'links'       => [
+                'show' => [
+                    'method' => 'GET',
+                    'url'    => route('api.tickets.show', $this),
+                ],
+                'update' => [
+                    'method' => 'PUT',
+                    'url'    => route('api.tickets.update', $this),
+                ],
+                'delete' => [
+                    'method' => 'PATCH',
+                    'url'    => route('api.tickets.close', $this),
+                ],
+            ],
         ];
     }
 }
