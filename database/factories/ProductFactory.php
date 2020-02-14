@@ -5,6 +5,7 @@ use App\Models\Product;
 use Faker\Generator as Faker;
 
 $factory->define(Product::class, function (Faker $faker) {
+
     return [
         'name'        => $faker->unique()->productName,
         'description' => $faker->optional()->paragraphs(3, true),
@@ -13,4 +14,5 @@ $factory->define(Product::class, function (Faker $faker) {
         'utc'         => $faker->unique()->numerify(str_repeat('#', 12)),
         'ean'         => $faker->optional()->ean13,
     ];
+
 });

@@ -19,7 +19,8 @@ class TicketTypesTableSeeder extends Seeder
             ['description' => 'Sugestão'],
             ['description' => 'Outro'],
         ]);
-        $other = Type::where('description', 'Outro')->get()->first();
+
+        $other = Type::where('description', 'Outro')->first();
         $other->id = 9999;
         $other->save();
     }

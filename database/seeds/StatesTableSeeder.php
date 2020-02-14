@@ -2,7 +2,6 @@
 
 use App\Models\State;
 use GuzzleHttp\Client;
-use GuzzleHttp\Promise;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -17,9 +16,15 @@ class StatesTableSeeder extends Seeder
     {
         $now = now();
         $client = new Client();
-        $response = $client->request(State::IBGE_API_METHOD, State::IBGE_API_URL);
-        $states = json_decode($response->getBody());
+        $states = json_decode(
+            $client->request(
+                State::IBGE_API_METHOD,
+                State::IBGE_API_URL
+            )->getBody()
+        );
+
         foreach ($states as $state) {
+
             DB::table('states')->insert([
                 'id'          => $state->id,
                 'abreviation' => $state->sigla,

@@ -2,7 +2,6 @@
 
 use App\Models\City;
 use GuzzleHttp\Client;
-use GuzzleHttp\Promise;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -17,9 +16,15 @@ class CitiesTableSeeder extends Seeder
     {
         $now = now();
         $client = new Client();
-        $response = $client->request(City::IBGE_API_METHOD, City::IBGE_API_URL);
-        $cities = json_decode($response->getBody());
+        $cities = json_decode(
+            $client->request(
+                City::IBGE_API_METHOD,
+                City::IBGE_API_URL
+            )->getBody()
+        );
+
         foreach ($cities as $city) {
+
             DB::table('cities')->insert([
                 'id'         => $city->id,
                 'name'       => $city->nome,
