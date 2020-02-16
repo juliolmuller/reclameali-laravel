@@ -9,22 +9,20 @@
     "prod": "npm run production",
     "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
   },
-  "dependencies": {
+  "devDependencies": {
     "@chenfengyuan/datepicker": "1.*",
-    "@fortawesome/fontawesome-free": "^5.12.0",
+    "@fortawesome/fontawesome-free": "^5.12.1",
     "bootstrap": "4.*",
+    "cross-env": "6.*",
     "jquery": "3.*",
     "jquery-mask-plugin": "1.*",
-    "popper.js": "^1.16.1",
-    "toastr": "2.*"
-  },
-  "devDependencies": {
-    "cross-env": "6.*",
     "laravel-mix": "5.*",
-    "lodash": "4.*",
+    "popper.js": "1.*",
     "resolve-url-loader": "3.*",
-    "sass": "^1.25.0",
-    "sass-loader": "^8.0.2",
+    "sass": "1.*",
+    "sass-loader": "8.*",
+    "toastr": "2.*",
+    "vue": "2.*",
     "vue-template-compiler": "2.*"
   }
 }
