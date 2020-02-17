@@ -4,15 +4,7 @@
 @section('body')
 
   {{-- Page header --}}
-  @header([
-    'activePage'      => 1,
-    'navigationLinks' => [
-      ['label' => 'Home',         'href' => url('/')],
-      ['label' => 'Atendimentos', 'href' => url('/atendimentos')],
-      ['label' => 'Categorias',   'href' => url('/categorias')],
-      ['label' => 'Produtos',     'href' => url('/produtos')],
-    ],
-  ])
+  @header
   @endheader
 
   {{-- Page content --}}

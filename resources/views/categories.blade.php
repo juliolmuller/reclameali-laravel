@@ -6,12 +6,7 @@
   {{-- Page header --}}
   @header([
     'activePage'      => 1,
-    'navigationLinks' => [
-      ['label' => 'Home',         'href' => url('/')],
-      ['label' => 'Atendimentos', 'href' => url('/atendimentos')],
-      ['label' => 'Categorias',   'href' => url('/categorias')],
-      ['label' => 'Produtos',     'href' => url('/produtos')],
-    ],
+    'navigationLinks' => $user->headerLinks,
   ])
   @endheader
 
@@ -61,40 +56,6 @@
           </c:choose>
         </tbody>
       </table>
-    </div>
-
-    {{-- Form to manage categories --}}
-    <div id="category-modal" class="modal fade" tabindex="-1" role="dialog">
-      <div class="modal-dialog modal-lg" role="document">
-        <form action="${pageContext.request.contextPath}/api/categories" id="category-form" class="modal-content" novalidate>
-          <div class="modal-header">
-            <h2 id="category-form-title" class="modal-title"></h2>
-            <button type="button" class="close" data-dismiss="modal">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <input type="hidden" name="id" value="" />
-            <div class="form-group">
-              <label for="category-name">Nome da categoria:</label>
-              <textarea id="category-name" class="form-control" name="name" rows="3" maxlength="255" oninput="charCounter(event, '#char-counter', 255)"></textarea>
-              <small id="char-counter" class="form-text text-muted text-right">
-                Caracteres digitados: 0/255
-              </small>
-            </div>
-          </div>
-          <div class="modal-footer c-sign-buttons">
-            <button type="button" class="btn btn-lg btn-light" data-dismiss="modal">
-              <i class="far fa-times-circle"></i>
-              Cancelar
-            </button>
-            <button type="submit" class="btn btn-lg btn-primary">
-              <i class="far fa-save"></i>
-              Salvar
-            </button>
-          </div>
-        </form>
-      </div>
     </div>
   </main>
 
