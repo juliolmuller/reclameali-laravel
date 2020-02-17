@@ -2,10 +2,6 @@
 
   === HEADER COMPONENT ===
 
-  Expected parameters:
-    $navigationLinks : array (optional)
-    $activePage      : int   (optional)
-
 --}}
 
 <header class="container-fluid bg-dark fixed-top c-header">
@@ -15,17 +11,15 @@
       <span class="text-white-50 h4 c-title">Reclame Ali</span>
     </a>
     <div class="container">
-      @isset($navigationLinks)
-        <ul class="navbar-nav text-white">
-          @foreach ($navigationLinks as $nav)
-            <li class="nav-item">
-              <a href="{{ $nav['href'] }}" class="nav-link {{ isset($activePage) && $activePage == $loop->iteration ? 'active' : '' }}">
-                {{ $nav['label'] }}
-              </a>
-            </li>
-          @endforeach
-        </ul>
-      @endisset
+      <ul class="navbar-nav text-white">
+        @foreach(auth()->user()->getNavigationLinks() as $link)
+          <li class="nav-item">
+            <a href="{{ route($link['route']) }}" class="nav-link {{ active($link['route']) }}">
+              {{ $link['label'] }}
+            </a>
+          </li>
+        @endforeach
+      </ul>
     </div>
     <form action="{{ route('auth.signout') }}" method="POST" class="form-inline">
       @csrf

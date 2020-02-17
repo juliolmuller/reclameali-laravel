@@ -124,4 +124,50 @@ class User extends Authenticatable
     {
         return $this->hasMany(Ticket::class, 'created_by')->orderByDesc('created_at');
     }
+
+    /**
+     * Returns an array of hyperlinks for the navigation bar
+     *
+     * @return array
+     */
+    public function getNavigationLinks()
+    {
+        $links = [[
+            'route' => 'home',
+            'label' => 'Home',
+        ]];
+
+        switch ($this->role_id) {
+            case 1:
+                return array_merge($links, [
+                    ['route' => 'page.tickets',     'label' => 'Atendimentos'],
+                    ['route' => 'page.manage_data', 'label' => 'Meus Dados'],
+                ]);
+
+            case 2:
+                return array_merge($links, [
+                    ['route' => 'page.tickets',     'label' => 'Atendimentos'],
+                    ['route' => 'page.categories',  'label' => 'Categorias'],
+                    ['route' => 'page.products',    'label' => 'Produtos'],
+                    ['route' => 'page.manage_data', 'label' => 'Meus Dados'],
+                ]);
+
+            case 3:
+                return array_merge($links, [
+                    ['route' => 'page.tickets',         'label' => 'Atendimentos'],
+                    ['route' => 'page.ticket_options', 'label' => 'Gerenciar Opções'],
+                    ['route' => 'page.users',           'label' => 'Usuários'],
+                ]);
+
+            case 4:
+                return array_merge($links, [
+                    ['route' => 'page.users',       'label' => 'Usuários'],
+                    ['route' => 'page.roles',       'label' => 'Perfis de Acesso'],
+                    ['route' => 'page.permissions', 'label' => 'Permissões'],
+                ]);
+
+            default:
+                return $links;
+        }
+    }
 }
