@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
@@ -16,6 +17,7 @@ class BladeServiceProvider extends ServiceProvider
     {
         $this->setupComponents();
         $this->setupFormattingDirectives();
+        $this->setupConditionBlocks();
     }
 
     /**
@@ -37,23 +39,39 @@ class BladeServiceProvider extends ServiceProvider
     private function setupFormattingDirectives()
     {
         Blade::directive('datetime', function ($expression) {
-            return "<?= ($expression)->format('m/d/Y G:i') ?>";
+            return "<?= ({$expression})->format('m/d/Y G:i') ?>";
         });
+
         Blade::directive('date', function ($expression) {
-            return "<?= ($expression)->format('j-M-Y') ?>";
+            return "<?= ({$expression})->format('j-M-Y') ?>";
         });
+
         Blade::directive('time', function ($expression) {
-            return "<?= ($expression)->format('G:i:s') ?>";
+            return "<?= ({$expression})->format('G:i:s') ?>";
         });
+
         Blade::directive('cpf', function ($expression) {
             $pattern = '/(\d{3})(\d{3})(\d{3})(\d{2})/';
             $cpf = preg_replace($pattern, '$1.$2.$3-$4', $expression);
+
             return "<?= {$cpf} ?>";
         });
+
         Blade::directive('phone', function ($expression) {
             $pattern = '/(\d{2})(\d{4,5})(\d{4})/';
             $phone = preg_replace($pattern, '($1) $2-$3', $expression);
+
             return "<?= {$phone} ?>";
+        });
+    }
+
+    /**
+     * Define blocks to be printted on certain condition
+     */
+    private function setupConditionBlocks()
+    {
+        Blade::if('role', function (...$roles) {
+            return in_array(Auth::user()->role->name, $roles);
         });
     }
 }
