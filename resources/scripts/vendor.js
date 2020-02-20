@@ -18,6 +18,11 @@ import '@chenfengyuan/datepicker'
 window.toastr = require('toastr')
 
 /*
+ * Import numeral
+ */
+window.numeral = require('numeral')
+
+/*
  * Import Vue.js framework
  */
 window.Vue = require('vue')
