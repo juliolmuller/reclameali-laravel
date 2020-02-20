@@ -6,6 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <meta name="author" content="Julio L. Muller" />
     <meta name="csrf-token" content="{{ csrf_token() }}" />
+    <meta name="api-url" content="{{ $apiUrl ?? '' }}" />
+    <meta name="controller" content="{{ $controller ?? '' }}" />
     <title>
       BEIBE :: Reclame Ali - Serviço de Atendimento ao Cliente
     </title>
