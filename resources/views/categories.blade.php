@@ -1,17 +1,17 @@
 
-@extends('layout.baseLayout')
+@extends('layout.baseLayout', [
+    'apiUrl'     => route('api.categories.index'),
+    'controller' => 'categories',
+])
 
 @section('body')
 
   {{-- Page header --}}
-  @header([
-    'activePage'      => 1,
-    'navigationLinks' => $user->headerLinks,
-  ])
+  @header
   @endheader
 
   {{-- Page content --}}
-  <main class="container c-main">
+  <main id="categories-crud" class="container c-main">
     <div class="d-flex flex-wrap justify-content-between align-items-start">
       <div>
         <h1 class="mb-4">
@@ -27,8 +27,11 @@
     </div>
 
     {{-- Categories table --}}
-    <div class="mt-3">
-      <table id="category-table" class="table table-hover">
+    <div class="mt-3 h-100">
+      <div class="d-flex h-100 justify-content-center align-items-center" v-if="isLoading">
+        <img src="{{ asset('img/loading.svg') }}" alt="Loading animation" style="max-height:100px;" />
+      </div>
+      <table id="category-table" class="table table-hover" v-show="!isLoading">
         <thead class="c-thead">
           <tr class="text-center">
             <th scope="col">#</th>
@@ -37,30 +40,26 @@
           </tr>
         </thead>
         <tbody>
-          <c:choose>
-            <c:when test="${empty categories}">
-              <tr><td colspan="3" class="h4 py-4">Nenhuma categoria cadastrada.</td></tr>
-            </c:when>
-            <c:otherwise>
-              <c:forEach var="category" items="${categories}">
-                <tr>
-                  <th scope="row" class="text-center"><fmt:formatNumber type="number" value="${category.id}" pattern="000"/></th>
-                  <td><c:out value="${category.name}" /></td>
-                  <td class="text-right">
-                    <button type="button" class="btn btn-sm btn-info" title="Editar" onclick="editCategory(<c:out value="${category.id}" />)"><i class="fas fa-edit"></i></button>
-                    <button type="submit" class="btn btn-sm btn-danger" title="Excluir" onclick="deleteCategory(<c:out value="${category.id}" />, event)"><i class="fas fa-trash-alt"></i></button>
-                  </td>
-                </tr>
-              </c:forEach>
-            </c:otherwise>
-          </c:choose>
+          <tr v-if="!categories.length">
+            <td colspan="3" class="h4 py-4">Nenhuma categoria cadastrada.</td>
+          </tr>
+          <template v-else>
+            <tr v-for="category in categories" :key="category.id">
+              <th scope="row" class="text-center">@{{ category.id }}</th>
+              <td>@{{ category.name }}</td>
+              <td class="text-right">
+                <button type="button" class="btn btn-sm btn-info" title="Editar"><i class="fas fa-edit"></i></button>
+                <button type="button" class="btn btn-sm btn-danger" title="Excluir"><i class="fas fa-trash-alt"></i></button>
+              </td>
+            </tr>
+          </template>
         </tbody>
       </table>
     </div>
   </main>
 
   {{-- Page footer --}}
-  @footer()
+  @footer
   @endfooter
 
 @endsection
