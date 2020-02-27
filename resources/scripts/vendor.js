@@ -26,3 +26,8 @@ window.numeral = require('numeral')
  * Import Vue.js framework
  */
 window.Vue = require('vue')
+
+/*
+ * Import cpfFmt function
+ */
+window.cpfFmt = require('@lacussoft/cpf-fmt')
