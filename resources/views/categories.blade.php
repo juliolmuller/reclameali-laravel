@@ -67,18 +67,17 @@
         <form class="modal-content" novalidate>
           <div class="modal-header">
             <h2 class="modal-title" v-if="!currCategory.id">Nova Categoria</h2>
-          <h2 class="modal-title" v-else>Editando Categoria #@{{ currCategory.id }}</h2>
+            <h2 class="modal-title" v-else>Editando Categoria #@{{ currCategory.id }}</h2>
             <button type="button" class="close" @@click="hideForm()">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
-            <input type="hidden" v-model="currCategory.id" />
             <div class="form-group">
               <label for="category-name">Nome da categoria:</label>
               <textarea id="category-name" class="form-control char-counter" rows="3" maxlength="255" v-model="currCategory.name"></textarea>
               <small class="form-text text-muted text-right char-counter">
-                Caracteres digitados: 0/255
+                Caracteres digitados: <span>0/255</span>
               </small>
             </div>
           </div>
@@ -87,7 +86,7 @@
               <i class="far fa-times-circle"></i>
               Cancelar
             </button>
-            <button type="submit" class="btn btn-lg btn-primary" :disabled="requesting" @@click="!!currCategory.id ? put() : post()">
+            <button type="submit" class="btn btn-lg btn-primary" :disabled="requesting" @@click.prevent="!!currCategory.id ? put() : post()">
               <template v-if="requesting">
                 <i class="fa fa-spinner fa-spin"></i>
               </template>
