@@ -28,6 +28,6 @@ window.numeral = require('numeral')
 window.Vue = require('vue')
 
 /*
- * Import cpfFmt function
+ * Import cpfUtils function
  */
-window.cpfFmt = require('@lacussoft/cpf-fmt')
+window.cpfUtils = require('cpf-check')
