@@ -87,13 +87,14 @@
               <i class="far fa-times-circle"></i>
               Cancelar
             </button>
-            <button type="submit" class="btn btn-lg btn-primary" :disabled="requesting" @@click="post()" v-if="!currCategory.id">
-              <i class="far fa-save"></i>
-              Salvar
-            </button>
-            <button type="submit" class="btn btn-lg btn-primary" :disabled="requesting" @@click="put()" v-else>
-              <i class="far fa-save"></i>
-              Atualizar
+            <button type="submit" class="btn btn-lg btn-primary" :disabled="requesting" @@click="!!currCategory.id ? put() : post()">
+              <template v-if="requesting">
+                <i class="fa fa-spinner fa-spin"></i>
+              </template>
+              <template v-else>
+                <i class="far fa-save"></i>
+                Salvar
+              </template>
             </button>
           </div>
         </form>

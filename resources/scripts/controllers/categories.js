@@ -3,7 +3,7 @@ import qs from 'querystring'
 // Identify page controller
 const apiUrl = $('meta[name="api-url"]')[0].content
 
-window.vue = new Vue({
+export default new Vue({
 
   el: '#categories-crud',
 
