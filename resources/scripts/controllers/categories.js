@@ -77,9 +77,7 @@ export default new Vue({
       $.ajax({
         url: apiUrl,
         method: 'POST',
-        data: {
-          name: this.currCategory.name,
-        },
+        data: this.currCategory,
         success: () => {
           toastr.success('Categoria criada com sucesso.')
           this.hideForm()
@@ -112,9 +110,7 @@ export default new Vue({
       $.ajax({
         url: this.currCategory.api.url,
         method: this.currCategory.api.method,
-        data: {
-          name: this.currCategory.name,
-        },
+        data: this.currCategory,
         success: () => {
           toastr.success('Categoria atualizada com sucesso.')
           this.hideForm()
