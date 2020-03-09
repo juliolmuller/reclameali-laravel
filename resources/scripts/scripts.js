@@ -2,15 +2,7 @@
 // import Vue from 'vue'
 // import toastr from 'toastr'
 
-// Include configuration files
-import './config/numeral'
-import './config/filters'
-
-import initVue from './controllers/controller'
-
-const apiUrl = $('meta[name="api-url"]')[0].content
-const pageName = $('meta[name="controller"]')[0].content
-const controller = initVue(pageName, apiUrl)
+import './controllers'
 
 // Configurar toastr
 toastr.options.showMethod = 'slideDown'

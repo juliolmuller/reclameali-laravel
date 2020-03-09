@@ -20,7 +20,7 @@
       </div>
 
       {{-- Button to create new category --}}
-      <button type="button" class="btn btn-primary mt-1" onclick="createCategory()">
+      <button type="button" class="btn btn-primary mt-1" @@click="showForm()">
         <i class="fa fa-plus"></i>
         Criar Nova Categoria
       </button>
@@ -31,7 +31,7 @@
       <div class="d-flex h-100 justify-content-center align-items-center" v-if="isLoading">
         <img src="{{ asset('img/loading.svg') }}" alt="Loading animation" style="max-height:100px;" />
       </div>
-      <table id="category-table" class="table table-hover" v-show="!isLoading">
+      <table id="category-table" class="table table-hover" v-else>
         <thead class="c-thead">
           <tr class="text-center">
             <th scope="col">#</th>
@@ -48,13 +48,56 @@
               <th scope="row" class="text-center">@{{ category.id }}</th>
               <td>@{{ category.name }}</td>
               <td class="text-right">
-                <button type="button" class="btn btn-sm btn-info" title="Editar"><i class="fas fa-edit"></i></button>
-                <button type="button" class="btn btn-sm btn-danger" title="Excluir"><i class="fas fa-trash-alt"></i></button>
+                <button type="button" class="btn btn-sm btn-info" title="Editar" @@click="edit(category)">
+                  <i class="fas fa-edit"></i>
+                </button>
+                <button type="button" class="btn btn-sm btn-danger" title="Excluir" @@click="destroy(category)">
+                  <i class="fas fa-trash-alt"></i>
+                </button>
               </td>
             </tr>
           </template>
         </tbody>
       </table>
+    </div>
+
+    {{-- Form to manage categories --}}
+    <div class="modal fade" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-lg" role="document">
+        <form class="modal-content" novalidate>
+          <div class="modal-header">
+            <h2 class="modal-title" v-if="!currCategory.id">Nova Categoria</h2>
+          <h2 class="modal-title" v-else>Editando Categoria #@{{ currCategory.id }}</h2>
+            <button type="button" class="close" @@click="hideForm()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <input type="hidden" v-model="currCategory.id" />
+            <div class="form-group">
+              <label for="category-name">Nome da categoria:</label>
+              <textarea id="category-name" class="form-control char-counter" rows="3" maxlength="255" v-model="currCategory.name"></textarea>
+              <small class="form-text text-muted text-right char-counter">
+                Caracteres digitados: 0/255
+              </small>
+            </div>
+          </div>
+          <div class="modal-footer c-sign-buttons">
+            <button type="button" class="btn btn-lg btn-light" @@click="hideForm()">
+              <i class="far fa-times-circle"></i>
+              Cancelar
+            </button>
+            <button type="submit" class="btn btn-lg btn-primary" :disabled="requesting" @@click="post()" v-if="!currCategory.id">
+              <i class="far fa-save"></i>
+              Salvar
+            </button>
+            <button type="submit" class="btn btn-lg btn-primary" :disabled="requesting" @@click="put()" v-else>
+              <i class="far fa-save"></i>
+              Atualizar
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   </main>
 
