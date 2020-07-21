@@ -1,5 +1,4 @@
 {
-  "private": true,
   "scripts": {
     "dev": "npm run development",
     "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
@@ -10,21 +9,21 @@
     "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
   },
   "devDependencies": {
-    "@chenfengyuan/datepicker": "1.*",
-    "@fortawesome/fontawesome-free": "^5.13.0",
+    "@chenfengyuan/datepicker": "^1.0.9",
+    "@fortawesome/fontawesome-free": "^5.14.0",
     "bootstrap": "^4.5.0",
     "cpf-check": "^3.0.0",
-    "cross-env": "6.*",
+    "cross-env": "^7.0.2",
     "jquery": "^3.5.1",
-    "jquery-mask-plugin": "1.*",
+    "jquery-mask-plugin": "^1.14.16",
     "laravel-mix": "^5.0.4",
-    "numeral": "2.*",
-    "popper.js": "1.*",
-    "resolve-url-loader": "3.*",
-    "sass": "^1.26.5",
-    "sass-loader": "8.*",
-    "toastr": "2.*",
-    "vue": "2.*",
-    "vue-template-compiler": "2.*"
+    "numeral": "^2.0.6",
+    "popper.js": "^1.16.1",
+    "resolve-url-loader": "^3.1.1",
+    "sass": "^1.26.10",
+    "sass-loader": "^9.0.2",
+    "toastr": "^2.1.4",
+    "vue": "^2.6.11",
+    "vue-template-compiler": "^2.6.11"
   }
 }
