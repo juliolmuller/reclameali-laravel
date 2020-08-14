@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use Illuminate\Http\Resources\Json\Resource;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\URL;
 
@@ -35,6 +35,6 @@ class AppServiceProvider extends ServiceProvider
         /**
          * Disable data wrapping for resources
          */
-        Resource::withoutWrapping();
+        JsonResource::withoutWrapping();
     }
 }
